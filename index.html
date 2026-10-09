@@ -283,7 +283,7 @@ function renderBooks(books) {
 function openBook(bookId) {
     // 下一章会做 read.html，现在先弹提示
     // 之后会改成：window.location.href = 'read.html?book=' + bookId;
-    alert('点击了书籍：' + bookId + '\n\n下一步我们会做阅读页 read.html');
+   window.location.href = 'read.html?book=' + bookId;
 }
 
 // 搜索功能
