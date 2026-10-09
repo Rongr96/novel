@@ -12,16 +12,12 @@ body { background: #f7f3eb; min-height: 100vh; color: #2f241b; padding: 1.5rem; 
 /* 密码门禁 */
 .gate {
     position: fixed; inset: 0; z-index: 9999;
-    background: #f7f3eb;
-    display: flex; align-items: center; justify-content: center;
-    padding: 1.5rem;
+    background: #f7f3eb; display: flex; align-items: center; justify-content: center; padding: 1.5rem;
 }
 .gate-box {
-    max-width: 400px; width: 100%;
-    background: #fefcf9; border: 1px solid #e9dbce;
-    border-radius: 1.5rem; padding: 2rem;
-    box-shadow: 0 12px 32px rgba(0,0,0,0.06);
-    text-align: center;
+    max-width: 400px; width: 100%; background: #fefcf9;
+    border: 1px solid #e9dbce; border-radius: 1.5rem; padding: 2rem;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.06); text-align: center;
 }
 .gate-box .icon { font-size: 3rem; margin-bottom: 1rem; }
 .gate-box h2 { font-weight: 400; color: #3f2e22; letter-spacing: 2px; margin-bottom: 0.5rem; }
@@ -34,18 +30,37 @@ body { background: #f7f3eb; min-height: 100vh; color: #2f241b; padding: 1.5rem; 
 }
 .gate-box input:focus { border-color: #b09b89; box-shadow: 0 0 0 3px rgba(176,155,137,0.15); }
 .gate-box button {
-    width: 100%; padding: 0.9rem 0;
-    background: #5e4b3c; color: #fff; border: none;
-    border-radius: 60px; font-size: 1rem; letter-spacing: 2px;
-    cursor: pointer; font-family: inherit; transition: background 0.2s;
+    width: 100%; padding: 0.9rem 0; background: #5e4b3c; color: #fff;
+    border: none; border-radius: 60px; font-size: 1rem;
+    letter-spacing: 2px; cursor: pointer; font-family: inherit; transition: background 0.2s;
 }
 .gate-box button:hover { background: #4a3a2e; }
 .gate-error { color: #b35e5e; font-size: 0.85rem; margin-top: 0.5rem; min-height: 1.2rem; font-style: italic; }
 
-/* 主内容 */
+/* 顶部 */
 .site-header { text-align: center; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 2px solid #e0d3c6; }
 .site-header h1 { font-size: 2.4rem; font-weight: 400; color: #3f2e22; letter-spacing: 4px; margin-bottom: 0.4rem; }
 .site-header p { color: #9b8a7a; font-style: italic; font-size: 1rem; }
+
+/* 最近阅读 */
+.recent-section { margin-bottom: 2rem; }
+.recent-title {
+    font-size: 1.1rem; color: #6b5a4b; font-weight: 400;
+    margin-bottom: 0.8rem; letter-spacing: 2px;
+    display: flex; align-items: center; gap: 0.5rem;
+}
+.recent-list { display: flex; gap: 0.8rem; overflow-x: auto; padding-bottom: 0.5rem; }
+.recent-card {
+    flex: 0 0 auto; min-width: 180px;
+    background: #fefcf9; border: 1px solid #e9dbce;
+    border-radius: 0.9rem; padding: 1rem 1.2rem;
+    cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;
+}
+.recent-card:hover { transform: translateY(-2px); box-shadow: 0 8px 16px rgba(0,0,0,0.06); }
+.recent-card .r-title { font-size: 1.05rem; color: #3f2e22; margin-bottom: 0.3rem; }
+.recent-card .r-meta { font-size: 0.8rem; color: #9b8a7a; font-style: italic; }
+
+/* 搜索框 */
 .search-box { max-width: 480px; margin: 0 auto 2rem; position: relative; }
 .search-box input {
     width: 100%; padding: 0.9rem 1.2rem 0.9rem 3rem;
@@ -58,6 +73,8 @@ body { background: #f7f3eb; min-height: 100vh; color: #2f241b; padding: 1.5rem; 
     content: "🔍"; position: absolute; left: 1.2rem; top: 50%;
     transform: translateY(-50%); font-size: 1rem; opacity: 0.5;
 }
+
+/* 书籍网格 */
 .book-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
 .book-card {
     background: #fefcf9; border: 1px solid #e9dbce; border-radius: 1rem;
@@ -79,9 +96,11 @@ body { background: #f7f3eb; min-height: 100vh; color: #2f241b; padding: 1.5rem; 
 }
 .book-category { background: #efe6dd; color: #6b5a4b; font-size: 0.8rem; padding: 0.25rem 0.8rem; border-radius: 40px; }
 .book-count { color: #9b8a7a; font-size: 0.85rem; }
+
 .empty-state { text-align: center; padding: 4rem 1rem; color: #b7a89b; font-style: italic; }
 .empty-state .icon { font-size: 4rem; margin-bottom: 1rem; opacity: 0.5; }
 .site-footer { text-align: center; color: #b7a89b; font-size: 0.85rem; margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid #e9dbce; letter-spacing: 1px; }
+
 @media (max-width: 600px) {
     body { padding: 1rem; }
     .site-header h1 { font-size: 1.8rem; letter-spacing: 2px; }
@@ -91,7 +110,7 @@ body { background: #f7f3eb; min-height: 100vh; color: #2f241b; padding: 1.5rem; 
 </head>
 <body>
 
-<!-- ========== 密码门禁 ========== -->
+<!-- 密码门禁 -->
 <div id="gate" class="gate">
     <div class="gate-box">
         <div class="icon">🔒</div>
@@ -106,33 +125,42 @@ body { background: #f7f3eb; min-height: 100vh; color: #2f241b; padding: 1.5rem; 
     </div>
 </div>
 
-<!-- ========== 主内容 ========== -->
+<!-- 主内容 -->
 <div class="container" id="mainContent" style="display:none;">
     <header class="site-header">
         <h1>✎ 我的书房</h1>
         <p>—— 那些藏在字里行间的故事 ——</p>
     </header>
+
+    <!-- 最近阅读 -->
+    <div id="recentSection" class="recent-section" style="display:none;">
+        <div class="recent-title">📖 最近阅读</div>
+        <div id="recentList" class="recent-list"></div>
+    </div>
+
     <div class="search-box">
         <input type="text" id="searchInput" placeholder="搜索书名、作者、简介或章节内容..." autocomplete="off">
     </div>
+
     <div id="bookGrid" class="book-grid"></div>
     <div id="emptyState" class="empty-state" style="display:none;">
         <div class="icon">📚</div>
         <p>还没有书，或者没有匹配的结果</p>
     </div>
+
     <footer class="site-footer">—— 只属于你的故事 ——</footer>
 </div>
 
 <script>
 // ============================================================
-// 密码门禁 + 首页逻辑
+// 密码门禁 + 首页逻辑 + 最近阅读
 // ============================================================
 
-let READER_PASSWORD = "read";  // 默认值，稍后会从 data.json 覆盖
+let READER_PASSWORD = "read";
 const PASS_KEY = "novel_pass_ok";
-const PASS_TTL = 24 * 60 * 60 * 1000;  // 24小时有效
+const PASS_TTL = 24 * 60 * 60 * 1000;
+const HISTORY_KEY = "novel_read_history"; // 阅读历史
 
-// 检查通行证
 function hasPass() {
     try {
         const raw = localStorage.getItem(PASS_KEY);
@@ -142,15 +170,19 @@ function hasPass() {
         return true;
     } catch(e) { return false; }
 }
-
-// 写通行证
 function setPass() {
     localStorage.setItem(PASS_KEY, JSON.stringify({ t: Date.now() }));
 }
 
-// 页面初始化
+// 读取阅读历史
+function getHistory() {
+    try {
+        const raw = localStorage.getItem(HISTORY_KEY);
+        return raw ? JSON.parse(raw) : {};
+    } catch(e) { return {}; }
+}
+
 window.addEventListener('DOMContentLoaded', async function() {
-    // 先从 data.json 读取真实密码
     try {
         const res = await fetch('data.json?t=' + Date.now());
         if (res.ok) {
@@ -159,7 +191,7 @@ window.addEventListener('DOMContentLoaded', async function() {
                 READER_PASSWORD = data.settings.readerPassword;
             }
         }
-    } catch(e) { /* 读取失败就用默认密码 */ }
+    } catch(e) { /* 用默认密码 */ }
 
     if (hasPass()) {
         showContent();
@@ -168,7 +200,6 @@ window.addEventListener('DOMContentLoaded', async function() {
     }
 });
 
-// 门禁按钮
 document.getElementById('gateBtn').onclick = function() {
     const pwd = document.getElementById('gatePwd').value.trim();
     if (pwd === READER_PASSWORD) {
@@ -203,6 +234,40 @@ async function loadBooks() {
         allBooks = [];
     }
     renderBooks(allBooks);
+    renderRecent();
+}
+
+// 渲染最近阅读
+function renderRecent() {
+    const history = getHistory();
+    const section = document.getElementById('recentSection');
+    const list = document.getElementById('recentList');
+
+    // 把历史里的书按访问时间倒序
+    const items = Object.values(history)
+        .filter(h => h && h.bookId)
+        .sort((a, b) => b.t - a.t)
+        .slice(0, 5);
+
+    if (items.length === 0) {
+        section.style.display = 'none';
+        return;
+    }
+    section.style.display = 'block';
+    list.innerHTML = items.map(h => {
+        const book = allBooks.find(b => b.id === h.bookId);
+        if (!book) return '';
+        return `
+            <div class="recent-card" onclick="continueRead('${book.id}', ${h.chapterIndex || 0})">
+                <div class="r-title">${escapeHtml(book.title || '无题')}</div>
+                <div class="r-meta">读到 第${(h.chapterIndex || 0) + 1}章</div>
+            </div>
+        `;
+    }).join('');
+}
+
+function continueRead(bookId, chapterIndex) {
+    window.location.href = 'read.html?book=' + bookId + '&ch=' + chapterIndex;
 }
 
 function renderBooks(books) {
