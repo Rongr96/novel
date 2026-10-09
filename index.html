@@ -128,7 +128,7 @@ body { background: #f7f3eb; min-height: 100vh; color: #2f241b; padding: 1.5rem; 
 // 密码门禁 + 首页逻辑
 // ============================================================
 
-const READER_PASSWORD = "read";  // ⚠️ 读者密码，改这里
+let READER_PASSWORD = "read";  // 默认值，稍后会从 data.json 覆盖
 const PASS_KEY = "novel_pass_ok";
 const PASS_TTL = 24 * 60 * 60 * 1000;  // 24小时有效
 
@@ -149,11 +149,21 @@ function setPass() {
 }
 
 // 页面初始化
-window.addEventListener('DOMContentLoaded', function() {
+window.addEventListener('DOMContentLoaded', async function() {
+    // 先从 data.json 读取真实密码
+    try {
+        const res = await fetch('data.json?t=' + Date.now());
+        if (res.ok) {
+            const data = await res.json();
+            if (data.settings && data.settings.readerPassword) {
+                READER_PASSWORD = data.settings.readerPassword;
+            }
+        }
+    } catch(e) { /* 读取失败就用默认密码 */ }
+
     if (hasPass()) {
         showContent();
     } else {
-        // 保持 gate 显示
         document.getElementById('gatePwd').focus();
     }
 });
