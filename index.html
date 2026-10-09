@@ -1,394 +1,320 @@
-```html
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>私人书房 · 小说手稿</title>
+<title>我的书房 · 小说集</title>
 <style>
-* { margin:0; padding:0; box-sizing:border-box; font-family:'Georgia','Times New Roman','宋体',serif; }
-body { background:#f7f3eb; min-height:100vh; display:flex; align-items:center; justify-content:center; padding:1.5rem; }
-.study-room { max-width:1000px; width:100%; background:#fffcf6; border-radius:2rem; box-shadow:0 20px 40px rgba(0,0,0,0.08); padding:2rem 2rem 2.5rem; border:1px solid #e9dbce; }
+* { margin:0; padding:0; box-sizing:border-box; font-family:'Georgia','宋体',serif; }
+body {
+    background: #f7f3eb;  /* 旧纸色 */
+    min-height: 100vh;
+    color: #2f241b;
+    padding: 1.5rem;
+}
+.container { max-width: 1100px; margin: 0 auto; }
 
-/* 密码锁 */
-.lock-screen { display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:2rem 1rem; }
-.lock-icon { font-size:3.5rem; margin-bottom:1.5rem; opacity:0.8; color:#745d4b; }
-.lock-screen h2 { font-size:2rem; font-weight:400; letter-spacing:2px; color:#3f2e22; margin-bottom:0.5rem; }
-.lock-screen p { color:#8b7a6b; margin-bottom:2rem; font-size:1rem; font-style:italic; }
-.password-area { display:flex; flex-direction:column; gap:1rem; width:100%; max-width:360px; }
-.password-area input { padding:1rem 1.2rem; border:1px solid #d6c7b8; border-radius:60px; font-size:1.1rem; background:#fefcf9; outline:none; text-align:center; letter-spacing:2px; color:#2f241b; }
-.password-area input:focus { border-color:#b09b89; box-shadow:0 0 0 3px rgba(176,155,137,0.15); }
-.password-area button { padding:1rem 0; background:#5e4b3c; color:white; border:none; border-radius:60px; font-size:1.1rem; letter-spacing:2px; cursor:pointer; transition:background 0.2s; }
-.password-area button:hover { background:#4a3a2e; }
-.error-message { color:#b35e5e; font-size:0.9rem; margin-top:0.5rem; min-height:1.5rem; font-style:italic; }
+/* 顶部 */
+.site-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 2px solid #e0d3c6;
+}
+.site-header h1 {
+    font-size: 2.4rem;
+    font-weight: 400;
+    color: #3f2e22;
+    letter-spacing: 4px;
+    margin-bottom: 0.4rem;
+}
+.site-header p {
+    color: #9b8a7a;
+    font-style: italic;
+    font-size: 1rem;
+}
 
-/* 主内容 */
-.main-area { display:none; flex-direction:column; gap:1.5rem; }
-.study-header { display:flex; flex-wrap:wrap; align-items:baseline; justify-content:space-between; border-bottom:2px solid #e9dbce; padding-bottom:1rem; gap:1rem; }
-.study-header h1 { font-size:2rem; font-weight:400; color:#3f2e22; letter-spacing:2px; }
-.header-btns { display:flex; gap:0.6rem; flex-wrap:wrap; }
-.btn { font-size:0.9rem; color:#8b7a6b; background:#efe6dd; padding:0.5rem 1.1rem; border-radius:40px; cursor:pointer; border:none; transition:background 0.2s; font-family:inherit; }
-.btn:hover { background:#e0d3c6; }
-.btn.active { background:#5e4b3c; color:#fff; }
+/* 搜索框 */
+.search-box {
+    max-width: 480px;
+    margin: 0 auto 2rem;
+    position: relative;
+}
+.search-box input {
+    width: 100%;
+    padding: 0.9rem 1.2rem 0.9rem 3rem;
+    border: 1px solid #d6c7b8;
+    border-radius: 60px;
+    font-size: 1rem;
+    background: #fffcf9;
+    outline: none;
+    color: #2f241b;
+    transition: border 0.2s, box-shadow 0.2s;
+}
+.search-box input:focus {
+    border-color: #b09b89;
+    box-shadow: 0 0 0 3px rgba(176,155,137,0.15);
+}
+.search-box::before {
+    content: "🔍";
+    position: absolute;
+    left: 1.2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1rem;
+    opacity: 0.5;
+}
 
-/* 阅读模式卡片 */
-.story-card { background:#fefcf9; border:1px solid #e9dbce; border-radius:1.5rem; padding:2rem 2.5rem; box-shadow:0 6px 16px rgba(0,0,0,0.02); position:relative; }
-.story-title { font-size:1.8rem; font-weight:400; color:#3f2e22; margin-bottom:0.6rem; border-left:5px solid #b09b89; padding-left:1.2rem; }
-.story-meta { display:flex; gap:1.5rem; color:#9b8a7a; font-size:0.9rem; margin-bottom:1.8rem; padding-left:1.7rem; font-style:italic; }
-.story-text { color:#2f241b; line-height:1.9; font-size:1.05rem; white-space:pre-wrap; word-break:break-word; }
-.story-text p { margin-bottom:1.2rem; }
-.divider { text-align:center; color:#cbb9aa; font-size:1.5rem; letter-spacing:8px; margin:0.5rem 0; }
-.footer-note { text-align:center; color:#b7a89b; font-size:0.8rem; margin-top:2rem; border-top:1px solid #e9dbce; padding-top:1.5rem; letter-spacing:1px; }
+/* 书籍网格 */
+.book-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
 
-/* 编辑模式 */
-.edit-panel { display:none; flex-direction:column; gap:1.2rem; }
-.edit-panel.active { display:flex; }
-.edit-item { background:#fefcf9; border:1px solid #e9dbce; border-radius:1rem; padding:1.2rem; }
-.edit-item label { display:block; font-size:0.85rem; color:#8b7a6b; margin-bottom:0.4rem; letter-spacing:1px; }
-.edit-item input, .edit-item textarea { width:100%; padding:0.7rem 0.9rem; border:1px solid #d6c7b8; border-radius:0.6rem; font-size:1rem; background:#fffcf9; outline:none; font-family:inherit; color:#2f241b; }
-.edit-item input:focus, .edit-item textarea:focus { border-color:#b09b89; }
-.edit-item textarea { min-height:150px; resize:vertical; line-height:1.7; }
-.edit-actions { display:flex; gap:0.6rem; flex-wrap:wrap; margin-top:0.5rem; }
-.btn-primary { background:#5e4b3c; color:#fff; border:none; padding:0.8rem 1.5rem; border-radius:40px; cursor:pointer; font-size:0.95rem; font-family:inherit; letter-spacing:1px; }
-.btn-primary:hover { background:#4a3a2e; }
-.btn-danger { background:#c97a7a; color:#fff; border:none; padding:0.6rem 1.2rem; border-radius:40px; cursor:pointer; font-size:0.85rem; font-family:inherit; }
-.btn-danger:hover { background:#b35e5e; }
-.btn-small { background:#efe6dd; color:#5e4b3c; border:none; padding:0.5rem 1rem; border-radius:40px; cursor:pointer; font-size:0.85rem; font-family:inherit; }
-.btn-small:hover { background:#e0d3c6; }
-.empty-tip { text-align:center; color:#b7a89b; font-style:italic; padding:2rem 0; }
+/* 书籍卡片 */
+.book-card {
+    background: #fefcf9;
+    border: 1px solid #e9dbce;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+.book-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.08);
+    border-color: #cbb9aa;
+}
+.book-title {
+    font-size: 1.5rem;
+    font-weight: 400;
+    color: #3f2e22;
+    letter-spacing: 1px;
+    border-left: 4px solid #b09b89;
+    padding-left: 0.8rem;
+}
+.book-meta {
+    display: flex;
+    gap: 1rem;
+    color: #9b8a7a;
+    font-size: 0.85rem;
+    font-style: italic;
+    padding-left: 0.9rem;
+}
+.book-desc {
+    color: #5a4a3e;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    padding-left: 0.9rem;
+    min-height: 3.4rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.book-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 0.9rem;
+    margin-top: 0.5rem;
+    padding-top: 0.8rem;
+    border-top: 1px dashed #e9dbce;
+}
+.book-category {
+    background: #efe6dd;
+    color: #6b5a4b;
+    font-size: 0.8rem;
+    padding: 0.25rem 0.8rem;
+    border-radius: 40px;
+}
+.book-count {
+    color: #9b8a7a;
+    font-size: 0.85rem;
+}
 
-@media (max-width:600px) {
-  .study-room { padding:1.5rem; }
-  .story-card { padding:1.5rem; }
-  .story-title { font-size:1.5rem; }
-  .study-header h1 { font-size:1.6rem; }
+/* 空状态 */
+.empty-state {
+    text-align: center;
+    padding: 4rem 1rem;
+    color: #b7a89b;
+    font-style: italic;
+}
+.empty-state .icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+/* 页脚 */
+.site-footer {
+    text-align: center;
+    color: #b7a89b;
+    font-size: 0.85rem;
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e9dbce;
+    letter-spacing: 1px;
+}
+
+/* 响应式 */
+@media (max-width: 600px) {
+    body { padding: 1rem; }
+    .site-header h1 { font-size: 1.8rem; letter-spacing: 2px; }
+    .book-grid { grid-template-columns: 1fr; }
 }
 </style>
 </head>
 <body>
-<div class="study-room">
+<div class="container">
 
-  <!-- ========== 密码锁 ========== -->
-  <div id="lockScreen" class="lock-screen">
-    <div class="lock-icon">🔒</div>
-    <h2>私人书房</h2>
-    <p>请输入密码</p >
-    <div class="password-area">
-      <input type="password" id="passwordInput" placeholder="········" autocomplete="off">
-      <button id="unlockBtn">进入</button>
-      <div id="errorMsg" class="error-message"></div>
-    </div>
-    <p style="font-size:0.8rem; margin-top:1.5rem; color:#bcab9c; line-height:1.6;">
-      读者密码：<b>read</b>　|　管理员密码：<b>admin</b><br>
-      （可在代码顶部修改）
-    </p >
-  </div>
+    <header class="site-header">
+        <h1>✎ 我的书房</h1>
+        <p>—— 那些藏在字里行间的故事 ——</p>
+    </header>
 
-  <!-- ========== 主内容 ========== -->
-  <div id="mainArea" class="main-area">
-    <div class="study-header">
-      <h1>✎ 私人手稿</h1>
-      <div class="header-btns">
-        <button id="readModeBtn" class="btn active">📖 阅读</button>
-        <button id="editModeBtn" class="btn" style="display:none;">✏️ 编辑</button>
-        <button id="lockAgainBtn" class="btn">🔐 锁定</button>
-      </div>
+    <div class="search-box">
+        <input type="text" id="searchInput" placeholder="搜索书名、作者、简介或章节内容..." autocomplete="off">
     </div>
 
-    <!-- 阅读区 -->
-    <div id="readPanel">
-      <div id="storyList"></div>
-      <div class="footer-note">—— 只属于你的故事 ——</div>
+    <div id="bookGrid" class="book-grid">
+        <!-- 书籍卡片会由 JS 自动生成 -->
     </div>
 
-    <!-- 编辑区 -->
-    <div id="editPanel" class="edit-panel">
-      <div id="editList"></div>
-      <button id="addStoryBtn" class="btn-primary">＋ 新增一章</button>
-      <div class="edit-actions">
-        <button id="saveAllBtn" class="btn-primary">💾 保存全部</button>
-        <button id="resetBtn" class="btn-small">↺ 恢复示例</button>
-      </div>
-      <p style="font-size:0.8rem; color:#b7a89b; text-align:center; margin-top:0.5rem;">
-        内容保存在本浏览器，换设备或清缓存会丢失
-      </p >
+    <div id="emptyState" class="empty-state" style="display:none;">
+        <div class="icon">📚</div>
+        <p>还没有书，或者没有匹配的结果</p>
     </div>
-  </div>
+
+    <footer class="site-footer">
+        —— 只属于你的故事 ——
+    </footer>
 
 </div>
 
 <script>
-(function(){
-  // ========== 密码设置 ==========
-  const READER_PASSWORD = "read";   // 读者密码
-  const ADMIN_PASSWORD  = "admin";  // 管理员密码
+// ============================================
+// 读者首页逻辑
+// 所有书籍数据从 data.json 读取
+// ============================================
 
-  // ========== 默认示例数据 ==========
-  const DEFAULT_STORIES = [
-    {
-      title: "第一章 · 雨夜来客",
-      date: "2025-03-12",
-      author: "未署名",
-      text: "雨下得很大，敲在瓦片上像是无数细碎的鼓点。林晚推开那扇吱呀作响的木门时，一股潮湿的霉味迎面扑来。\n\n“有人吗？”她轻声问。声音被雨声吞掉大半，只剩下一点微弱的回响。\n\n堂屋正中摆着一张八仙桌，桌上放着一盏未点燃的煤油灯。墙角的蜘蛛网在穿堂风里轻轻晃动。"
-    },
-    {
-      title: "第二章 · 旧信",
-      date: "2025-03-15",
-      author: "未署名",
-      text: "阁楼的木箱里堆满了旧书和信札。苏晚拂去灰尘，发现箱底压着一封用火漆封口的信。\n\n她小心翼翼地拆开火漆，抽出信纸。上面只写了一行短句：\n\n“如果你看到这封信，说明我已经不在你身边了。”\n\n苏晚的手微微颤抖。"
-    }
-  ];
+// 全局书籍数据
+let allBooks = [];
 
-  // ========== 状态 ==========
-  const STORAGE_KEY = "my_novel_stories";
-  let stories = [];
-  let isAdmin = false;
+// 页面加载时读取数据
+window.addEventListener('DOMContentLoaded', loadBooks);
 
-  // ========== DOM ==========
-  const lockScreen = document.getElementById('lockScreen');
-  const mainArea = document.getElementById('mainArea');
-  const passwordInput = document.getElementById('passwordInput');
-  const unlockBtn = document.getElementById('unlockBtn');
-  const errorMsg = document.getElementById('errorMsg');
-  const lockAgainBtn = document.getElementById('lockAgainBtn');
-  const readModeBtn = document.getElementById('readModeBtn');
-  const editModeBtn = document.getElementById('editModeBtn');
-  const readPanel = document.getElementById('readPanel');
-  const editPanel = document.getElementById('editPanel');
-  const storyList = document.getElementById('storyList');
-  const editList = document.getElementById('editList');
-  const addStoryBtn = document.getElementById('addStoryBtn');
-  const saveAllBtn = document.getElementById('saveAllBtn');
-  const resetBtn = document.getElementById('resetBtn');
-
-  // ========== 工具函数 ==========
-  function escapeHtml(s){
-    return String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
-  }
-
-  function loadStories(){
+// 从 data.json 加载数据
+async function loadBooks() {
     try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (raw) {
-        stories = JSON.parse(raw);
-      } else {
-        stories = JSON.parse(JSON.stringify(DEFAULT_STORIES));
-      }
-    } catch(e){
-      stories = JSON.parse(JSON.stringify(DEFAULT_STORIES));
+        // 加时间戳避免浏览器缓存
+        const res = await fetch('data.json?t=' + Date.now());
+        if (!res.ok) throw new Error('数据文件不存在');
+        const data = await res.json();
+        allBooks = data.books || [];
+    } catch (err) {
+        console.warn('读取数据失败，使用示例数据', err);
+        // 如果 data.json 不存在，用一份示例数据，方便你预览效果
+        allBooks = [
+            {
+                id: 'demo1',
+                title: '雨夜来客',
+                author: '未署名',
+                category: '悬疑',
+                description: '一个雨夜，陌生人敲响了木门。那些藏了多年的秘密，正在被一层层揭开……',
+                chapters: [
+                    { id: 'c1', title: '第一章 · 雨夜', content: '雨下得很大……' },
+                    { id: 'c2', title: '第二章 · 旧信', content: '阁楼的木箱里……' },
+                    { id: 'c3', title: '第三章 · 地窖', content: '第三块砖下面……' }
+                ]
+            },
+            {
+                id: 'demo2',
+                title: '青山不改',
+                author: '未署名',
+                category: '武侠',
+                description: '十年学剑，下山之日，江湖已变。一个人，一柄剑，走遍山河。',
+                chapters: [
+                    { id: 'c1', title: '第一章 · 下山', content: '晨雾未散……' },
+                    { id: 'c2', title: '第二章 · 客栈', content: '客栈里鱼龙混杂……' }
+                ]
+            }
+        ];
     }
-    if (!Array.isArray(stories) || stories.length === 0) {
-      stories = JSON.parse(JSON.stringify(DEFAULT_STORIES));
-    }
-  }
+    renderBooks(allBooks);
+}
 
-  function saveStories(){
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(stories));
-    } catch(e){
-      alert("保存失败，可能是浏览器存储空间不足");
-    }
-  }
+// 渲染书籍卡片
+function renderBooks(books) {
+    const grid = document.getElementById('bookGrid');
+    const empty = document.getElementById('emptyState');
 
-  // ========== 渲染阅读区 ==========
-  function renderRead(){
-    if (stories.length === 0) {
-      storyList.innerHTML = '<div class="empty-tip">还没有任何章节，请用管理员密码进入编辑模式添加。</div>';
-      return;
+    if (!books || books.length === 0) {
+        grid.innerHTML = '';
+        empty.style.display = 'block';
+        return;
     }
-    let html = '';
-    stories.forEach((s, i) => {
-      const paras = (s.text || '').split('\n').filter(p => p.trim() !== '').map(p => '<p>' + escapeHtml(p) + '</p >').join('');
-      html += `
-        <div class="story-card">
-          <div class="story-title">${escapeHtml(s.title || '无标题')}</div>
-          <div class="story-meta">
-            <span>📅 ${escapeHtml(s.date || '')}</span>
-            <span>✍️ ${escapeHtml(s.author || '未署名')}</span>
-          </div>
-          <div class="story-text">${paras || '<p style="color:#b7a89b;font-style:italic;">（本章暂无内容）</p >'}</div>
-        </div>
-      `;
-      if (i < stories.length - 1) html += '<div class="divider">⸻ ✦ ⸻</div>';
-    });
-    storyList.innerHTML = html;
-  }
+    empty.style.display = 'none';
 
-  // ========== 渲染编辑区 ==========
-  function renderEdit(){
-    if (stories.length === 0) {
-      editList.innerHTML = '<div class="empty-tip">点击下方「新增一章」开始写作。</div>';
-      return;
-    }
-    let html = '';
-    stories.forEach((s, i) => {
-      html += `
-        <div class="edit-item" data-index="${i}">
-          <label>标题</label>
-          <input type="text" class="edit-title" value="${escapeHtml(s.title || '')}" placeholder="章节标题">
-          <div style="display:flex; gap:0.8rem; margin-top:0.8rem; flex-wrap:wrap;">
-            <div style="flex:1; min-width:120px;">
-              <label>日期</label>
-              <input type="text" class="edit-date" value="${escapeHtml(s.date || '')}" placeholder="2025-01-01">
+    grid.innerHTML = books.map(book => {
+        const chapterCount = (book.chapters || []).length;
+        return `
+            <div class="book-card" onclick="openBook('${book.id}')">
+                <div class="book-title">${escapeHtml(book.title || '无题')}</div>
+                <div class="book-meta">
+                    <span>✍️ ${escapeHtml(book.author || '未署名')}</span>
+                </div>
+                <div class="book-desc">${escapeHtml(book.description || '暂无简介')}</div>
+                <div class="book-footer">
+                    <span class="book-category">${escapeHtml(book.category || '未分类')}</span>
+                    <span class="book-count">📖 ${chapterCount} 章</span>
+                </div>
             </div>
-            <div style="flex:1; min-width:120px;">
-              <label>作者</label>
-              <input type="text" class="edit-author" value="${escapeHtml(s.author || '')}" placeholder="笔名">
-            </div>
-          </div>
-          <label style="margin-top:0.8rem;">正文（空行分段）</label>
-          <textarea class="edit-text" placeholder="在这里写正文，空一行表示分段">${escapeHtml(s.text || '')}</textarea>
-          <div class="edit-actions">
-            <button class="btn-small move-up" data-index="${i}">↑ 上移</button>
-            <button class="btn-small move-down" data-index="${i}">↓ 下移</button>
-            <button class="btn-danger delete-item" data-index="${i}">删除本章</button>
-          </div>
-        </div>
-      `;
-    });
-    editList.innerHTML = html;
+        `;
+    }).join('');
+}
 
-    // 绑定编辑区按钮
-    editList.querySelectorAll('.move-up').forEach(btn => {
-      btn.onclick = () => { moveStory(parseInt(btn.dataset.index), -1); };
-    });
-    editList.querySelectorAll('.move-down').forEach(btn => {
-      btn.onclick = () => { moveStory(parseInt(btn.dataset.index), 1); };
-    });
-    editList.querySelectorAll('.delete-item').forEach(btn => {
-      btn.onclick = () => { deleteStory(parseInt(btn.dataset.index)); };
-    });
-  }
+// 点击书籍，跳转到阅读页
+function openBook(bookId) {
+    // 下一章会做 read.html，现在先弹提示
+    // 之后会改成：window.location.href = 'read.html?book=' + bookId;
+    alert('点击了书籍：' + bookId + '\n\n下一步我们会做阅读页 read.html');
+}
 
-  // ========== 编辑区操作 ==========
-  function collectEditData(){
-    const items = editList.querySelectorAll('.edit-item');
-    const newStories = [];
-    items.forEach(item => {
-      newStories.push({
-        title: item.querySelector('.edit-title').value.trim(),
-        date: item.querySelector('.edit-date').value.trim(),
-        author: item.querySelector('.edit-author').value.trim(),
-        text: item.querySelector('.edit-text').value
-      });
-    });
-    stories = newStories;
-  }
-
-  function moveStory(index, dir){
-    collectEditData();
-    const newIndex = index + dir;
-    if (newIndex < 0 || newIndex >= stories.length) return;
-    [stories[index], stories[newIndex]] = [stories[newIndex], stories[index]];
-    renderEdit();
-  }
-
-  function deleteStory(index){
-    if (!confirm('确定删除这一章吗？')) return;
-    collectEditData();
-    stories.splice(index, 1);
-    renderEdit();
-  }
-
-  function addStory(){
-    collectEditData();
-    stories.push({
-      title: '新章节',
-      date: new Date().toISOString().slice(0,10),
-      author: '',
-      text: ''
-    });
-    renderEdit();
-    // 滚动到底部
-    setTimeout(() => {
-      const items = editList.querySelectorAll('.edit-item');
-      if (items.length) items[items.length-1].scrollIntoView({behavior:'smooth', block:'center'});
-    }, 50);
-  }
-
-  function saveAll(){
-    collectEditData();
-    saveStories();
-    renderRead();
-    alert('已保存 ✅');
-  }
-
-  function resetToDefault(){
-    if (!confirm('确定恢复为示例内容吗？当前内容会丢失。')) return;
-    stories = JSON.parse(JSON.stringify(DEFAULT_STORIES));
-    saveStories();
-    renderEdit();
-    renderRead();
-  }
-
-  // ========== 模式切换 ==========
-  function showReadMode(){
-    readPanel.style.display = 'block';
-    editPanel.classList.remove('active');
-    readModeBtn.classList.add('active');
-    editModeBtn.classList.remove('active');
-  }
-
-  function showEditMode(){
-    if (!isAdmin) return;
-    collectEditData(); // 先同步一下
-    renderEdit();
-    readPanel.style.display = 'none';
-    editPanel.classList.add('active');
-    editModeBtn.classList.add('active');
-    readModeBtn.classList.remove('active');
-  }
-
-  // ========== 解锁 ==========
-  function unlock(){
-    const val = passwordInput.value.trim();
-    if (val === READER_PASSWORD || val === ADMIN_PASSWORD) {
-      isAdmin = (val === ADMIN_PASSWORD);
-      lockScreen.style.display = 'none';
-      mainArea.style.display = 'flex';
-      editModeBtn.style.display = isAdmin ? 'inline-block' : 'none';
-      errorMsg.textContent = '';
-      passwordInput.value = '';
-      loadStories();
-      renderRead();
-      showReadMode();
-      // 管理员默认进编辑模式
-      if (isAdmin) {
-        showEditMode();
-      }
-    } else {
-      errorMsg.textContent = '密码不正确，请重试。';
-      passwordInput.value = '';
-      passwordInput.focus();
+// 搜索功能
+document.getElementById('searchInput').addEventListener('input', function(e) {
+    const keyword = e.target.value.trim().toLowerCase();
+    if (!keyword) {
+        renderBooks(allBooks);
+        return;
     }
-  }
+    const filtered = allBooks.filter(book => {
+        // 搜索书名、作者、简介
+        const inMeta = 
+            (book.title || '').toLowerCase().includes(keyword) ||
+            (book.author || '').toLowerCase().includes(keyword) ||
+            (book.description || '').toLowerCase().includes(keyword);
+        // 搜索章节正文
+        const inChapters = (book.chapters || []).some(ch =>
+            (ch.title || '').toLowerCase().includes(keyword) ||
+            (ch.content || '').toLowerCase().includes(keyword)
+        );
+        return inMeta || inChapters;
+    });
+    renderBooks(filtered);
+});
 
-  function lockAgain(){
-    isAdmin = false;
-    mainArea.style.display = 'none';
-    lockScreen.style.display = 'flex';
-    passwordInput.value = '';
-    errorMsg.textContent = '';
-    passwordInput.focus();
-  }
-
-  // ========== 事件绑定 ==========
-  unlockBtn.onclick = unlock;
-  passwordInput.addEventListener('keypress', e => {
-    if (e.key === 'Enter') { e.preventDefault(); unlock(); }
-  });
-  lockAgainBtn.onclick = lockAgain;
-  readModeBtn.onclick = showReadMode;
-  editModeBtn.onclick = showEditMode;
-  addStoryBtn.onclick = addStory;
-  saveAllBtn.onclick = saveAll;
-  resetBtn.onclick = resetToDefault;
-
-  // 初始加载
-  loadStories();
-  window.addEventListener('load', () => passwordInput.focus());
-})();
+// HTML 转义，防止 XSS
+function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, m => ({
+        '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+    }[m]));
+}
 </script>
 </body>
 </html>
-```
