@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>阅读 · 我的书房</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; font-family:'Georgia','宋体',serif; }
+body {
+    background: #f7f3eb;
+    min-height: 100vh;
+    color: #2f241b;
+    padding: 1.5rem;
+}
+.container { max-width: 1100px; margin: 0 auto; }
+
+/* 顶部栏 */
+.top-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 1rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid #e0d3c6;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+}
+.back-btn {
+    background: #efe6dd;
+    color: #5e4b3c;
+    border: none;
+    padding: 0.6rem 1.2rem;
+    border-radius: 40px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-family: inherit;
+    transition: background 0.2s;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+.back-btn:hover { background: #e0d3c6; }
+.book-title-top {
+    font-size: 1.4rem;
+    color: #3f2e22;
+    font-weight: 400;
+    letter-spacing: 2px;
+}
+
+/* 主体布局 */
+.read-layout {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 2rem;
+}
+@media (max-width: 800px) {
+    .read-layout { grid-template-columns: 1fr; }
+}
+
+/* 章节目录 */
+.chapter-list {
+    background: #fefcf9;
+    border: 1px solid #e9dbce;
+    border-radius: 1rem;
+    padding: 1rem;
+    max-height: 80vh;
+    overflow-y: auto;
+    align-self: start;
+    position: sticky;
+    top: 1.5rem;
+}
+.chapter-list h3 {
+    font-size: 1rem;
+    color: #8b7a6b;
+    font-weight: 400;
+    margin-bottom: 0.8rem;
+    padding-left: 0.5rem;
+    letter-spacing: 1px;
+}
+.chapter-item {
+    padding: 0.7rem 0.9rem;
+    border-radius: 0.6rem;
+    cursor: pointer;
+    color: #5a4a3e;
+    font-size: 0.95rem;
+    transition: background 0.15s, color 0.15s;
+    margin-bottom: 0.2rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.chapter-item:hover { background: #f3ece3; }
+.chapter-item.active {
+    background: #5e4b3c;
+    color: #fff;
+}
+
+/* 正文区 */
+.article-area {
+    background: #fefcf9;
+    border: 1px solid #e9dbce;
+    border-radius: 1rem;
+    padding: 2.5rem 3rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+}
+@media (max-width: 600px) {
+    .article-area { padding: 1.5rem 1.2rem; }
+}
+.article-title {
+    font-size: 1.8rem;
+    color: #3f2e22;
+    font-weight: 400;
+    margin-bottom: 0.5rem;
+    letter-spacing: 1px;
+    border-left: 5px solid #b09b89;
+    padding-left: 1rem;
+}
+.article-meta {
+    color: #9b8a7a;
+    font-size: 0.9rem;
+    font-style: italic;
+    margin-bottom: 2rem;
+    padding-left: 1.3rem;
+}
+.article-content {
+    color: #2f241b;
+    font-size: 1.05rem;
+    line-height: 2;
+}
+.article-content p {
+    text-indent: 2em;      /* 首行缩进2字符 */
+    margin-bottom: 1.2rem; /* 段落间空行 */
+}
+.article-content p:last-child { margin-bottom: 0; }
+
+/* 上下章按钮 */
+.nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px dashed #e9dbce;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+.nav-btn {
+    background: #efe6dd;
+    color: #5e4b3c;
+    border: none;
+    padding: 0.7rem 1.4rem;
+    border-radius: 40px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-family: inherit;
+    transition: background 0.2s;
+}
+.nav-btn:hover:not(:disabled) { background: #e0d3c6; }
+.nav-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* 提示 */
+.loading-tip {
+    text-align: center;
+    padding: 4rem 1rem;
+    color: #b7a89b;
+    font-style: italic;
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+    <div class="top-bar">
+        <a href="index.html" class="back-btn">← 返回书架</a>
+        <div class="book-title-top" id="topTitle">加载中...</div>
+    </div>
+
+    <div class="read-layout">
+        <aside class="chapter-list">
+            <h3>📖 章节目录</h3>
+            <div id="chapterList">
+                <div class="loading-tip">加载中...</div>
+            </div>
+        </aside>
+
+        <main class="article-area" id="articleArea">
+            <div class="loading-tip">正在加载正文...</div>
+        </main>
+    </div>
+
+</div>
+
+<script>
+// ============================================
+// 阅读页逻辑
+// ============================================
+
+let currentBook = null;   // 当前书籍
+let currentChapterIndex = 0; // 当前章节索引
+
+// 页面加载
+window.addEventListener('DOMContentLoaded', init);
+
+async function init() {
+    // 1. 从 URL 参数里拿到书籍 ID
+    const params = new URLSearchParams(window.location.search);
+    const bookId = params.get('book');
+
+    if (!bookId) {
+        document.getElementById('articleArea').innerHTML =
+            '<div class="loading-tip">没有指定书籍，请从<a href="index.html">书架</a>进入</div>';
+        return;
+    }
+
+    // 2. 读取 data.json
+    let data;
+    try {
+        const res = await fetch('data.json?t=' + Date.now());
+        if (!res.ok) throw new Error();
+        data = await res.json();
+    } catch (err) {
+        // 读取失败，用示例数据（和首页一致）
+        data = { books: getDemoBooks() };
+    }
+
+    // 3. 找到对应书籍
+    currentBook = (data.books || []).find(b => b.id === bookId);
+    if (!currentBook) {
+        document.getElementById('articleArea').innerHTML =
+            '<div class="loading-tip">找不到这本书</div>';
+        return;
+    }
+
+    // 4. 渲染
+    document.getElementById('topTitle').textContent = currentBook.title || '未命名';
+    document.title = (currentBook.title || '阅读') + ' · 我的书房';
+    renderChapterList();
+    loadChapter(0);
+}
+
+// 渲染章节目录
+function renderChapterList() {
+    const list = document.getElementById('chapterList');
+    const chapters = currentBook.chapters || [];
+    if (chapters.length === 0) {
+        list.innerHTML = '<div class="loading-tip">本书暂无章节</div>';
+        return;
+    }
+    list.innerHTML = chapters.map((ch, i) => `
+        <div class="chapter-item" data-index="${i}" onclick="loadChapter(${i})">
+            ${escapeHtml(ch.title || ('第' + (i+1) + '章'))}
+        </div>
+    `).join('');
+}
+
+// 加载某一章
+function loadChapter(index) {
+    const chapters = currentBook.chapters || [];
+    if (index < 0 || index >= chapters.length) return;
+    currentChapterIndex = index;
+    const ch = chapters[index];
+
+    // 高亮目录
+    document.querySelectorAll('.chapter-item').forEach((el, i) => {
+        el.classList.toggle('active', i === index);
+    });
+
+    // 渲染正文
+    const paras = (ch.content || '').split('\n')
+        .filter(p => p.trim() !== '')
+        .map(p => `<p>${escapeHtml(p)}</p>`).join('');
+
+    document.getElementById('articleArea').innerHTML = `
+        <h1 class="article-title">${escapeHtml(ch.title || ('第' + (index+1) + '章'))}</h1>
+        <div class="article-meta">✍️ ${escapeHtml(currentBook.author || '未署名')}</div>
+        <div class="article-content">
+            ${paras || '<p style="text-indent:0;color:#b7a89b;font-style:italic;">（本章暂无正文）</p>'}
+        </div>
+        <div class="nav-buttons">
+            <button class="nav-btn" onclick="loadChapter(${index-1})" ${index <= 0 ? 'disabled' : ''}>← 上一章</button>
+            <button class="nav-btn" onclick="loadChapter(${index+1})" ${index >= chapters.length-1 ? 'disabled' : ''}>下一章 →</button>
+        </div>
+    `;
+
+    // 滚动到顶部
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// 示例数据（当 data.json 不存在时用，和首页保持一致）
+function getDemoBooks() {
+    return [
+        {
+            id: 'demo1',
+            title: '雨夜来客',
+            author: '未署名',
+            category: '悬疑',
+            description: '一个雨夜，陌生人敲响了木门。那些藏了多年的秘密，正在被一层层揭开……',
+            chapters: [
+                { id: 'c1', title: '第一章 · 雨夜', content: '雨下得很大，敲在瓦片上像是无数细碎的鼓点。\n\n林晚推开那扇吱呀作响的木门时，一股潮湿的霉味迎面扑来。\n\n“有人吗？”她轻声问。声音被雨声吞掉大半，只剩下一点微弱的回响。' },
+                { id: 'c2', title: '第二章 · 旧信', content: '阁楼的木箱里堆满了旧书和信札。\n\n苏晚拂去灰尘，发现箱底压着一封用火漆封口的信。\n\n她小心翼翼地拆开火漆，抽出信纸。上面只写了一行短句：“如果你看到这封信，说明我已经不在你身边了。”' },
+                { id: 'c3', title: '第三章 · 地窖', content: '第三块砖下面，藏着一个铁盒。\n\n林晚的手指在冰冷的砖面上摸索，终于找到了那道几乎看不见的缝隙。\n\n她屏住呼吸，用力一按。' }
+            ]
+        },
+        {
+            id: 'demo2',
+            title: '青山不改',
+            author: '未署名',
+            category: '武侠',
+            description: '十年学剑，下山之日，江湖已变。一个人，一柄剑，走遍山河。',
+            chapters: [
+                { id: 'c1', title: '第一章 · 下山', content: '晨雾未散，少年背剑下山。\n\n师父的话还在耳边：“江湖险恶，切记三思。”\n\n他没有回头。' },
+                { id: 'c2', title: '第二章 · 客栈', content: '客栈里鱼龙混杂。\n\n他选了角落的桌子，要了一碗清汤面。\n\n对面坐着一个戴斗笠的人，从进店到现在，一句话也没说。' }
+            ]
+        }
+    ];
+}
+
+// HTML 转义
+function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, m => ({
+        '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+    }[m]));
+}
+</script>
+</body>
+</html>
