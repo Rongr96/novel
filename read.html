@@ -6,242 +6,230 @@
 <title>阅读 · 我的书房</title>
 <style>
 * { margin:0; padding:0; box-sizing:border-box; font-family:'Georgia','宋体',serif; }
-body {
-    background: #f7f3eb;
-    min-height: 100vh;
-    color: #2f241b;
-    padding: 1.5rem;
-}
+body { background: #f7f3eb; min-height: 100vh; color: #2f241b; padding: 1.5rem; }
 .container { max-width: 1100px; margin: 0 auto; }
 
-/* 顶部栏 */
+/* 密码门禁 */
+.gate {
+    position: fixed; inset: 0; z-index: 9999;
+    background: #f7f3eb;
+    display: flex; align-items: center; justify-content: center; padding: 1.5rem;
+}
+.gate-box {
+    max-width: 400px; width: 100%; background: #fefcf9;
+    border: 1px solid #e9dbce; border-radius: 1.5rem; padding: 2rem;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.06); text-align: center;
+}
+.gate-box .icon { font-size: 3rem; margin-bottom: 1rem; }
+.gate-box h2 { font-weight: 400; color: #3f2e22; letter-spacing: 2px; margin-bottom: 0.5rem; }
+.gate-box p { color: #8b7a6b; font-size: 0.9rem; font-style: italic; margin-bottom: 1.5rem; }
+.gate-box input {
+    width: 100%; padding: 0.9rem 1rem; border: 1px solid #d6c7b8;
+    border-radius: 60px; font-size: 1rem; background: #fffcf9;
+    outline: none; text-align: center; letter-spacing: 2px;
+    color: #2f241b; margin-bottom: 1rem; font-family: inherit;
+}
+.gate-box input:focus { border-color: #b09b89; }
+.gate-box button {
+    width: 100%; padding: 0.9rem 0; background: #5e4b3c; color: #fff;
+    border: none; border-radius: 60px; font-size: 1rem;
+    letter-spacing: 2px; cursor: pointer; font-family: inherit;
+}
+.gate-box button:hover { background: #4a3a2e; }
+.gate-error { color: #b35e5e; font-size: 0.85rem; margin-top: 0.5rem; min-height: 1.2rem; font-style: italic; }
+
+/* 阅读页 */
 .top-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-bottom: 1rem;
-    margin-bottom: 1.5rem;
-    border-bottom: 2px solid #e0d3c6;
-    flex-wrap: wrap;
-    gap: 0.8rem;
+    display: flex; justify-content: space-between; align-items: center;
+    padding-bottom: 1rem; margin-bottom: 1.5rem;
+    border-bottom: 2px solid #e0d3c6; flex-wrap: wrap; gap: 0.8rem;
 }
 .back-btn {
-    background: #efe6dd;
-    color: #5e4b3c;
-    border: none;
-    padding: 0.6rem 1.2rem;
-    border-radius: 40px;
-    cursor: pointer;
-    font-size: 0.9rem;
-    font-family: inherit;
-    transition: background 0.2s;
-    text-decoration: none;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
+    background: #efe6dd; color: #5e4b3c; border: none;
+    padding: 0.6rem 1.2rem; border-radius: 40px; cursor: pointer;
+    font-size: 0.9rem; font-family: inherit; text-decoration: none;
+    display: inline-flex; align-items: center; gap: 0.4rem;
 }
 .back-btn:hover { background: #e0d3c6; }
-.book-title-top {
-    font-size: 1.4rem;
-    color: #3f2e22;
-    font-weight: 400;
-    letter-spacing: 2px;
-}
+.book-title-top { font-size: 1.4rem; color: #3f2e22; font-weight: 400; letter-spacing: 2px; }
 
-/* 主体布局 */
-.read-layout {
-    display: grid;
-    grid-template-columns: 240px 1fr;
-    gap: 2rem;
-}
-@media (max-width: 800px) {
-    .read-layout { grid-template-columns: 1fr; }
-}
+.read-layout { display: grid; grid-template-columns: 240px 1fr; gap: 2rem; }
+@media (max-width: 800px) { .read-layout { grid-template-columns: 1fr; } }
 
-/* 章节目录 */
 .chapter-list {
-    background: #fefcf9;
-    border: 1px solid #e9dbce;
-    border-radius: 1rem;
-    padding: 1rem;
-    max-height: 80vh;
-    overflow-y: auto;
-    align-self: start;
-    position: sticky;
-    top: 1.5rem;
+    background: #fefcf9; border: 1px solid #e9dbce;
+    border-radius: 1rem; padding: 1rem;
+    max-height: 80vh; overflow-y: auto;
+    align-self: start; position: sticky; top: 1.5rem;
 }
-.chapter-list h3 {
-    font-size: 1rem;
-    color: #8b7a6b;
-    font-weight: 400;
-    margin-bottom: 0.8rem;
-    padding-left: 0.5rem;
-    letter-spacing: 1px;
-}
+.chapter-list h3 { font-size: 1rem; color: #8b7a6b; font-weight: 400; margin-bottom: 0.8rem; padding-left: 0.5rem; }
 .chapter-item {
-    padding: 0.7rem 0.9rem;
-    border-radius: 0.6rem;
-    cursor: pointer;
-    color: #5a4a3e;
-    font-size: 0.95rem;
-    transition: background 0.15s, color 0.15s;
-    margin-bottom: 0.2rem;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    padding: 0.7rem 0.9rem; border-radius: 0.6rem; cursor: pointer;
+    color: #5a4a3e; font-size: 0.95rem; transition: background 0.15s;
+    margin-bottom: 0.2rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 .chapter-item:hover { background: #f3ece3; }
-.chapter-item.active {
-    background: #5e4b3c;
-    color: #fff;
-}
+.chapter-item.active { background: #5e4b3c; color: #fff; }
 
-/* 正文区 */
 .article-area {
-    background: #fefcf9;
-    border: 1px solid #e9dbce;
-    border-radius: 1rem;
-    padding: 2.5rem 3rem;
+    background: #fefcf9; border: 1px solid #e9dbce;
+    border-radius: 1rem; padding: 2.5rem 3rem;
     box-shadow: 0 4px 12px rgba(0,0,0,0.02);
 }
-@media (max-width: 600px) {
-    .article-area { padding: 1.5rem 1.2rem; }
-}
+@media (max-width: 600px) { .article-area { padding: 1.5rem 1.2rem; } }
 .article-title {
-    font-size: 1.8rem;
-    color: #3f2e22;
-    font-weight: 400;
-    margin-bottom: 0.5rem;
-    letter-spacing: 1px;
-    border-left: 5px solid #b09b89;
-    padding-left: 1rem;
+    font-size: 1.8rem; color: #3f2e22; font-weight: 400;
+    margin-bottom: 0.5rem; letter-spacing: 1px;
+    border-left: 5px solid #b09b89; padding-left: 1rem;
 }
-.article-meta {
-    color: #9b8a7a;
-    font-size: 0.9rem;
-    font-style: italic;
-    margin-bottom: 2rem;
-    padding-left: 1.3rem;
-}
-.article-content {
-    color: #2f241b;
-    font-size: 1.05rem;
-    line-height: 2;
-}
-.article-content p {
-    text-indent: 2em;      /* 首行缩进2字符 */
-    margin-bottom: 1.2rem; /* 段落间空行 */
-}
+.article-meta { color: #9b8a7a; font-size: 0.9rem; font-style: italic; margin-bottom: 2rem; padding-left: 1.3rem; }
+.article-content { color: #2f241b; font-size: 1.05rem; line-height: 2; }
+.article-content p { text-indent: 2em; margin-bottom: 1.2rem; }
 .article-content p:last-child { margin-bottom: 0; }
 
-/* 上下章按钮 */
 .nav-buttons {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 3rem;
-    padding-top: 1.5rem;
-    border-top: 1px dashed #e9dbce;
-    gap: 1rem;
-    flex-wrap: wrap;
+    display: flex; justify-content: space-between;
+    margin-top: 3rem; padding-top: 1.5rem;
+    border-top: 1px dashed #e9dbce; gap: 1rem; flex-wrap: wrap;
 }
 .nav-btn {
-    background: #efe6dd;
-    color: #5e4b3c;
-    border: none;
-    padding: 0.7rem 1.4rem;
-    border-radius: 40px;
-    cursor: pointer;
-    font-size: 0.95rem;
-    font-family: inherit;
-    transition: background 0.2s;
+    background: #efe6dd; color: #5e4b3c; border: none;
+    padding: 0.7rem 1.4rem; border-radius: 40px;
+    cursor: pointer; font-size: 0.95rem; font-family: inherit;
 }
 .nav-btn:hover:not(:disabled) { background: #e0d3c6; }
 .nav-btn:disabled { opacity: 0.4; cursor: not-allowed; }
-
-/* 提示 */
-.loading-tip {
-    text-align: center;
-    padding: 4rem 1rem;
-    color: #b7a89b;
-    font-style: italic;
-}
+.loading-tip { text-align: center; padding: 4rem 1rem; color: #b7a89b; font-style: italic; }
 </style>
 </head>
 <body>
-<div class="container">
 
+<!-- ========== 密码门禁 ========== -->
+<div id="gate" class="gate">
+    <div class="gate-box">
+        <div class="icon">🔒</div>
+        <h2>私人书房</h2>
+        <p>请输入阅读密码</p>
+        <input type="password" id="gatePwd" placeholder="········" autocomplete="off">
+        <button id="gateBtn">进入书房</button>
+        <div id="gateError" class="gate-error"></div>
+        <div style="font-size:0.8rem; color:#b7a89b; margin-top:1.2rem; font-style:italic;">
+            密码获取添加 QQ：1550930440
+        </div>
+    </div>
+</div>
+
+<!-- ========== 主内容 ========== -->
+<div class="container" id="mainContent" style="display:none;">
     <div class="top-bar">
         <a href="index.html" class="back-btn">← 返回书架</a>
         <div class="book-title-top" id="topTitle">加载中...</div>
     </div>
-
     <div class="read-layout">
         <aside class="chapter-list">
             <h3>📖 章节目录</h3>
-            <div id="chapterList">
-                <div class="loading-tip">加载中...</div>
-            </div>
+            <div id="chapterList"><div class="loading-tip">加载中...</div></div>
         </aside>
-
         <main class="article-area" id="articleArea">
             <div class="loading-tip">正在加载正文...</div>
         </main>
     </div>
-
 </div>
 
 <script>
-// ============================================
-// 阅读页逻辑
-// ============================================
+// ============================================================
+// 密码门禁 + 阅读页逻辑
+// ============================================================
 
-let currentBook = null;   // 当前书籍
-let currentChapterIndex = 0; // 当前章节索引
+const READER_PASSWORD = "read";  // ⚠️ 读者密码，改这里
+const PASS_KEY = "novel_pass_ok";
+const PASS_TTL = 24 * 60 * 60 * 1000;
 
-// 页面加载
-window.addEventListener('DOMContentLoaded', init);
+function hasPass() {
+    try {
+        const raw = localStorage.getItem(PASS_KEY);
+        if (!raw) return false;
+        const obj = JSON.parse(raw);
+        if (Date.now() - obj.t > PASS_TTL) return false;
+        return true;
+    } catch(e) { return false; }
+}
+function setPass() {
+    localStorage.setItem(PASS_KEY, JSON.stringify({ t: Date.now() }));
+}
+
+let currentBook = null;
+let currentChapterIndex = 0;
+
+window.addEventListener('DOMContentLoaded', function() {
+    if (hasPass()) {
+        showContent();
+    } else {
+        document.getElementById('gatePwd').focus();
+    }
+});
+
+document.getElementById('gateBtn').onclick = function() {
+    const pwd = document.getElementById('gatePwd').value.trim();
+    if (pwd === READER_PASSWORD) {
+        setPass();
+        showContent();
+    } else {
+        document.getElementById('gateError').textContent = '密码不正确，请重试。';
+        document.getElementById('gatePwd').value = '';
+        document.getElementById('gatePwd').focus();
+    }
+};
+document.getElementById('gatePwd').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') { e.preventDefault(); document.getElementById('gateBtn').click(); }
+});
+
+function showContent() {
+    document.getElementById('gate').style.display = 'none';
+    document.getElementById('mainContent').style.display = 'block';
+    init();
+}
 
 async function init() {
-    // 1. 从 URL 参数里拿到书籍 ID
     const params = new URLSearchParams(window.location.search);
     const bookId = params.get('book');
-
     if (!bookId) {
         document.getElementById('articleArea').innerHTML =
             '<div class="loading-tip">没有指定书籍，请从<a href="index.html">书架</a>进入</div>';
         return;
     }
-
-    // 2. 读取 data.json
     let data;
     try {
         const res = await fetch('data.json?t=' + Date.now());
         if (!res.ok) throw new Error();
         data = await res.json();
     } catch (err) {
-        // 读取失败，用示例数据（和首页一致）
-        data = { books: getDemoBooks() };
+        data = { books: [] };
     }
-
-    // 3. 找到对应书籍
     currentBook = (data.books || []).find(b => b.id === bookId);
     if (!currentBook) {
         document.getElementById('articleArea').innerHTML =
             '<div class="loading-tip">找不到这本书</div>';
         return;
     }
-
-    // 4. 渲染
     document.getElementById('topTitle').textContent = currentBook.title || '未命名';
     document.title = (currentBook.title || '阅读') + ' · 我的书房';
     renderChapterList();
     loadChapter(0);
 }
 
-// 渲染章节目录
+// 过滤：定时未到的章节不显示
+function getVisibleChapters() {
+    const now = new Date();
+    return (currentBook.chapters || []).filter(ch => {
+        if (!ch.isScheduled) return true;
+        return new Date(ch.publishTime) <= now;
+    });
+}
+
 function renderChapterList() {
     const list = document.getElementById('chapterList');
-    const chapters = currentBook.chapters || [];
+    const chapters = getVisibleChapters();
     if (chapters.length === 0) {
         list.innerHTML = '<div class="loading-tip">本书暂无章节</div>';
         return;
@@ -253,19 +241,16 @@ function renderChapterList() {
     `).join('');
 }
 
-// 加载某一章
 function loadChapter(index) {
-    const chapters = currentBook.chapters || [];
+    const chapters = getVisibleChapters();
     if (index < 0 || index >= chapters.length) return;
     currentChapterIndex = index;
     const ch = chapters[index];
 
-    // 高亮目录
     document.querySelectorAll('.chapter-item').forEach((el, i) => {
         el.classList.toggle('active', i === index);
     });
 
-    // 渲染正文
     const paras = (ch.content || '').split('\n')
         .filter(p => p.trim() !== '')
         .map(p => `<p>${escapeHtml(p)}</p>`).join('');
@@ -281,41 +266,9 @@ function loadChapter(index) {
             <button class="nav-btn" onclick="loadChapter(${index+1})" ${index >= chapters.length-1 ? 'disabled' : ''}>下一章 →</button>
         </div>
     `;
-
-    // 滚动到顶部
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// 示例数据（当 data.json 不存在时用，和首页保持一致）
-function getDemoBooks() {
-    return [
-        {
-            id: 'demo1',
-            title: '雨夜来客',
-            author: '未署名',
-            category: '悬疑',
-            description: '一个雨夜，陌生人敲响了木门。那些藏了多年的秘密，正在被一层层揭开……',
-            chapters: [
-                { id: 'c1', title: '第一章 · 雨夜', content: '雨下得很大，敲在瓦片上像是无数细碎的鼓点。\n\n林晚推开那扇吱呀作响的木门时，一股潮湿的霉味迎面扑来。\n\n“有人吗？”她轻声问。声音被雨声吞掉大半，只剩下一点微弱的回响。' },
-                { id: 'c2', title: '第二章 · 旧信', content: '阁楼的木箱里堆满了旧书和信札。\n\n苏晚拂去灰尘，发现箱底压着一封用火漆封口的信。\n\n她小心翼翼地拆开火漆，抽出信纸。上面只写了一行短句：“如果你看到这封信，说明我已经不在你身边了。”' },
-                { id: 'c3', title: '第三章 · 地窖', content: '第三块砖下面，藏着一个铁盒。\n\n林晚的手指在冰冷的砖面上摸索，终于找到了那道几乎看不见的缝隙。\n\n她屏住呼吸，用力一按。' }
-            ]
-        },
-        {
-            id: 'demo2',
-            title: '青山不改',
-            author: '未署名',
-            category: '武侠',
-            description: '十年学剑，下山之日，江湖已变。一个人，一柄剑，走遍山河。',
-            chapters: [
-                { id: 'c1', title: '第一章 · 下山', content: '晨雾未散，少年背剑下山。\n\n师父的话还在耳边：“江湖险恶，切记三思。”\n\n他没有回头。' },
-                { id: 'c2', title: '第二章 · 客栈', content: '客栈里鱼龙混杂。\n\n他选了角落的桌子，要了一碗清汤面。\n\n对面坐着一个戴斗笠的人，从进店到现在，一句话也没说。' }
-            ]
-        }
-    ];
-}
-
-// HTML 转义
 function escapeHtml(s) {
     return String(s).replace(/[&<>"']/g, m => ({
         '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
