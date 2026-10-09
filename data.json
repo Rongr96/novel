@@ -1,20 +1,5 @@
 {
-  "books": [
-    {
-      "id": "book1",
-      "title": "我的第一本书",
-      "author": "你的笔名",
-      "category": "玄幻",
-      "description": "在这里写这本书的简介。",
-      "chapters": [
-        {
-          "id": "ch1",
-          "title": "第一章 · 开端",
-          "content": "在这里写第一章的正文。\n\n空一行代表分段。\n\n每一段会自动首行缩进。"
-        }
-      ]
-    }
-  ],
+  "books": [],
   "settings": {
     "readerPassword": "read",
     "adminPassword": "admin"
