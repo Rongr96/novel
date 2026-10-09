@@ -929,7 +929,7 @@
     }
   ],
   "settings": {
-    "readerPassword": "read",
+    "readerPassword": "123456",
     "adminPassword": "admin"
   }
 }
