@@ -6,163 +6,82 @@
 <title>我的书房 · 小说集</title>
 <style>
 * { margin:0; padding:0; box-sizing:border-box; font-family:'Georgia','宋体',serif; }
-body {
-    background: #f7f3eb;  /* 旧纸色 */
-    min-height: 100vh;
-    color: #2f241b;
-    padding: 1.5rem;
-}
+body { background: #f7f3eb; min-height: 100vh; color: #2f241b; padding: 1.5rem; }
 .container { max-width: 1100px; margin: 0 auto; }
 
-/* 顶部 */
-.site-header {
-    text-align: center;
-    margin-bottom: 2rem;
-    padding-bottom: 1.5rem;
-    border-bottom: 2px solid #e0d3c6;
-}
-.site-header h1 {
-    font-size: 2.4rem;
-    font-weight: 400;
-    color: #3f2e22;
-    letter-spacing: 4px;
-    margin-bottom: 0.4rem;
-}
-.site-header p {
-    color: #9b8a7a;
-    font-style: italic;
-    font-size: 1rem;
-}
-
-/* 搜索框 */
-.search-box {
-    max-width: 480px;
-    margin: 0 auto 2rem;
-    position: relative;
-}
-.search-box input {
-    width: 100%;
-    padding: 0.9rem 1.2rem 0.9rem 3rem;
-    border: 1px solid #d6c7b8;
-    border-radius: 60px;
-    font-size: 1rem;
-    background: #fffcf9;
-    outline: none;
-    color: #2f241b;
-    transition: border 0.2s, box-shadow 0.2s;
-}
-.search-box input:focus {
-    border-color: #b09b89;
-    box-shadow: 0 0 0 3px rgba(176,155,137,0.15);
-}
-.search-box::before {
-    content: "🔍";
-    position: absolute;
-    left: 1.2rem;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 1rem;
-    opacity: 0.5;
-}
-
-/* 书籍网格 */
-.book-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1.5rem;
-}
-
-/* 书籍卡片 */
-.book-card {
-    background: #fefcf9;
-    border: 1px solid #e9dbce;
-    border-radius: 1rem;
+/* 密码门禁 */
+.gate {
+    position: fixed; inset: 0; z-index: 9999;
+    background: #f7f3eb;
+    display: flex; align-items: center; justify-content: center;
     padding: 1.5rem;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.03);
-    cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
-    display: flex;
-    flex-direction: column;
-    gap: 0.8rem;
 }
-.book-card:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 24px rgba(0,0,0,0.08);
-    border-color: #cbb9aa;
+.gate-box {
+    max-width: 400px; width: 100%;
+    background: #fefcf9; border: 1px solid #e9dbce;
+    border-radius: 1.5rem; padding: 2rem;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.06);
+    text-align: center;
 }
-.book-title {
-    font-size: 1.5rem;
-    font-weight: 400;
-    color: #3f2e22;
-    letter-spacing: 1px;
-    border-left: 4px solid #b09b89;
-    padding-left: 0.8rem;
+.gate-box .icon { font-size: 3rem; margin-bottom: 1rem; }
+.gate-box h2 { font-weight: 400; color: #3f2e22; letter-spacing: 2px; margin-bottom: 0.5rem; }
+.gate-box p { color: #8b7a6b; font-size: 0.9rem; font-style: italic; margin-bottom: 1.5rem; }
+.gate-box input {
+    width: 100%; padding: 0.9rem 1rem; border: 1px solid #d6c7b8;
+    border-radius: 60px; font-size: 1rem; background: #fffcf9;
+    outline: none; text-align: center; letter-spacing: 2px;
+    color: #2f241b; margin-bottom: 1rem; font-family: inherit;
 }
-.book-meta {
-    display: flex;
-    gap: 1rem;
-    color: #9b8a7a;
-    font-size: 0.85rem;
-    font-style: italic;
-    padding-left: 0.9rem;
+.gate-box input:focus { border-color: #b09b89; box-shadow: 0 0 0 3px rgba(176,155,137,0.15); }
+.gate-box button {
+    width: 100%; padding: 0.9rem 0;
+    background: #5e4b3c; color: #fff; border: none;
+    border-radius: 60px; font-size: 1rem; letter-spacing: 2px;
+    cursor: pointer; font-family: inherit; transition: background 0.2s;
 }
+.gate-box button:hover { background: #4a3a2e; }
+.gate-error { color: #b35e5e; font-size: 0.85rem; margin-top: 0.5rem; min-height: 1.2rem; font-style: italic; }
+
+/* 主内容 */
+.site-header { text-align: center; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 2px solid #e0d3c6; }
+.site-header h1 { font-size: 2.4rem; font-weight: 400; color: #3f2e22; letter-spacing: 4px; margin-bottom: 0.4rem; }
+.site-header p { color: #9b8a7a; font-style: italic; font-size: 1rem; }
+.search-box { max-width: 480px; margin: 0 auto 2rem; position: relative; }
+.search-box input {
+    width: 100%; padding: 0.9rem 1.2rem 0.9rem 3rem;
+    border: 1px solid #d6c7b8; border-radius: 60px;
+    font-size: 1rem; background: #fffcf9; outline: none;
+    color: #2f241b; transition: border 0.2s, box-shadow 0.2s;
+}
+.search-box input:focus { border-color: #b09b89; box-shadow: 0 0 0 3px rgba(176,155,137,0.15); }
+.search-box::before {
+    content: "🔍"; position: absolute; left: 1.2rem; top: 50%;
+    transform: translateY(-50%); font-size: 1rem; opacity: 0.5;
+}
+.book-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
+.book-card {
+    background: #fefcf9; border: 1px solid #e9dbce; border-radius: 1rem;
+    padding: 1.5rem; box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;
+    display: flex; flex-direction: column; gap: 0.8rem;
+}
+.book-card:hover { transform: translateY(-3px); box-shadow: 0 12px 24px rgba(0,0,0,0.08); border-color: #cbb9aa; }
+.book-title { font-size: 1.5rem; font-weight: 400; color: #3f2e22; letter-spacing: 1px; border-left: 4px solid #b09b89; padding-left: 0.8rem; }
+.book-meta { display: flex; gap: 1rem; color: #9b8a7a; font-size: 0.85rem; font-style: italic; padding-left: 0.9rem; }
 .book-desc {
-    color: #5a4a3e;
-    font-size: 0.95rem;
-    line-height: 1.7;
-    padding-left: 0.9rem;
-    min-height: 3.4rem;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
+    color: #5a4a3e; font-size: 0.95rem; line-height: 1.7; padding-left: 0.9rem;
+    min-height: 3.4rem; display: -webkit-box; -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical; overflow: hidden;
 }
 .book-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-left: 0.9rem;
-    margin-top: 0.5rem;
-    padding-top: 0.8rem;
-    border-top: 1px dashed #e9dbce;
+    display: flex; justify-content: space-between; align-items: center;
+    padding-left: 0.9rem; margin-top: 0.5rem; padding-top: 0.8rem; border-top: 1px dashed #e9dbce;
 }
-.book-category {
-    background: #efe6dd;
-    color: #6b5a4b;
-    font-size: 0.8rem;
-    padding: 0.25rem 0.8rem;
-    border-radius: 40px;
-}
-.book-count {
-    color: #9b8a7a;
-    font-size: 0.85rem;
-}
-
-/* 空状态 */
-.empty-state {
-    text-align: center;
-    padding: 4rem 1rem;
-    color: #b7a89b;
-    font-style: italic;
-}
-.empty-state .icon {
-    font-size: 4rem;
-    margin-bottom: 1rem;
-    opacity: 0.5;
-}
-
-/* 页脚 */
-.site-footer {
-    text-align: center;
-    color: #b7a89b;
-    font-size: 0.85rem;
-    margin-top: 3rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid #e9dbce;
-    letter-spacing: 1px;
-}
-
-/* 响应式 */
+.book-category { background: #efe6dd; color: #6b5a4b; font-size: 0.8rem; padding: 0.25rem 0.8rem; border-radius: 40px; }
+.book-count { color: #9b8a7a; font-size: 0.85rem; }
+.empty-state { text-align: center; padding: 4rem 1rem; color: #b7a89b; font-style: italic; }
+.empty-state .icon { font-size: 4rem; margin-bottom: 1rem; opacity: 0.5; }
+.site-footer { text-align: center; color: #b7a89b; font-size: 0.85rem; margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid #e9dbce; letter-spacing: 1px; }
 @media (max-width: 600px) {
     body { padding: 1rem; }
     .site-header h1 { font-size: 1.8rem; letter-spacing: 2px; }
@@ -171,145 +90,155 @@ body {
 </style>
 </head>
 <body>
-<div class="container">
 
+<!-- ========== 密码门禁 ========== -->
+<div id="gate" class="gate">
+    <div class="gate-box">
+        <div class="icon">🔒</div>
+        <h2>私人书房</h2>
+        <p>请输入阅读密码</p>
+        <input type="password" id="gatePwd" placeholder="········" autocomplete="off">
+        <button id="gateBtn">进入书房</button>
+        <div id="gateError" class="gate-error"></div>
+        <div style="font-size:0.8rem; color:#b7a89b; margin-top:1.2rem; font-style:italic;">
+            密码获取添加 QQ：1550930440
+        </div>
+    </div>
+</div>
+
+<!-- ========== 主内容 ========== -->
+<div class="container" id="mainContent" style="display:none;">
     <header class="site-header">
         <h1>✎ 我的书房</h1>
         <p>—— 那些藏在字里行间的故事 ——</p>
     </header>
-
     <div class="search-box">
         <input type="text" id="searchInput" placeholder="搜索书名、作者、简介或章节内容..." autocomplete="off">
     </div>
-
-    <div id="bookGrid" class="book-grid">
-        <!-- 书籍卡片会由 JS 自动生成 -->
-    </div>
-
+    <div id="bookGrid" class="book-grid"></div>
     <div id="emptyState" class="empty-state" style="display:none;">
         <div class="icon">📚</div>
         <p>还没有书，或者没有匹配的结果</p>
     </div>
-
-    <footer class="site-footer">
-        —— 只属于你的故事 ——
-    </footer>
-
+    <footer class="site-footer">—— 只属于你的故事 ——</footer>
 </div>
 
 <script>
-// ============================================
-// 读者首页逻辑
-// 所有书籍数据从 data.json 读取
-// ============================================
+// ============================================================
+// 密码门禁 + 首页逻辑
+// ============================================================
 
-// 全局书籍数据
+const READER_PASSWORD = "read";  // ⚠️ 读者密码，改这里
+const PASS_KEY = "novel_pass_ok";
+const PASS_TTL = 24 * 60 * 60 * 1000;  // 24小时有效
+
+// 检查通行证
+function hasPass() {
+    try {
+        const raw = localStorage.getItem(PASS_KEY);
+        if (!raw) return false;
+        const obj = JSON.parse(raw);
+        if (Date.now() - obj.t > PASS_TTL) return false;
+        return true;
+    } catch(e) { return false; }
+}
+
+// 写通行证
+function setPass() {
+    localStorage.setItem(PASS_KEY, JSON.stringify({ t: Date.now() }));
+}
+
+// 页面初始化
+window.addEventListener('DOMContentLoaded', function() {
+    if (hasPass()) {
+        showContent();
+    } else {
+        // 保持 gate 显示
+        document.getElementById('gatePwd').focus();
+    }
+});
+
+// 门禁按钮
+document.getElementById('gateBtn').onclick = function() {
+    const pwd = document.getElementById('gatePwd').value.trim();
+    if (pwd === READER_PASSWORD) {
+        setPass();
+        showContent();
+    } else {
+        document.getElementById('gateError').textContent = '密码不正确，请重试。';
+        document.getElementById('gatePwd').value = '';
+        document.getElementById('gatePwd').focus();
+    }
+};
+document.getElementById('gatePwd').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') { e.preventDefault(); document.getElementById('gateBtn').click(); }
+});
+
+function showContent() {
+    document.getElementById('gate').style.display = 'none';
+    document.getElementById('mainContent').style.display = 'block';
+    loadBooks();
+}
+
+// ========== 书籍数据 ==========
 let allBooks = [];
 
-// 页面加载时读取数据
-window.addEventListener('DOMContentLoaded', loadBooks);
-
-// 从 data.json 加载数据
 async function loadBooks() {
     try {
-        // 加时间戳避免浏览器缓存
         const res = await fetch('data.json?t=' + Date.now());
-        if (!res.ok) throw new Error('数据文件不存在');
+        if (!res.ok) throw new Error();
         const data = await res.json();
         allBooks = data.books || [];
     } catch (err) {
-        console.warn('读取数据失败，使用示例数据', err);
-        // 如果 data.json 不存在，用一份示例数据，方便你预览效果
-        allBooks = [
-            {
-                id: 'demo1',
-                title: '雨夜来客',
-                author: '未署名',
-                category: '悬疑',
-                description: '一个雨夜，陌生人敲响了木门。那些藏了多年的秘密，正在被一层层揭开……',
-                chapters: [
-                    { id: 'c1', title: '第一章 · 雨夜', content: '雨下得很大……' },
-                    { id: 'c2', title: '第二章 · 旧信', content: '阁楼的木箱里……' },
-                    { id: 'c3', title: '第三章 · 地窖', content: '第三块砖下面……' }
-                ]
-            },
-            {
-                id: 'demo2',
-                title: '青山不改',
-                author: '未署名',
-                category: '武侠',
-                description: '十年学剑，下山之日，江湖已变。一个人，一柄剑，走遍山河。',
-                chapters: [
-                    { id: 'c1', title: '第一章 · 下山', content: '晨雾未散……' },
-                    { id: 'c2', title: '第二章 · 客栈', content: '客栈里鱼龙混杂……' }
-                ]
-            }
-        ];
+        allBooks = [];
     }
     renderBooks(allBooks);
 }
 
-// 渲染书籍卡片
 function renderBooks(books) {
     const grid = document.getElementById('bookGrid');
     const empty = document.getElementById('emptyState');
-
     if (!books || books.length === 0) {
         grid.innerHTML = '';
         empty.style.display = 'block';
         return;
     }
     empty.style.display = 'none';
-
     grid.innerHTML = books.map(book => {
-        const chapterCount = (book.chapters || []).length;
+        const count = (book.chapters || []).length;
         return `
             <div class="book-card" onclick="openBook('${book.id}')">
                 <div class="book-title">${escapeHtml(book.title || '无题')}</div>
-                <div class="book-meta">
-                    <span>✍️ ${escapeHtml(book.author || '未署名')}</span>
-                </div>
+                <div class="book-meta"><span>✍️ ${escapeHtml(book.author || '未署名')}</span></div>
                 <div class="book-desc">${escapeHtml(book.description || '暂无简介')}</div>
                 <div class="book-footer">
                     <span class="book-category">${escapeHtml(book.category || '未分类')}</span>
-                    <span class="book-count">📖 ${chapterCount} 章</span>
+                    <span class="book-count">📖 ${count} 章</span>
                 </div>
             </div>
         `;
     }).join('');
 }
 
-// 点击书籍，跳转到阅读页
 function openBook(bookId) {
-    // 下一章会做 read.html，现在先弹提示
-    // 之后会改成：window.location.href = 'read.html?book=' + bookId;
-   window.location.href = 'read.html?book=' + bookId;
+    window.location.href = 'read.html?book=' + bookId;
 }
 
-// 搜索功能
 document.getElementById('searchInput').addEventListener('input', function(e) {
-    const keyword = e.target.value.trim().toLowerCase();
-    if (!keyword) {
-        renderBooks(allBooks);
-        return;
-    }
+    const kw = e.target.value.trim().toLowerCase();
+    if (!kw) { renderBooks(allBooks); return; }
     const filtered = allBooks.filter(book => {
-        // 搜索书名、作者、简介
-        const inMeta = 
-            (book.title || '').toLowerCase().includes(keyword) ||
-            (book.author || '').toLowerCase().includes(keyword) ||
-            (book.description || '').toLowerCase().includes(keyword);
-        // 搜索章节正文
-        const inChapters = (book.chapters || []).some(ch =>
-            (ch.title || '').toLowerCase().includes(keyword) ||
-            (ch.content || '').toLowerCase().includes(keyword)
-        );
+        const inMeta = (book.title||'').toLowerCase().includes(kw)
+                    || (book.author||'').toLowerCase().includes(kw)
+                    || (book.description||'').toLowerCase().includes(kw);
+        const inChapters = (book.chapters||[]).some(ch =>
+            (ch.title||'').toLowerCase().includes(kw)
+            || (ch.content||'').toLowerCase().includes(kw));
         return inMeta || inChapters;
     });
     renderBooks(filtered);
 });
 
-// HTML 转义，防止 XSS
 function escapeHtml(s) {
     return String(s).replace(/[&<>"']/g, m => ({
         '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
