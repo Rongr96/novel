@@ -767,12 +767,20 @@ $('createChapterBtn').onclick = async function() {
 // ---------- 删除书籍 ----------
 window.deleteBook = async function(index) {
     if (!confirm('确定删除这本书及其所有章节吗？（不会自动删文件）')) return;
-    const removed = state.books.splice(index, 1)[0];
+    const removed = state.books[index];
+    // 用新数组替换，避免 splice 留下的问题
+    const newBooks = state.books.filter((_, i) => i !== index);
+    state.books = newBooks;
     const ok = await saveBooks();
-    if (ok) { toast('已从书单移除'); renderBookList(); renderBookSelects(); }
-    else state.books.splice(index, 0, removed);
+    if (ok) {
+        toast('已从书单移除');
+        renderBookList();
+        renderBookSelects();
+    } else {
+        // 保存失败，回滚
+        state.books = [...newBooks.slice(0, index), removed, ...newBooks.slice(index)];
+    }
 };
-
 // ---------- 章节操作 ----------
 window.editChapter = async function(index) {
     const book = state.books.find(b => b.id === $('cmBookSelect').value);
