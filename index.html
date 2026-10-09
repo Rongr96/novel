@@ -153,13 +153,13 @@ body { background: #f7f3eb; min-height: 100vh; color: #2f241b; padding: 1.5rem; 
 
 <script>
 // ============================================================
-// 密码门禁 + 首页逻辑 + 最近阅读
+// 新版首页：从 books.json 读列表，从 book_xxx.json 读章节
 // ============================================================
 
-let READER_PASSWORD = "read";
+let READER_PASSWORD = "123456";
 const PASS_KEY = "novel_pass_ok";
 const PASS_TTL = 24 * 60 * 60 * 1000;
-const HISTORY_KEY = "novel_read_history"; // 阅读历史
+const HISTORY_KEY = "novel_read_history";
 
 function hasPass() {
     try {
@@ -174,7 +174,6 @@ function setPass() {
     localStorage.setItem(PASS_KEY, JSON.stringify({ t: Date.now() }));
 }
 
-// 读取阅读历史
 function getHistory() {
     try {
         const raw = localStorage.getItem(HISTORY_KEY);
@@ -182,9 +181,14 @@ function getHistory() {
     } catch(e) { return {}; }
 }
 
+// 全局数据
+let allBooks = [];
+let bookChaptersCache = {}; // 缓存每本书的章节数（避免重复请求）
+
 window.addEventListener('DOMContentLoaded', async function() {
+    // 从 books.json 读密码
     try {
-        const res = await fetch('data.json?t=' + Date.now());
+        const res = await fetch('books.json?t=' + Date.now());
         if (res.ok) {
             const data = await res.json();
             if (data.settings && data.settings.readerPassword) {
@@ -221,29 +225,39 @@ function showContent() {
     loadBooks();
 }
 
-// ========== 书籍数据 ==========
-let allBooks = [];
-
 async function loadBooks() {
     try {
-        const res = await fetch('data.json?t=' + Date.now());
+        const res = await fetch('books.json?t=' + Date.now());
         if (!res.ok) throw new Error();
         const data = await res.json();
         allBooks = data.books || [];
     } catch (err) {
         allBooks = [];
     }
+    // 并行读取每本书的章节数
+    await Promise.all(allBooks.map(async (book) => {
+        if (!book.dataFile) { bookChaptersCache[book.id] = 0; return; }
+        try {
+            const res = await fetch(book.dataFile + '?t=' + Date.now());
+            if (res.ok) {
+                const d = await res.json();
+                bookChaptersCache[book.id] = (d.chapters || []).length;
+            } else {
+                bookChaptersCache[book.id] = 0;
+            }
+        } catch(e) {
+            bookChaptersCache[book.id] = 0;
+        }
+    }));
     renderBooks(allBooks);
     renderRecent();
 }
 
-// 渲染最近阅读
 function renderRecent() {
     const history = getHistory();
     const section = document.getElementById('recentSection');
     const list = document.getElementById('recentList');
 
-    // 把历史里的书按访问时间倒序
     const items = Object.values(history)
         .filter(h => h && h.bookId)
         .sort((a, b) => b.t - a.t)
@@ -280,7 +294,7 @@ function renderBooks(books) {
     }
     empty.style.display = 'none';
     grid.innerHTML = books.map(book => {
-        const count = (book.chapters || []).length;
+        const count = bookChaptersCache[book.id] || 0;
         return `
             <div class="book-card" onclick="openBook('${book.id}')">
                 <div class="book-title">${escapeHtml(book.title || '无题')}</div>
@@ -306,10 +320,7 @@ document.getElementById('searchInput').addEventListener('input', function(e) {
         const inMeta = (book.title||'').toLowerCase().includes(kw)
                     || (book.author||'').toLowerCase().includes(kw)
                     || (book.description||'').toLowerCase().includes(kw);
-        const inChapters = (book.chapters||[]).some(ch =>
-            (ch.title||'').toLowerCase().includes(kw)
-            || (ch.content||'').toLowerCase().includes(kw));
-        return inMeta || inChapters;
+        return inMeta;
     });
     renderBooks(filtered);
 });
