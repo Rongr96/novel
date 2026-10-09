@@ -528,40 +528,119 @@ document.querySelectorAll('.tab').forEach(tab => {
 });
 
 // ---------- 渲染 ----------
+let expandedBooks = {};  // 记录哪些书展开了
+
 function renderBookList() {
     const box = $('bookList');
     if (state.books.length === 0) {
         box.innerHTML = '<div class="empty">暂无书籍，去「发表新文」创建第一本吧</div>';
         return;
     }
-    box.innerHTML = state.books.map((b, i) => `
-        <div class="item">
-            <div class="item-info">
-                <div class="item-title">${escapeHtml(b.title || '无题')}</div>
-                <div class="item-meta">
-                    ${escapeHtml(b.category || '')} · ${escapeHtml(b.author || '未署名')} ·
-                    ${escapeHtml(b.dataFile || '无文件')} ·
-                    创建于 ${escapeHtml(b.createTime || '未知')}
+    box.innerHTML = state.books.map((b, i) => {
+        const isOpen = expandedBooks[b.id];
+        return `
+        <div class="item" style="flex-direction:column; align-items:stretch;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem;">
+                <div class="item-info" style="cursor:pointer;" onclick="toggleBook('${b.id}')">
+                    <div class="item-title">
+                        ${isOpen ? '▾' : '▸'} ${escapeHtml(b.title || '无题')}
+                    </div>
+                    <div class="item-meta">
+                        ${escapeHtml(b.category || '')} · ${escapeHtml(b.author || '未署名')} ·
+                        ${escapeHtml(b.dataFile || '无文件')} ·
+                        创建于 ${escapeHtml(b.createTime || '未知')}
+                    </div>
+                </div>
+                <div class="item-actions">
+                    <button class="btn btn-small" onclick="toggleBook('${b.id}')">${isOpen ? '收起' : '展开章节'}</button>
+                    <button class="btn btn-small btn-danger" onclick="deleteBook(${i})">删除</button>
                 </div>
             </div>
-            <div class="item-actions">
-                <button class="btn btn-small" onclick="deleteBook(${i})">删除</button>
-            </div>
+            ${isOpen ? `<div id="book-chapters-${b.id}" style="margin-top:1rem; padding-top:1rem; border-top:1px dashed #e9dbce;"><div class="empty">加载中...</div></div>` : ''}
         </div>
-    `).join('');
-}
+        `;
+    }).join('');
 
-function renderBookSelects() {
-    const options = state.books.length === 0
-        ? '<option value="">（还没有书）</option>'
-        : state.books.map(b => `<option value="${b.id}">${escapeHtml(b.title)}</option>`).join('');
-    ['ncBookSelect', 'cmBookSelect', 'biBookSelect'].forEach(id => {
-        const el = $(id);
-        const old = el.value;
-        el.innerHTML = options;
-        if (old) el.value = old;
+    // 展开的书自动加载章节
+    state.books.forEach(b => {
+        if (expandedBooks[b.id]) {
+            loadBookChaptersInline(b.id);
+        }
     });
 }
+
+// 展开/收起某本书
+window.toggleBook = function(bookId) {
+    expandedBooks[bookId] = !expandedBooks[bookId];
+    renderBookList();
+};
+
+// 加载某本书的章节，显示在书籍列表里
+async function loadBookChaptersInline(bookId) {
+    const book = state.books.find(b => b.id === bookId);
+    if (!book) return;
+    const box = document.getElementById('book-chapters-' + bookId);
+    if (!box) return;
+
+    const bookData = await loadBookData(book);
+    const chapters = bookData.chapters || [];
+    if (chapters.length === 0) {
+        box.innerHTML = '<div class="empty">本书暂无章节</div>';
+        return;
+    }
+    box.innerHTML = chapters.map((c, i) => {
+        const isScheduled = c.isScheduled && new Date(c.publishTime) > new Date();
+        const badge = isScheduled
+            ? '<span class="badge badge-scheduled">定时中</span>'
+            : '<span class="badge badge-live">已发布</span>';
+        return `
+            <div class="item" style="margin-bottom:0.5rem;">
+                <div class="item-info">
+                    <div class="item-title">${escapeHtml(c.title || '无题')} ${badge}</div>
+                    <div class="item-meta">📅 ${escapeHtml(c.publishTime || '未设置')}</div>
+                </div>
+                <div class="item-actions">
+                    <button class="btn btn-small" onclick="editChapterById('${book.id}', ${i})">编辑</button>
+                    <button class="btn btn-small btn-danger" onclick="deleteChapterById('${book.id}', ${i})">删除</button>
+                </div>
+            </div>
+        `;
+    }).join('');
+}
+
+// 通过 bookId 编辑章节（不依赖章节管理下拉框）
+window.editChapterById = async function(bookId, index) {
+    const book = state.books.find(b => b.id === bookId);
+    if (!book) return;
+    const bookData = await loadBookData(book);
+    const ch = bookData.chapters[index];
+
+    const newTitle = prompt('章节标题', ch.title || '');
+    if (newTitle === null) return;
+    const newContent = prompt('正文', ch.content || '');
+    if (newContent === null) return;
+    const newTime = prompt('发表时间（2023-05-12 10:00）', ch.publishTime || '');
+    if (newTime === null) return;
+
+    ch.title = newTitle;
+    ch.content = newContent;
+    ch.publishTime = newTime;
+
+    const ok = await saveBookData(book, bookData);
+    if (ok) { toast('已保存'); renderBookList(); }
+};
+
+// 通过 bookId 删除章节
+window.deleteChapterById = async function(bookId, index) {
+    const book = state.books.find(b => b.id === bookId);
+    if (!book) return;
+    if (!confirm('确定删除这一章吗？')) return;
+    const bookData = await loadBookData(book);
+    const removed = bookData.chapters.splice(index, 1)[0];
+    const ok = await saveBookData(book, bookData);
+    if (ok) { toast('已删除'); renderBookList(); }
+    else bookData.chapters.splice(index, 0, removed);
+};
 
 async function renderChapterList() {
     const box = $('chapterList');
