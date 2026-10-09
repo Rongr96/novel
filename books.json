@@ -12,6 +12,15 @@
       "description": "在这里粘贴你原本的书籍简介",
       "createTime": "2023-05-09 17:01",
       "dataFile": "book_b1.json"
+    },
+    {
+      "id": "b_mv0uv1s16ar4",
+      "title": "测试",
+      "author": "test",
+      "category": "BL",
+      "description": "",
+      "createTime": "2026-10-09 19:01",
+      "dataFile": "book_b_mv0uv1s16ar4.json"
     }
   ]
 }
