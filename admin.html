@@ -9,7 +9,6 @@
 body { background:#f7f3eb; min-height:100vh; color:#2f241b; padding:1.5rem; }
 .container { max-width:1200px; margin:0 auto; }
 
-/* 顶部 */
 .top-bar {
     display:flex; justify-content:space-between; align-items:center;
     padding-bottom:1rem; margin-bottom:1.5rem;
@@ -18,7 +17,6 @@ body { background:#f7f3eb; min-height:100vh; color:#2f241b; padding:1.5rem; }
 .top-bar h1 { font-size:1.6rem; font-weight:400; letter-spacing:2px; color:#3f2e22; }
 .top-actions { display:flex; gap:0.6rem; flex-wrap:wrap; }
 
-/* 通用按钮 */
 .btn {
     background:#efe6dd; color:#5e4b3c; border:none;
     padding:0.6rem 1.2rem; border-radius:40px; cursor:pointer;
@@ -33,7 +31,6 @@ body { background:#f7f3eb; min-height:100vh; color:#2f241b; padding:1.5rem; }
 .btn-small { padding:0.4rem 0.9rem; font-size:0.85rem; }
 .btn:disabled { opacity:0.5; cursor:not-allowed; }
 
-/* 登录区 */
 .login-box {
     max-width:420px; margin:3rem auto; background:#fefcf9;
     border:1px solid #e9dbce; border-radius:1.5rem;
@@ -41,7 +38,7 @@ body { background:#f7f3eb; min-height:100vh; color:#2f241b; padding:1.5rem; }
 }
 .login-box h2 { font-weight:400; text-align:center; margin-bottom:1.5rem; color:#3f2e22; letter-spacing:2px; }
 .login-box label { display:block; font-size:0.85rem; color:#8b7a6b; margin-bottom:0.4rem; }
-.login-box input, .login-box textarea {
+.login-box input {
     width:100%; padding:0.8rem 1rem; border:1px solid #d6c7b8;
     border-radius:0.6rem; font-size:0.95rem; background:#fffcf9;
     outline:none; font-family:inherit; margin-bottom:1rem; color:#2f241b;
@@ -49,10 +46,8 @@ body { background:#f7f3eb; min-height:100vh; color:#2f241b; padding:1.5rem; }
 .login-box input:focus { border-color:#b09b89; }
 .login-box .tip { font-size:0.8rem; color:#b7a89b; margin-top:0.5rem; text-align:center; }
 
-/* 主区域 */
 .main-area { display:none; }
 
-/* 标签导航 */
 .tabs {
     display:flex; gap:0.3rem; flex-wrap:wrap;
     margin-bottom:1.5rem; border-bottom:1px solid #e9dbce; padding-bottom:0.5rem;
@@ -66,7 +61,6 @@ body { background:#f7f3eb; min-height:100vh; color:#2f241b; padding:1.5rem; }
 .tab:hover { background:#f3ece3; }
 .tab.active { background:#5e4b3c; color:#fff; }
 
-/* 面板 */
 .panel { display:none; }
 .panel.active { display:block; }
 
@@ -76,7 +70,6 @@ body { background:#f7f3eb; min-height:100vh; color:#2f241b; padding:1.5rem; }
 }
 .card h3 { font-weight:400; margin-bottom:1rem; color:#3f2e22; letter-spacing:1px; }
 
-/* 表单 */
 .form-row { display:flex; gap:1rem; flex-wrap:wrap; margin-bottom:1rem; }
 .form-group { flex:1; min-width:200px; }
 .form-group label { display:block; font-size:0.85rem; color:#8b7a6b; margin-bottom:0.4rem; }
@@ -90,7 +83,6 @@ body { background:#f7f3eb; min-height:100vh; color:#2f241b; padding:1.5rem; }
 }
 .form-group textarea { min-height:120px; resize:vertical; line-height:1.7; }
 
-/* 编辑器工具栏 */
 .toolbar {
     display:flex; gap:0.4rem; flex-wrap:wrap;
     margin-bottom:0.6rem; padding:0.6rem;
@@ -104,7 +96,6 @@ body { background:#f7f3eb; min-height:100vh; color:#2f241b; padding:1.5rem; }
 }
 .toolbar button:hover { background:#e0d3c6; }
 
-/* 章节列表 */
 .item-list { display:flex; flex-direction:column; gap:0.6rem; }
 .item {
     background:#fefcf9; border:1px solid #e9dbce;
@@ -117,7 +108,6 @@ body { background:#f7f3eb; min-height:100vh; color:#2f241b; padding:1.5rem; }
 .item-meta { font-size:0.8rem; color:#9b8a7a; margin-top:0.2rem; font-style:italic; }
 .item-actions { display:flex; gap:0.4rem; flex-wrap:wrap; }
 
-/* 状态标签 */
 .badge {
     display:inline-block; font-size:0.75rem;
     padding:0.15rem 0.6rem; border-radius:40px; margin-left:0.4rem;
@@ -125,7 +115,6 @@ body { background:#f7f3eb; min-height:100vh; color:#2f241b; padding:1.5rem; }
 .badge-live { background:#d7ebd7; color:#3a7a3a; }
 .badge-scheduled { background:#f3e2c7; color:#8a6b2e; }
 
-/* 提示消息 */
 .toast {
     position:fixed; top:1.5rem; left:50%; transform:translateX(-50%);
     background:#5e4b3c; color:#fff; padding:0.9rem 1.6rem;
@@ -136,14 +125,7 @@ body { background:#f7f3eb; min-height:100vh; color:#2f241b; padding:1.5rem; }
 .toast.show { opacity:1; transform:translateX(-50%) translateY(0.3rem); }
 .toast.error { background:#b35e5e; }
 
-/* 空状态 */
 .empty { text-align:center; padding:2.5rem 1rem; color:#b7a89b; font-style:italic; }
-
-/* 密码页脚提示 */
-.pwd-hint {
-    font-size:0.85rem; color:#9b8a7a; text-align:center;
-    margin-top:1rem; font-style:italic;
-}
 
 @media (max-width:600px) {
     body { padding:0.8rem; }
@@ -157,7 +139,6 @@ body { background:#f7f3eb; min-height:100vh; color:#2f241b; padding:1.5rem; }
 <body>
 <div class="container">
 
-    <!-- 顶部 -->
     <div class="top-bar">
         <h1>⚙️ 创作管理后台</h1>
         <div class="top-actions">
@@ -166,7 +147,7 @@ body { background:#f7f3eb; min-height:100vh; color:#2f241b; padding:1.5rem; }
         </div>
     </div>
 
-    <!-- ========== 登录区 ========== -->
+    <!-- 登录区 -->
     <div id="loginBox" class="login-box">
         <h2>🔐 管理员登录</h2>
         <label>管理员密码</label>
@@ -180,7 +161,7 @@ body { background:#f7f3eb; min-height:100vh; color:#2f241b; padding:1.5rem; }
         </div>
     </div>
 
-    <!-- ========== 主区域 ========== -->
+    <!-- 主区域 -->
     <div id="mainArea" class="main-area">
 
         <div class="tabs">
@@ -192,7 +173,7 @@ body { background:#f7f3eb; min-height:100vh; color:#2f241b; padding:1.5rem; }
             <button class="tab" data-tab="settings">⚙️ 设置</button>
         </div>
 
-        <!-- ========= 书籍管理 ========= -->
+        <!-- 书籍管理 -->
         <div id="panel-books" class="panel active">
             <div class="card">
                 <h3>所有书籍</h3>
@@ -202,7 +183,7 @@ body { background:#f7f3eb; min-height:100vh; color:#2f241b; padding:1.5rem; }
             </div>
         </div>
 
-        <!-- ========= 发表新文 ========= -->
+        <!-- 发表新文 -->
         <div id="panel-newBook" class="panel">
             <div class="card">
                 <h3>📝 发表新文</h3>
@@ -238,7 +219,7 @@ body { background:#f7f3eb; min-height:100vh; color:#2f241b; padding:1.5rem; }
             </div>
         </div>
 
-        <!-- ========= 新建章节 ========= -->
+        <!-- 新建章节 -->
         <div id="panel-newChapter" class="panel">
             <div class="card">
                 <h3>✍️ 新建章节</h3>
@@ -277,7 +258,7 @@ body { background:#f7f3eb; min-height:100vh; color:#2f241b; padding:1.5rem; }
             </div>
         </div>
 
-        <!-- ========= 章节管理 ========= -->
+        <!-- 章节管理 -->
         <div id="panel-chapters" class="panel">
             <div class="card">
                 <h3>📚 章节管理</h3>
@@ -291,7 +272,7 @@ body { background:#f7f3eb; min-height:100vh; color:#2f241b; padding:1.5rem; }
             </div>
         </div>
 
-        <!-- ========= 批量导入 ========= -->
+        <!-- 批量导入 -->
         <div id="panel-batch" class="panel">
             <div class="card">
                 <h3>📥 批量导入章节</h3>
@@ -305,7 +286,7 @@ body { background:#f7f3eb; min-height:100vh; color:#2f241b; padding:1.5rem; }
                 </div>
                 <div class="form-row">
                     <div class="form-group">
-                        <label>每章间隔（分钟，模拟连载时间）</label>
+                        <label>每章间隔（分钟）</label>
                         <input type="number" id="biInterval" value="1440" min="0">
                     </div>
                     <div class="form-group">
@@ -314,13 +295,10 @@ body { background:#f7f3eb; min-height:100vh; color:#2f241b; padding:1.5rem; }
                     </div>
                 </div>
                 <button id="batchImportBtn" class="btn btn-primary">开始导入</button>
-                <div class="tip" style="font-size:0.8rem; color:#b7a89b; margin-top:0.8rem;">
-                    每章间隔 1440 分钟 = 1 天。想一次性全发就填 0。
-                </div>
             </div>
         </div>
 
-        <!-- ========= 设置 ========= -->
+        <!-- 设置 -->
         <div id="panel-settings" class="panel">
             <div class="card">
                 <h3>⚙️ 设置</h3>
@@ -344,21 +322,21 @@ body { background:#f7f3eb; min-height:100vh; color:#2f241b; padding:1.5rem; }
 <div id="toast" class="toast"></div>
 <script>
 // ============================================================
-// 创作管理后台逻辑
+// 新版管理后台：一本书一个文件
 // ============================================================
 
-// ---------- 全局状态 ----------
+const REPO = 'Rongr96/novel';
+const BOOKS_API = `https://api.github.com/repos/${REPO}/contents/books.json`;
+
 let state = {
     token: '',
     books: [],
     settings: { readerPassword: 'read', adminPassword: 'admin' },
-    currentBookId: null,  // 章节管理当前选中的书
-    sha: ''               // data.json 的版本号，保存时必须带
+    currentBookId: null,
+    booksSha: '',      // books.json 的 sha
+    bookShaCache: {}   // 每本书 dataFile 的 sha
 };
 
-const API_BASE = 'https://api.github.com/repos/Rongr96/novel/contents/data.json';
-
-// ---------- 工具函数 ----------
 function $(id){ return document.getElementById(id); }
 
 function toast(msg, isError) {
@@ -375,7 +353,6 @@ function escapeHtml(s) {
     }[m]));
 }
 
-// 把 Date 转成 YYYY-MM-DDTHH:MM 供 datetime-local 用
 function toLocalInput(d) {
     const date = new Date(d);
     const pad = n => String(n).padStart(2, '0');
@@ -383,33 +360,26 @@ function toLocalInput(d) {
         + 'T' + pad(date.getHours()) + ':' + pad(date.getMinutes());
 }
 
-// 生成唯一 ID
 function uid(prefix) {
     return prefix + '_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
 }
 
-// ---------- 登录相关 ----------
+// ---------- 登录 ----------
 $('loginBtn').onclick = async function() {
     const pwd = $('adminPwd').value.trim();
     const token = $('tokenInput').value.trim();
-
     if (!pwd) return toast('请输入管理员密码', true);
     if (!token) return toast('请输入 GitHub Token', true);
 
-    // 先存起来，用于拉取数据时判断
     state.token = token;
-
-    // 拉取 data.json，验证密码和 Token 是否有效
-    const ok = await loadData();
+    const ok = await loadBooks();
     if (!ok) return;
 
     if (pwd !== state.settings.adminPassword) {
         return toast('管理员密码错误', true);
     }
 
-    // 登录成功
-    state.token = token;
-    localStorage.setItem('novel_token', token); // 可选：记住 token
+    localStorage.setItem('novel_token', token);
     $('loginBox').style.display = 'none';
     $('mainArea').style.display = 'block';
     $('logoutBtn').style.display = 'inline-flex';
@@ -428,84 +398,116 @@ $('logoutBtn').onclick = function() {
     toast('已退出');
 };
 
-// 页面加载时如果浏览器里存过 token，自动填上
 window.addEventListener('DOMContentLoaded', function() {
     const saved = localStorage.getItem('novel_token');
     if (saved) $('tokenInput').value = saved;
-    // 默认时间填现在
     const now = toLocalInput(new Date());
     $('nbCreateTime').value = now;
     $('ncPublishTime').value = now;
     $('biStartTime').value = now;
 });
 
+// ---------- GitHub API 工具 ----------
+async function ghGet(path) {
+    const res = await fetch(`https://api.github.com/repos/${REPO}/contents/${path}?t=${Date.now()}`, {
+        headers: { 'Authorization': 'token ' + state.token }
+    });
+    if (res.status === 404) return null;
+    if (res.status === 401) { toast('Token 无效或已过期', true); return null; }
+    if (!res.ok) { toast('读取失败：' + res.status, true); return null; }
+    const json = await res.json();
+    const content = decodeURIComponent(escape(atob(json.content.replace(/\n/g, ''))));
+    return { data: JSON.parse(content), sha: json.sha };
+}
+
+async function ghPut(path, dataObj, sha, commitMsg) {
+    const content = btoa(unescape(encodeURIComponent(JSON.stringify(dataObj, null, 2))));
+    const body = {
+        message: commitMsg || ('更新 ' + path + ' ' + new Date().toISOString()),
+        content: content
+    };
+    if (sha) body.sha = sha;
+
+    const res = await fetch(`https://api.github.com/repos/${REPO}/contents/${path}`, {
+        method: 'PUT',
+        headers: {
+            'Authorization': 'token ' + state.token,
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+    });
+    if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.message || ('HTTP ' + res.status));
+    }
+    const json = await res.json();
+    return json.content.sha;
+}
+
+// 带重试的保存
+async function saveWithRetry(path, dataObj, sha, commitMsg, maxRetry = 3) {
+    let lastErr;
+    for (let i = 0; i < maxRetry; i++) {
+        try {
+            const newSha = await ghPut(path, dataObj, sha, commitMsg);
+            return newSha;
+        } catch (e) {
+            lastErr = e;
+            if (i < maxRetry - 1) await new Promise(r => setTimeout(r, 2000));
+        }
+    }
+    throw lastErr;
+}
+
 // ---------- 数据读写 ----------
-async function loadData() {
-    try {
-        const res = await fetch(API_BASE + '?t=' + Date.now(), {
-            headers: { 'Authorization': 'token ' + state.token }
-        });
-        if (res.status === 401) {
-            toast('Token 无效或已过期', true);
-            return false;
-        }
-        if (res.status === 404) {
-            // 文件不存在，初始化一份
-            state.books = [];
-            state.settings = { readerPassword: 'read', adminPassword: 'admin' };
-            state.sha = '';
-            return true;
-        }
-        if (!res.ok) {
-            toast('读取数据失败：' + res.status, true);
-            return false;
-        }
-        const json = await res.json();
-        // GitHub API 返回的是 base64 编码的内容
-        const content = decodeURIComponent(escape(atob(json.content.replace(/\n/g, ''))));
-        const data = JSON.parse(content);
-        state.books = data.books || [];
-        state.settings = data.settings || { readerPassword: 'read', adminPassword: 'admin' };
-        state.sha = json.sha;
+async function loadBooks() {
+    const result = await ghGet('books.json');
+    if (!result) {
+        // 文件不存在，初始化
+        state.books = [];
+        state.settings = { readerPassword: 'read', adminPassword: 'admin' };
+        state.booksSha = '';
         return true;
-    } catch (err) {
-        console.error(err);
-        toast('网络错误，无法连接 GitHub', true);
+    }
+    state.books = result.data.books || [];
+    state.settings = result.data.settings || { readerPassword: 'read', adminPassword: 'admin' };
+    state.booksSha = result.sha;
+    return true;
+}
+
+async function saveBooks() {
+    const payload = {
+        settings: state.settings,
+        books: state.books
+    };
+    try {
+        const newSha = await saveWithRetry('books.json', payload, state.booksSha, '更新书籍列表');
+        state.booksSha = newSha;
+        return true;
+    } catch (e) {
+        toast('保存失败：' + e.message, true);
         return false;
     }
 }
 
-async function saveData() {
-    const payload = {
-        books: state.books,
-        settings: state.settings
-    };
-    const content = btoa(unescape(encodeURIComponent(JSON.stringify(payload, null, 2))));
+// 读取某本书的章节数据
+async function loadBookData(book) {
+    if (!book.dataFile) return { chapters: [] };
+    const result = await ghGet(book.dataFile);
+    if (!result) return { chapters: [] };
+    state.bookShaCache[book.dataFile] = result.sha;
+    return result.data;
+}
 
+// 保存某本书的章节
+async function saveBookData(book, bookData) {
+    const sha = state.bookShaCache[book.dataFile] || undefined;
     try {
-        const res = await fetch(API_BASE, {
-            method: 'PUT',
-            headers: {
-                'Authorization': 'token ' + state.token,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                message: '更新小说数据 ' + new Date().toISOString(),
-                content: content,
-                sha: state.sha || undefined
-            })
-        });
-        if (!res.ok) {
-            const err = await res.json().catch(() => ({}));
-            toast('保存失败：' + (err.message || res.status), true);
-            return false;
-        }
-        const json = await res.json();
-        state.sha = json.content.sha; // 更新 sha，方便下次保存
+        const newSha = await saveWithRetry(book.dataFile, bookData, sha, '更新 ' + book.title);
+        state.bookShaCache[book.dataFile] = newSha;
         return true;
-    } catch (err) {
-        console.error(err);
-        toast('保存失败：网络错误', true);
+    } catch (e) {
+        toast('保存失败：' + e.message, true);
         return false;
     }
 }
@@ -517,16 +519,15 @@ document.querySelectorAll('.tab').forEach(tab => {
         document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
         tab.classList.add('active');
         $('panel-' + tab.dataset.tab).classList.add('active');
-        // 进入对应面板时刷新数据
         if (tab.dataset.tab === 'books') renderBookList();
         if (tab.dataset.tab === 'newChapter') renderBookSelects();
-        if (tab.dataset.tab === 'chapters') renderBookSelects().then(renderChapterList);
+        if (tab.dataset.tab === 'chapters') { renderBookSelects(); renderChapterList(); }
         if (tab.dataset.tab === 'batch') renderBookSelects();
         if (tab.dataset.tab === 'settings') renderSettings();
     };
 });
 
-// ---------- 渲染：所有书籍列表 ----------
+// ---------- 渲染 ----------
 function renderBookList() {
     const box = $('bookList');
     if (state.books.length === 0) {
@@ -539,7 +540,7 @@ function renderBookList() {
                 <div class="item-title">${escapeHtml(b.title || '无题')}</div>
                 <div class="item-meta">
                     ${escapeHtml(b.category || '')} · ${escapeHtml(b.author || '未署名')} ·
-                    ${(b.chapters || []).length} 章 ·
+                    ${escapeHtml(b.dataFile || '无文件')} ·
                     创建于 ${escapeHtml(b.createTime || '未知')}
                 </div>
             </div>
@@ -550,7 +551,6 @@ function renderBookList() {
     `).join('');
 }
 
-// ---------- 渲染：书籍下拉框 ----------
 function renderBookSelects() {
     const options = state.books.length === 0
         ? '<option value="">（还没有书）</option>'
@@ -561,20 +561,18 @@ function renderBookSelects() {
         el.innerHTML = options;
         if (old) el.value = old;
     });
-    // 更新 currentBookId
-    if ($('cmBookSelect').value) state.currentBookId = $('cmBookSelect').value;
-    return Promise.resolve();
 }
 
-// ---------- 渲染：章节列表 ----------
-function renderChapterList() {
+async function renderChapterList() {
     const box = $('chapterList');
-    const book = state.books.find(b => b.id === $('cmBookSelect').value);
+    const bookId = $('cmBookSelect').value;
+    const book = state.books.find(b => b.id === bookId);
     if (!book) {
         box.innerHTML = '<div class="empty">请选择一本书</div>';
         return;
     }
-    const chapters = book.chapters || [];
+    const bookData = await loadBookData(book);
+    const chapters = bookData.chapters || [];
     if (chapters.length === 0) {
         box.innerHTML = '<div class="empty">这本书还没有章节</div>';
         return;
@@ -601,7 +599,6 @@ function renderChapterList() {
     }).join('');
 }
 
-// ---------- 渲染：设置 ----------
 function renderSettings() {
     $('stReaderPwd').value = state.settings.readerPassword || '';
     $('stAdminPwd').value = state.settings.adminPassword || '';
@@ -611,30 +608,47 @@ function renderSettings() {
 $('createBookBtn').onclick = async function() {
     const title = $('nbTitle').value.trim();
     if (!title) return toast('请填写书名', true);
+
     const createTime = $('nbCreateTime').value
         ? $('nbCreateTime').value.replace('T', ' ')
         : new Date().toISOString().slice(0, 16).replace('T', ' ');
+
+    const bookId = uid('b');
+    const dataFile = 'book_' + bookId + '.json';
+
     const book = {
-        id: uid('bk'),
+        id: bookId,
         title: title,
         author: $('nbAuthor').value.trim(),
         category: $('nbCategory').value,
         description: $('nbDesc').value.trim(),
         createTime: createTime,
-        chapters: []
+        dataFile: dataFile
     };
-    state.books.push(book);
-    const ok = await saveData();
-    if (ok) {
-        toast('创建成功');
-        $('nbTitle').value = '';
-        $('nbAuthor').value = '';
-        $('nbDesc').value = '';
-        renderBookList();
-        renderBookSelects();
-    } else {
-        state.books.pop(); // 回滚
+
+    // 1. 先创建这本书的空数据文件
+    try {
+        const newSha = await saveWithRetry(dataFile, { bookId, chapters: [] }, null, '创建书籍 ' + title);
+        state.bookShaCache[dataFile] = newSha;
+    } catch (e) {
+        toast('创建书籍数据文件失败：' + e.message, true);
+        return;
     }
+
+    // 2. 再加入 books.json
+    state.books.push(book);
+    const ok = await saveBooks();
+    if (!ok) {
+        state.books.pop();
+        return;
+    }
+
+    toast('创建成功');
+    $('nbTitle').value = '';
+    $('nbAuthor').value = '';
+    $('nbDesc').value = '';
+    renderBookList();
+    renderBookSelects();
 };
 
 // ---------- 创建章节 ----------
@@ -646,67 +660,72 @@ $('createChapterBtn').onclick = async function() {
 
     const book = state.books.find(b => b.id === bookId);
     if (!book) return toast('书籍不存在', true);
-    if (!book.chapters) book.chapters = [];
+
+    const bookData = await loadBookData(book);
+    if (!bookData.chapters) bookData.chapters = [];
 
     const publishTime = $('ncPublishTime').value
         ? $('ncPublishTime').value.replace('T', ' ')
         : new Date().toISOString().slice(0, 16).replace('T', ' ');
     const isScheduled = $('ncScheduled').value === 'true';
 
-    const chapter = {
+    bookData.chapters.push({
         id: uid('ch'),
         title: title,
         content: $('ncContent').value,
         publishTime: publishTime,
         isScheduled: isScheduled
-    };
-    book.chapters.push(chapter);
-    const ok = await saveData();
+    });
+
+    const ok = await saveBookData(book, bookData);
     if (ok) {
         toast('添加成功');
         $('ncTitle').value = '';
         $('ncContent').value = '';
-        renderChapterList();
-    } else {
-        book.chapters.pop();
     }
 };
 
 // ---------- 删除书籍 ----------
 window.deleteBook = async function(index) {
-    if (!confirm('确定删除这本书及其所有章节吗？')) return;
+    if (!confirm('确定删除这本书及其所有章节吗？（不会自动删文件）')) return;
     const removed = state.books.splice(index, 1)[0];
-    const ok = await saveData();
-    if (ok) { toast('已删除'); renderBookList(); renderBookSelects(); }
+    const ok = await saveBooks();
+    if (ok) { toast('已从书单移除'); renderBookList(); renderBookSelects(); }
     else state.books.splice(index, 0, removed);
 };
 
-// ---------- 章节管理：编辑 / 移动 / 删除 ----------
-window.editChapter = function(index) {
+// ---------- 章节操作 ----------
+window.editChapter = async function(index) {
     const book = state.books.find(b => b.id === $('cmBookSelect').value);
     if (!book) return;
-    const ch = book.chapters[index];
+    const bookData = await loadBookData(book);
+    const ch = bookData.chapters[index];
+
     const newTitle = prompt('章节标题', ch.title || '');
     if (newTitle === null) return;
-    const newContent = prompt('正文（可留空修改其它）', ch.content || '');
+    const newContent = prompt('正文', ch.content || '');
     if (newContent === null) return;
-    const newTime = prompt('发表时间（格式：2023-05-12 10:00）', ch.publishTime || '');
+    const newTime = prompt('发表时间（2023-05-12 10:00）', ch.publishTime || '');
     if (newTime === null) return;
     const newScheduled = confirm('是否定时发布？\n确定 = 定时（时间到才显示）\n取消 = 立即发布');
+
     ch.title = newTitle;
     ch.content = newContent;
     ch.publishTime = newTime;
     ch.isScheduled = newScheduled;
-    saveData().then(ok => { if (ok) { toast('已保存'); renderChapterList(); } });
+
+    const ok = await saveBookData(book, bookData);
+    if (ok) { toast('已保存'); renderChapterList(); }
 };
 
 window.moveChapter = async function(index, dir) {
     const book = state.books.find(b => b.id === $('cmBookSelect').value);
     if (!book) return;
+    const bookData = await loadBookData(book);
     const ni = index + dir;
-    if (ni < 0 || ni >= book.chapters.length) return;
-    [book.chapters[index], book.chapters[ni]] = [book.chapters[ni], book.chapters[index]];
-    const ok = await saveData();
+    if (ni < 0 || ni >= bookData.chapters.length) return;
+    [bookData.chapters[index], bookData.chapters[ni]] = [bookData.chapters[ni], bookData.chapters[index]];
+    const ok = await saveBookData(book, bookData);
     if (ok) renderChapterList();
 };
 
@@ -714,13 +733,13 @@ window.deleteChapter = async function(index) {
     const book = state.books.find(b => b.id === $('cmBookSelect').value);
     if (!book) return;
     if (!confirm('确定删除这一章吗？')) return;
-    const removed = book.chapters.splice(index, 1)[0];
-    const ok = await saveData();
+    const bookData = await loadBookData(book);
+    const removed = bookData.chapters.splice(index, 1)[0];
+    const ok = await saveBookData(book, bookData);
     if (ok) { toast('已删除'); renderChapterList(); }
-    else book.chapters.splice(index, 0, removed);
+    else bookData.chapters.splice(index, 0, removed);
 };
 
-// 切换书籍时刷新章节列表
 $('cmBookSelect').onchange = renderChapterList;
 
 // ---------- 编辑器工具栏 ----------
@@ -731,20 +750,16 @@ document.querySelectorAll('.toolbar button').forEach(btn => {
         let text = ta.value;
 
         if (action === 'indent') {
-            // 每段前加 2 个全角空格
             text = text.split('\n').map(line => {
                 if (line.trim() === '') return line;
                 return line.replace(/^[\s\u3000]*/, '　　');
             }).join('\n');
         } else if (action === 'blank') {
-            // 每段之间空一行
             text = text.split('\n').filter(l => l.trim() !== '').join('\n\n');
         } else if (action === 'trim') {
-            // 去掉每行首尾多余空格，去掉连续空行
             text = text.split('\n').map(l => l.trim()).join('\n');
             text = text.replace(/\n{3,}/g, '\n\n');
         } else if (action === 'auto') {
-            // 一键排版 = 去空格 + 空行 + 缩进
             text = text.split('\n').map(l => l.trim()).filter(l => l !== '').join('\n\n');
             text = text.split('\n').map(line => {
                 if (line.trim() === '') return line;
@@ -759,7 +774,7 @@ document.querySelectorAll('.toolbar button').forEach(btn => {
 $('saveSettingsBtn').onclick = async function() {
     state.settings.readerPassword = $('stReaderPwd').value.trim() || 'read';
     state.settings.adminPassword = $('stAdminPwd').value.trim() || 'admin';
-    const ok = await saveData();
+    const ok = await saveBooks();
     if (ok) toast('设置已保存');
 };
 
@@ -769,7 +784,6 @@ $('batchImportBtn').onclick = async function() {
     if (!bookId) return toast('请选择书籍', true);
     const book = state.books.find(b => b.id === bookId);
     if (!book) return toast('书籍不存在', true);
-    if (!book.chapters) book.chapters = [];
 
     const raw = $('biContent').value;
     if (!raw.trim()) return toast('请粘贴内容', true);
@@ -778,7 +792,6 @@ $('batchImportBtn').onclick = async function() {
     const startTimeStr = $('biStartTime').value;
     const startTime = startTimeStr ? new Date(startTimeStr) : new Date();
 
-    // 按「第X章」拆分
     const lines = raw.split('\n');
     const chapters = [];
     let current = null;
@@ -796,13 +809,15 @@ $('batchImportBtn').onclick = async function() {
     }
     if (current) chapters.push(current);
 
-    if (chapters.length === 0) return toast('没有识别到章节，请检查格式', true);
+    if (chapters.length === 0) return toast('没有识别到章节', true);
 
-    // 逐章写入
+    const bookData = await loadBookData(book);
+    if (!bookData.chapters) bookData.chapters = [];
+
     for (let i = 0; i < chapters.length; i++) {
         const t = new Date(startTime.getTime() + i * interval * 60000);
         const timeStr = t.toISOString().slice(0, 16).replace('T', ' ');
-        book.chapters.push({
+        bookData.chapters.push({
             id: uid('ch'),
             title: chapters[i].title,
             content: chapters[i].content.trim(),
@@ -811,17 +826,14 @@ $('batchImportBtn').onclick = async function() {
         });
     }
 
-    const ok = await saveData();
+    const ok = await saveBookData(book, bookData);
     if (ok) {
         toast('成功导入 ' + chapters.length + ' 章');
         $('biContent').value = '';
-        renderChapterList();
-    } else {
-        book.chapters.splice(book.chapters.length - chapters.length, chapters.length);
     }
 };
 
-// ---------- 刷新全部 ----------
+// ---------- 刷新 ----------
 function refreshAll() {
     renderBookList();
     renderBookSelects();
@@ -831,3 +843,4 @@ function refreshAll() {
 </script>
 </body>
 </html>
+    
