@@ -54,7 +54,54 @@ body { background: #f7f3eb; min-height: 100vh; color: #2f241b; padding: 1.5rem; 
 .book-title-top { font-size: 1.4rem; color: #3f2e22; font-weight: 400; letter-spacing: 2px; }
 
 .read-layout { display: grid; grid-template-columns: 240px 1fr; gap: 2rem; }
-@media (max-width: 800px) { .read-layout { grid-template-columns: 1fr; } }
+@media (max-width: 800px) {
+    .read-layout { grid-template-columns: 1fr; gap: 1rem; }
+
+    /* 手机上默认隐藏目录 */
+    .chapter-list {
+        display: none;
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        max-height: 100vh;
+        border-radius: 0;
+        z-index: 1000;
+        padding: 1.5rem 1rem;
+        overflow-y: auto;
+    }
+    .chapter-list.open { display: block; }
+
+    /* 目录展开时的关闭按钮 */
+    .chapter-close {
+        display: block;
+        text-align: right;
+        font-size: 1.5rem;
+        color: #8b7a6b;
+        padding: 0.5rem;
+        cursor: pointer;
+        border: none;
+        background: transparent;
+        width: 100%;
+    }
+    /* 目录展开时，显示一个遮罩，点遮罩也能关 */
+    .chapter-overlay {
+        display: none;
+        position: fixed; inset: 0;
+        background: rgba(0,0,0,0.3);
+        z-index: 999;
+    }
+    .chapter-overlay.open { display: block; }
+}
+
+/* 目录按钮：只在手机显示 */
+.menu-btn {
+    display: none;
+    background: #5e4b3c; color: #fff; border: none;
+    padding: 0.6rem 1.1rem; border-radius: 40px;
+    cursor: pointer; font-size: 0.9rem; font-family: inherit;
+}
+@media (max-width: 800px) {
+    .menu-btn { display: inline-flex; align-items: center; gap: 0.4rem; }
+}
 
 .chapter-list {
     background: #fefcf9; border: 1px solid #e9dbce;
@@ -121,15 +168,20 @@ body { background: #f7f3eb; min-height: 100vh; color: #2f241b; padding: 1.5rem; 
 
 <!-- ========== 主内容 ========== -->
 <div class="container" id="mainContent" style="display:none;">
-    <div class="top-bar">
-        <a href="index.html" class="back-btn">← 返回书架</a>
-        <div class="book-title-top" id="topTitle">加载中...</div>
-    </div>
+<div class="top-bar">
+    <a href="index.html" class="back-btn">← 返回书架</a>
+    <button class="menu-btn" onclick="toggleMenu()">📖 目录</button>
+    <div class="book-title-top" id="topTitle">加载中...</div>
+</div>
+
+<!-- 手机端目录遮罩 -->
+<div class="chapter-overlay" id="chapterOverlay" onclick="closeMenu()"></div>
     <div class="read-layout">
-        <aside class="chapter-list">
-            <h3>📖 章节目录</h3>
-            <div id="chapterList"><div class="loading-tip">加载中...</div></div>
-        </aside>
+<aside class="chapter-list" id="chapterListBox">
+    <button class="chapter-close" onclick="closeMenu()">✕ 关闭</button>
+    <h3>📖 章节目录</h3>
+    <div id="chapterList"><div class="loading-tip">加载中...</div></div>
+</aside>
         <main class="article-area" id="articleArea">
             <div class="loading-tip">正在加载正文...</div>
         </main>
@@ -235,10 +287,20 @@ function renderChapterList() {
         return;
     }
     list.innerHTML = chapters.map((ch, i) => `
-        <div class="chapter-item" data-index="${i}" onclick="loadChapter(${i})">
+        <div class="chapter-item" data-index="${i}" onclick="loadChapter(${i}); closeMenu();">
             ${escapeHtml(ch.title || ('第' + (i+1) + '章'))}
         </div>
     `).join('');
+}
+
+// 手机端目录开关
+function toggleMenu() {
+    document.getElementById('chapterListBox').classList.toggle('open');
+    document.getElementById('chapterOverlay').classList.toggle('open');
+}
+function closeMenu() {
+    document.getElementById('chapterListBox').classList.remove('open');
+    document.getElementById('chapterOverlay').classList.remove('open');
 }
 
 function loadChapter(index) {
