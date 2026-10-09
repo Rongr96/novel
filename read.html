@@ -394,10 +394,10 @@ function loadChapter(index) {
         .map(p => `<p>${escapeHtml(p)}</p>`).join('');
 
     const fontSize = getFontSize();
-    document.getElementById('articleArea').innerHTML = `
-        <h1 class="article-title">${escapeHtml(ch.title || ('第' + (index+1) + '章'))}</h1>
-        <div class="article-meta">✍️ ${escapeHtml(currentBook.author || '未署名')}</div>
-        <div class="article-content" style="font-size:${fontSize}px;">
+document.getElementById('articleArea').innerHTML = `
+    <h1 class="article-title">${escapeHtml(ch.title || ('第' + (index+1) + '章'))}</h1>
+    <div class="article-meta">📅 ${escapeHtml(ch.publishTime || '')}　✍️ ${escapeHtml(currentBook.author || '未署名')}</div>
+    <div class="article-content" style="font-size:${fontSize}px;">
             ${paras || '<p style="text-indent:0;color:#b7a89b;font-style:italic;">（本章暂无正文）</p>'}
         </div>
         <div class="nav-buttons">
