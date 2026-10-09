@@ -5,15 +5,6 @@
   },
   "books": [
     {
-      "id": "b1",
-      "title": "醉生梦死",
-      "author": "Rongr",
-      "category": "BL",
-      "description": "在这里粘贴你原本的书籍简介",
-      "createTime": "2023-05-09 17:01",
-      "dataFile": "book_b1.json"
-    },
-    {
       "id": "b_mv0v45d6mf9v",
       "title": "《赎罪》",
       "author": "Rongr",
@@ -21,8 +12,8 @@
       "description": "",
       "createTime": "2025-03-09 19:07",
       "dataFile": "book_b_mv0v45d6mf9v.json"
-   },
-   {
+    },
+    {
       "id": "b_mv0w3fr752jt",
       "title": "《醉生梦死》",
       "author": "Rongr",
