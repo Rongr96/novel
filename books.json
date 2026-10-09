@@ -1,0 +1,17 @@
+{
+  "settings": {
+    "readerPassword": "123456",
+    "adminPassword": "admin"
+  },
+  "books": [
+    {
+      "id": "b1",
+      "title": "醉生梦死",
+      "author": "Rongr",
+      "category": "BL",
+      "description": "在这里粘贴你原本的书籍简介",
+      "createTime": "2023-05-09 17:01",
+      "dataFile": "book_b1.json"
+    }
+  ]
+}
