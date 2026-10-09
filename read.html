@@ -6,14 +6,18 @@
 <title>阅读 · 我的书房</title>
 <style>
 * { margin:0; padding:0; box-sizing:border-box; font-family:'Georgia','宋体',serif; }
-body { background: #f7f3eb; min-height: 100vh; color: #2f241b; padding: 1.5rem; }
+body { min-height: 100vh; color: #2f241b; padding: 1.5rem; transition: background 0.3s; }
+body.bg-paper { background: #f7f3eb; }       /* 默认：旧纸色 */
+body.bg-white { background: #ffffff; }       /* 白纸 */
+body.bg-green { background: #e8efe3; }       /* 护眼绿 */
+body.bg-dark  { background: #2b2b2b; color: #d8d8d8; }  /* 暗黑 */
+
 .container { max-width: 1100px; margin: 0 auto; }
 
 /* 密码门禁 */
 .gate {
     position: fixed; inset: 0; z-index: 9999;
-    background: #f7f3eb;
-    display: flex; align-items: center; justify-content: center; padding: 1.5rem;
+    background: #f7f3eb; display: flex; align-items: center; justify-content: center; padding: 1.5rem;
 }
 .gate-box {
     max-width: 400px; width: 100%; background: #fefcf9;
@@ -38,7 +42,7 @@ body { background: #f7f3eb; min-height: 100vh; color: #2f241b; padding: 1.5rem; 
 .gate-box button:hover { background: #4a3a2e; }
 .gate-error { color: #b35e5e; font-size: 0.85rem; margin-top: 0.5rem; min-height: 1.2rem; font-style: italic; }
 
-/* 阅读页 */
+/* 顶部栏 */
 .top-bar {
     display: flex; justify-content: space-between; align-items: center;
     padding-bottom: 1rem; margin-bottom: 1.5rem;
@@ -53,55 +57,36 @@ body { background: #f7f3eb; min-height: 100vh; color: #2f241b; padding: 1.5rem; 
 .back-btn:hover { background: #e0d3c6; }
 .book-title-top { font-size: 1.4rem; color: #3f2e22; font-weight: 400; letter-spacing: 2px; }
 
+/* 阅读设置工具栏 */
+.read-tools {
+    display: flex; gap: 0.6rem; align-items: center; flex-wrap: wrap;
+    background: #fefcf9; border: 1px solid #e9dbce;
+    border-radius: 1rem; padding: 0.7rem 1rem; margin-bottom: 1.2rem;
+}
+.read-tools .label { font-size: 0.85rem; color: #8b7a6b; }
+.read-tools button {
+    background: #efe6dd; border: 1px solid #d6c7b8;
+    color: #5e4b3c; padding: 0.35rem 0.8rem; border-radius: 40px;
+    cursor: pointer; font-size: 0.85rem; font-family: inherit;
+}
+.read-tools button:hover { background: #e0d3c6; }
+.read-tools button.active { background: #5e4b3c; color: #fff; }
+
+/* 布局 */
 .read-layout { display: grid; grid-template-columns: 240px 1fr; gap: 2rem; }
 @media (max-width: 800px) {
     .read-layout { grid-template-columns: 1fr; gap: 1rem; }
-
-    /* 手机上默认隐藏目录 */
     .chapter-list {
-        display: none;
-        position: fixed;
-        top: 0; left: 0; right: 0; bottom: 0;
-        max-height: 100vh;
-        border-radius: 0;
-        z-index: 1000;
-        padding: 1.5rem 1rem;
-        overflow-y: auto;
+        display: none; position: fixed; inset: 0;
+        max-height: 100vh; border-radius: 0;
+        z-index: 1000; padding: 1.5rem 1rem; overflow-y: auto;
     }
     .chapter-list.open { display: block; }
-
-    /* 目录展开时的关闭按钮 */
-    .chapter-close {
-        display: block;
-        text-align: right;
-        font-size: 1.5rem;
-        color: #8b7a6b;
-        padding: 0.5rem;
-        cursor: pointer;
-        border: none;
-        background: transparent;
-        width: 100%;
-    }
-    /* 目录展开时，显示一个遮罩，点遮罩也能关 */
-    .chapter-overlay {
-        display: none;
-        position: fixed; inset: 0;
-        background: rgba(0,0,0,0.3);
-        z-index: 999;
-    }
+    .chapter-close { display: block; text-align: right; font-size: 1.5rem; color: #8b7a6b; padding: 0.5rem; cursor: pointer; border: none; background: transparent; width: 100%; }
+    .chapter-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.3); z-index: 999; }
     .chapter-overlay.open { display: block; }
 }
-
-/* 目录按钮：只在手机显示 */
-.menu-btn {
-    display: none;
-    background: #5e4b3c; color: #fff; border: none;
-    padding: 0.6rem 1.1rem; border-radius: 40px;
-    cursor: pointer; font-size: 0.9rem; font-family: inherit;
-}
-@media (max-width: 800px) {
-    .menu-btn { display: inline-flex; align-items: center; gap: 0.4rem; }
-}
+.chapter-close { display: none; }
 
 .chapter-list {
     background: #fefcf9; border: 1px solid #e9dbce;
@@ -118,19 +103,31 @@ body { background: #f7f3eb; min-height: 100vh; color: #2f241b; padding: 1.5rem; 
 .chapter-item:hover { background: #f3ece3; }
 .chapter-item.active { background: #5e4b3c; color: #fff; }
 
+.menu-btn {
+    display: none; background: #5e4b3c; color: #fff; border: none;
+    padding: 0.6rem 1.1rem; border-radius: 40px;
+    cursor: pointer; font-size: 0.9rem; font-family: inherit;
+}
+@media (max-width: 800px) { .menu-btn { display: inline-flex; align-items: center; gap: 0.4rem; } }
+
+/* 正文区 */
 .article-area {
     background: #fefcf9; border: 1px solid #e9dbce;
     border-radius: 1rem; padding: 2.5rem 3rem;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.02); transition: background 0.3s, color 0.3s;
 }
+body.bg-dark .article-area { background: #3a3a3a; border-color: #444; }
+body.bg-white .article-area { background: #ffffff; }
+body.bg-green .article-area { background: #f4f9ef; }
 @media (max-width: 600px) { .article-area { padding: 1.5rem 1.2rem; } }
 .article-title {
     font-size: 1.8rem; color: #3f2e22; font-weight: 400;
     margin-bottom: 0.5rem; letter-spacing: 1px;
     border-left: 5px solid #b09b89; padding-left: 1rem;
 }
+body.bg-dark .article-title { color: #e8e8e8; }
 .article-meta { color: #9b8a7a; font-size: 0.9rem; font-style: italic; margin-bottom: 2rem; padding-left: 1.3rem; }
-.article-content { color: #2f241b; font-size: 1.05rem; line-height: 2; }
+.article-content { line-height: 2; }
 .article-content p { text-indent: 2em; margin-bottom: 1.2rem; }
 .article-content p:last-child { margin-bottom: 0; }
 
@@ -149,9 +146,9 @@ body { background: #f7f3eb; min-height: 100vh; color: #2f241b; padding: 1.5rem; 
 .loading-tip { text-align: center; padding: 4rem 1rem; color: #b7a89b; font-style: italic; }
 </style>
 </head>
-<body>
+<body class="bg-paper">
 
-<!-- ========== 密码门禁 ========== -->
+<!-- 密码门禁 -->
 <div id="gate" class="gate">
     <div class="gate-box">
         <div class="icon">🔒</div>
@@ -166,36 +163,52 @@ body { background: #f7f3eb; min-height: 100vh; color: #2f241b; padding: 1.5rem; 
     </div>
 </div>
 
-<!-- ========== 主内容 ========== -->
+<!-- 主内容 -->
 <div class="container" id="mainContent" style="display:none;">
-<div class="top-bar">
-    <a href="index.html" class="back-btn">← 返回书架</a>
-    <button class="menu-btn" onclick="toggleMenu()">📖 目录</button>
-    <div class="book-title-top" id="topTitle">加载中...</div>
-</div>
+    <div class="top-bar">
+        <a href="index.html" class="back-btn">← 返回书架</a>
+        <button class="menu-btn" onclick="toggleMenu()">📖 目录</button>
+        <div class="book-title-top" id="topTitle">加载中...</div>
+    </div>
 
-<!-- 手机端目录遮罩 -->
-<div class="chapter-overlay" id="chapterOverlay" onclick="closeMenu()"></div>
+    <!-- 阅读设置栏 -->
+    <div class="read-tools">
+        <span class="label">字体：</span>
+        <button onclick="setFontSize(-1)">A-</button>
+        <button onclick="setFontSize(1)">A+</button>
+        <span class="label" style="margin-left:1rem;">背景：</span>
+        <button class="bg-btn active" data-bg="paper" onclick="setBg('paper')">📜 纸张</button>
+        <button class="bg-btn" data-bg="white" onclick="setBg('white')">⚪ 白纸</button>
+        <button class="bg-btn" data-bg="green" onclick="setBg('green')">🌿 护眼</button>
+        <button class="bg-btn" data-bg="dark" onclick="setBg('dark')">🌙 暗黑</button>
+    </div>
+
     <div class="read-layout">
-<aside class="chapter-list" id="chapterListBox">
-    <button class="chapter-close" onclick="closeMenu()">✕ 关闭</button>
-    <h3>📖 章节目录</h3>
-    <div id="chapterList"><div class="loading-tip">加载中...</div></div>
-</aside>
+        <aside class="chapter-list" id="chapterListBox">
+            <button class="chapter-close" onclick="closeMenu()">✕ 关闭</button>
+            <h3>📖 章节目录</h3>
+            <div id="chapterList"><div class="loading-tip">加载中...</div></div>
+        </aside>
+
         <main class="article-area" id="articleArea">
             <div class="loading-tip">正在加载正文...</div>
         </main>
     </div>
 </div>
 
+<div class="chapter-overlay" id="chapterOverlay" onclick="closeMenu()"></div>
+
 <script>
 // ============================================================
-// 密码门禁 + 阅读页逻辑
+// 密码门禁 + 阅读页逻辑（含字体、背景、历史记录）
 // ============================================================
 
-const READER_PASSWORD = "read";  // ⚠️ 读者密码，改这里
+let READER_PASSWORD = "read";
 const PASS_KEY = "novel_pass_ok";
 const PASS_TTL = 24 * 60 * 60 * 1000;
+const HISTORY_KEY = "novel_read_history";
+const FONT_KEY = "novel_font_size";
+const BG_KEY = "novel_bg";
 
 function hasPass() {
     try {
@@ -210,10 +223,77 @@ function setPass() {
     localStorage.setItem(PASS_KEY, JSON.stringify({ t: Date.now() }));
 }
 
+// 阅读历史
+function getHistory() {
+    try {
+        const raw = localStorage.getItem(HISTORY_KEY);
+        return raw ? JSON.parse(raw) : {};
+    } catch(e) { return {}; }
+}
+function saveHistory(bookId, chapterIndex, bookTitle) {
+    const h = getHistory();
+    h[bookId] = { bookId, chapterIndex, bookTitle, t: Date.now() };
+    localStorage.setItem(HISTORY_KEY, JSON.stringify(h));
+}
+
+// 字体大小
+function getFontSize() {
+    return parseInt(localStorage.getItem(FONT_KEY)) || 17; // 默认 17px
+}
+function applyFontSize() {
+    const size = getFontSize();
+    document.querySelector('.article-content') && 
+    document.querySelectorAll('.article-content').forEach(el => {
+        el.style.fontSize = size + 'px';
+    });
+    // 用全局方式，避免还没加载正文
+    document.documentElement.style.setProperty('--article-font-size', size + 'px');
+}
+function setFontSize(delta) {
+    let size = getFontSize() + delta * 2;
+    if (size < 12) size = 12;
+    if (size > 32) size = 32;
+    localStorage.setItem(FONT_KEY, size);
+    applyFontSize();
+    // 更新当前显示正文的字体
+    const content = document.querySelector('.article-content');
+    if (content) content.style.fontSize = size + 'px';
+}
+
+// 背景
+function setBg(bg) {
+    document.body.className = 'bg-' + bg;
+    localStorage.setItem(BG_KEY, bg);
+    document.querySelectorAll('.bg-btn').forEach(b => {
+        b.classList.toggle('active', b.dataset.bg === bg);
+    });
+}
+function applyBg() {
+    const bg = localStorage.getItem(BG_KEY) || 'paper';
+    document.body.className = 'bg-' + bg;
+    document.querySelectorAll('.bg-btn').forEach(b => {
+        b.classList.toggle('active', b.dataset.bg === bg);
+    });
+}
+
 let currentBook = null;
 let currentChapterIndex = 0;
 
-window.addEventListener('DOMContentLoaded', function() {
+window.addEventListener('DOMContentLoaded', async function() {
+    // 应用字体和背景
+    applyBg();
+
+    // 从 data.json 读密码
+    try {
+        const res = await fetch('data.json?t=' + Date.now());
+        if (res.ok) {
+            const data = await res.json();
+            if (data.settings && data.settings.readerPassword) {
+                READER_PASSWORD = data.settings.readerPassword;
+            }
+        }
+    } catch(e) { /* 用默认 */ }
+
     if (hasPass()) {
         showContent();
     } else {
@@ -245,6 +325,8 @@ function showContent() {
 async function init() {
     const params = new URLSearchParams(window.location.search);
     const bookId = params.get('book');
+    const jumpChapter = parseInt(params.get('ch'));
+
     if (!bookId) {
         document.getElementById('articleArea').innerHTML =
             '<div class="loading-tip">没有指定书籍，请从<a href="index.html">书架</a>进入</div>';
@@ -267,10 +349,11 @@ async function init() {
     document.getElementById('topTitle').textContent = currentBook.title || '未命名';
     document.title = (currentBook.title || '阅读') + ' · 我的书房';
     renderChapterList();
-    loadChapter(0);
+    // 如果 URL 里指定了章节就跳过去，否则从头开始
+    const startCh = (!isNaN(jumpChapter) && jumpChapter >= 0) ? jumpChapter : 0;
+    loadChapter(startCh);
 }
 
-// 过滤：定时未到的章节不显示
 function getVisibleChapters() {
     const now = new Date();
     return (currentBook.chapters || []).filter(ch => {
@@ -293,16 +376,6 @@ function renderChapterList() {
     `).join('');
 }
 
-// 手机端目录开关
-function toggleMenu() {
-    document.getElementById('chapterListBox').classList.toggle('open');
-    document.getElementById('chapterOverlay').classList.toggle('open');
-}
-function closeMenu() {
-    document.getElementById('chapterListBox').classList.remove('open');
-    document.getElementById('chapterOverlay').classList.remove('open');
-}
-
 function loadChapter(index) {
     const chapters = getVisibleChapters();
     if (index < 0 || index >= chapters.length) return;
@@ -317,10 +390,11 @@ function loadChapter(index) {
         .filter(p => p.trim() !== '')
         .map(p => `<p>${escapeHtml(p)}</p>`).join('');
 
+    const fontSize = getFontSize();
     document.getElementById('articleArea').innerHTML = `
         <h1 class="article-title">${escapeHtml(ch.title || ('第' + (index+1) + '章'))}</h1>
         <div class="article-meta">✍️ ${escapeHtml(currentBook.author || '未署名')}</div>
-        <div class="article-content">
+        <div class="article-content" style="font-size:${fontSize}px;">
             ${paras || '<p style="text-indent:0;color:#b7a89b;font-style:italic;">（本章暂无正文）</p>'}
         </div>
         <div class="nav-buttons">
@@ -328,7 +402,20 @@ function loadChapter(index) {
             <button class="nav-btn" onclick="loadChapter(${index+1})" ${index >= chapters.length-1 ? 'disabled' : ''}>下一章 →</button>
         </div>
     `;
+
+    // 保存阅读历史
+    saveHistory(currentBook.id, index, currentBook.title);
+
     window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function toggleMenu() {
+    document.getElementById('chapterListBox').classList.toggle('open');
+    document.getElementById('chapterOverlay').classList.toggle('open');
+}
+function closeMenu() {
+    document.getElementById('chapterListBox').classList.remove('open');
+    document.getElementById('chapterOverlay').classList.remove('open');
 }
 
 function escapeHtml(s) {
