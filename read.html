@@ -7,10 +7,10 @@
 <style>
 * { margin:0; padding:0; box-sizing:border-box; font-family:'Georgia','宋体',serif; }
 body { min-height: 100vh; color: #2f241b; padding: 1.5rem; transition: background 0.3s; }
-body.bg-paper { background: #f7f3eb; }       /* 默认：旧纸色 */
-body.bg-white { background: #ffffff; }       /* 白纸 */
-body.bg-green { background: #e8efe3; }       /* 护眼绿 */
-body.bg-dark  { background: #2b2b2b; color: #d8d8d8; }  /* 暗黑 */
+body.bg-paper { background: #f7f3eb; }
+body.bg-white { background: #ffffff; }
+body.bg-green { background: #e8efe3; }
+body.bg-dark  { background: #2b2b2b; color: #d8d8d8; }
 
 .container { max-width: 1100px; margin: 0 auto; }
 
@@ -57,7 +57,7 @@ body.bg-dark  { background: #2b2b2b; color: #d8d8d8; }  /* 暗黑 */
 .back-btn:hover { background: #e0d3c6; }
 .book-title-top { font-size: 1.4rem; color: #3f2e22; font-weight: 400; letter-spacing: 2px; }
 
-/* 阅读设置工具栏 */
+/* 阅读设置栏 */
 .read-tools {
     display: flex; gap: 0.6rem; align-items: center; flex-wrap: wrap;
     background: #fefcf9; border: 1px solid #e9dbce;
@@ -200,7 +200,8 @@ body.bg-dark .article-title { color: #e8e8e8; }
 
 <script>
 // ============================================================
-// 密码门禁 + 阅读页逻辑（含字体、背景、历史记录）
+// 新版阅读页：先读 books.json 找到书的 dataFile，
+// 再读那个文件拿章节列表和正文
 // ============================================================
 
 let READER_PASSWORD = "read";
@@ -222,8 +223,6 @@ function hasPass() {
 function setPass() {
     localStorage.setItem(PASS_KEY, JSON.stringify({ t: Date.now() }));
 }
-
-// 阅读历史
 function getHistory() {
     try {
         const raw = localStorage.getItem(HISTORY_KEY);
@@ -235,32 +234,17 @@ function saveHistory(bookId, chapterIndex, bookTitle) {
     h[bookId] = { bookId, chapterIndex, bookTitle, t: Date.now() };
     localStorage.setItem(HISTORY_KEY, JSON.stringify(h));
 }
-
-// 字体大小
 function getFontSize() {
-    return parseInt(localStorage.getItem(FONT_KEY)) || 17; // 默认 17px
-}
-function applyFontSize() {
-    const size = getFontSize();
-    document.querySelector('.article-content') && 
-    document.querySelectorAll('.article-content').forEach(el => {
-        el.style.fontSize = size + 'px';
-    });
-    // 用全局方式，避免还没加载正文
-    document.documentElement.style.setProperty('--article-font-size', size + 'px');
+    return parseInt(localStorage.getItem(FONT_KEY)) || 17;
 }
 function setFontSize(delta) {
     let size = getFontSize() + delta * 2;
     if (size < 12) size = 12;
     if (size > 32) size = 32;
     localStorage.setItem(FONT_KEY, size);
-    applyFontSize();
-    // 更新当前显示正文的字体
     const content = document.querySelector('.article-content');
     if (content) content.style.fontSize = size + 'px';
 }
-
-// 背景
 function setBg(bg) {
     document.body.className = 'bg-' + bg;
     localStorage.setItem(BG_KEY, bg);
@@ -277,15 +261,15 @@ function applyBg() {
 }
 
 let currentBook = null;
+let currentBookData = null;  // 这本书的完整数据（含章节）
 let currentChapterIndex = 0;
 
 window.addEventListener('DOMContentLoaded', async function() {
-    // 应用字体和背景
     applyBg();
 
-    // 从 data.json 读密码
+    // 读 books.json 拿读者密码
     try {
-        const res = await fetch('data.json?t=' + Date.now());
+        const res = await fetch('books.json?t=' + Date.now());
         if (res.ok) {
             const data = await res.json();
             if (data.settings && data.settings.readerPassword) {
@@ -332,31 +316,50 @@ async function init() {
             '<div class="loading-tip">没有指定书籍，请从<a href="index.html">书架</a>进入</div>';
         return;
     }
-    let data;
+
+    // 1. 读 books.json
+    let booksData;
     try {
-        const res = await fetch('data.json?t=' + Date.now());
+        const res = await fetch('books.json?t=' + Date.now());
         if (!res.ok) throw new Error();
-        data = await res.json();
+        booksData = await res.json();
     } catch (err) {
-        data = { books: [] };
+        document.getElementById('articleArea').innerHTML =
+            '<div class="loading-tip">读取书籍列表失败</div>';
+        return;
     }
-    currentBook = (data.books || []).find(b => b.id === bookId);
+
+    // 2. 找到这本书
+    currentBook = (booksData.books || []).find(b => b.id === bookId);
     if (!currentBook) {
         document.getElementById('articleArea').innerHTML =
             '<div class="loading-tip">找不到这本书</div>';
         return;
     }
+
+    // 3. 读这本书的 dataFile（含章节）
+    if (currentBook.dataFile) {
+        try {
+            const res = await fetch(currentBook.dataFile + '?t=' + Date.now());
+            if (res.ok) {
+                currentBookData = await res.json();
+            }
+        } catch(e) { currentBookData = { chapters: [] }; }
+    }
+    if (!currentBookData) currentBookData = { chapters: [] };
+
     document.getElementById('topTitle').textContent = currentBook.title || '未命名';
     document.title = (currentBook.title || '阅读') + ' · 我的书房';
     renderChapterList();
-    // 如果 URL 里指定了章节就跳过去，否则从头开始
+
     const startCh = (!isNaN(jumpChapter) && jumpChapter >= 0) ? jumpChapter : 0;
     loadChapter(startCh);
 }
 
+// 章节列表（过滤掉未到时间的定时章节）
 function getVisibleChapters() {
     const now = new Date();
-    return (currentBook.chapters || []).filter(ch => {
+    return (currentBookData.chapters || []).filter(ch => {
         if (!ch.isScheduled) return true;
         return new Date(ch.publishTime) <= now;
     });
@@ -403,9 +406,7 @@ function loadChapter(index) {
         </div>
     `;
 
-    // 保存阅读历史
     saveHistory(currentBook.id, index, currentBook.title);
-
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
