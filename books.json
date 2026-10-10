@@ -13,6 +13,14 @@
       "createTime": "2025-03-09 19:07",
       "dataFile": "book_b_mv0v45d6mf9v.json"
     },
-    
+    {
+      "id": "b_mv0w3fr752jt",
+      "title": "《醉生梦死》",
+      "author": "Rongr",
+      "category": "BL",
+      "description": "为本文书名做个解释。\n姜季帆「钟鼓馔玉不足贵，但愿长醉不复醒…」\n花花和允默几乎异口同声的问道「什么意思？」\n姜季帆看了看一旁的周洺，见他微点了下头以示允许后，他才再次转向两人，解释道「山珍海味的豪华生活算不上什么珍贵，只希望能醉生梦死而不愿清醒。」",
+      "createTime": "2023-05-09 19:35",
+      "dataFile": "book_b_mv0w3fr752jt.json"
+    }
   ]
 }
