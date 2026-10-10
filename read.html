@@ -309,15 +309,16 @@ async function init() {
             if (metaRes.ok) {
                 const meta = await metaRes.json();
                 const parts = meta.parts || [];
-                // 并行读取所有 part
-                const partDatas = await Promise.all(parts.map(p =>
-                    fetch(p.file + '?t=' + Date.now())
-                        .then(r => r.ok ? r.json() : { chapters: [] })
-                        .catch(() => ({ chapters: [] }))
-                ));
-                partDatas.forEach(d => {
-                    (d.chapters || []).forEach(ch => allChapters.push(ch));
-                });
+// 按 part 顺序串行读取，保证章节顺序正确
+for (const p of parts) {
+    try {
+        const r = await fetch(p.file + '?t=' + Date.now());
+        if (r.ok) {
+            const d = await r.json();
+            (d.chapters || []).forEach(ch => allChapters.push(ch));
+        }
+    } catch(e) {}
+}
             }
         } catch(e) { /* 保持空 */ }
     }
