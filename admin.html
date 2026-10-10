@@ -514,7 +514,6 @@ async function saveBooks() {
 
 // 读取某本书的完整章节列表（跨所有 part）
 async function loadAllChapters(book) {
-async function loadAllChapters(book) {
     const metaPath = book.metaFile;
     if (!metaPath) return { chapters: [], parts: [] };
 
@@ -568,7 +567,7 @@ async function loadAllChapters(book) {
     } catch(e) { /* sessionStorage 满或不可用，忽略 */ }
 
     return { chapters: allChapters, parts, meta };
-    }
+}
     
 // 保存所有章节（自动分文件）
 async function saveAllChapters(book, chapters) {
