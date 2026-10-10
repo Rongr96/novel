@@ -593,7 +593,7 @@ window.editChapterById = async function(bookId, index) {
 
         // 1. 保存正文到独立文件
         if (!ch.file) {
-            ch.file = 'data/' + book.id + '_ch_' + String(index + 1).padStart(3, '0') + '.json';
+            ch.file = 'data/' + book.id + '/ch_' + String(index + 1).padStart(3, '0') + '.json';
         }
         if (!(await saveChapterContent(book, ch))) return;
 
@@ -684,7 +684,7 @@ window.editChapter = async function(index) {
         ch.publishTime = newTime;
         ch.type = newType;
         if (!ch.file) {
-            ch.file = 'data/' + book.id + '_ch_' + String(index + 1).padStart(3, '0') + '.json';
+            ch.file = 'data/' + book.id + '/ch_' + String(index + 1).padStart(3, '0') + '.json';
         }
         if (!(await saveChapterContent(book, ch))) return;
         const metaToSave = { bookId: book.id, chapters: chapters.map(c => ({
@@ -1090,7 +1090,7 @@ $('batchImportBtn').onclick = async function() {
         const t = new Date(startTime.getTime() + i * interval * 60000);
         const timeStr = t.toISOString().slice(0, 16).replace('T', ' ');
         const chIndex = baseIndex + i + 1;
-        const chFile = 'data/' + book.id + '_ch_' + String(chIndex).padStart(3, '0') + '.json';
+        const chFile = 'data/' + book.id + '/ch_' + String(chIndex).padStart(3, '0') + '.json';
 
         try {
             const sha = await saveWithRetry(chFile, { content: newChapters[i].content.trim() }, null, '导入 ' + newChapters[i].title);
