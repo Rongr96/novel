@@ -3,5 +3,16 @@
     "readerPassword": "123456",
     "adminPassword": "admin"
   },
-  "books": []
+  "books": [
+    {
+      "id": "b_mv2pi7zpvc0b",
+      "title": "《醉生梦死》",
+      "author": "Rongr",
+      "category": "BL",
+      "status": "连载中",
+      "description": "",
+      "createTime": "2023-02-01 02:06",
+      "metaFile": "data/b_mv2pi7zpvc0b_meta.json"
+    }
+  ]
 }
