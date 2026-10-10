@@ -624,7 +624,8 @@ function renderBookList() {
                 </div>
                 <div class="item-actions">
                     <button class="btn btn-small" onclick="toggleBook('${b.id}')">${isOpen ? '收起' : '展开'}</button>
-                    <button class="btn btn-small btn-danger" onclick="deleteBook(${i})">删除</button>
+                    <button class="btn btn-small btn-danger" onclick="deleteBook(${i})">删除</button><button class="btn btn-small" onclick="changeBookStatus(${i})">改状态</button><button class="btn btn-small" onclick="changeBookStatus(${i})">改状态</button>
+<button class="btn btn-small btn-danger" onclick="deleteBook(${i})">删除</button>
                 </div>
             </div>
             ${isOpen ? `<div id="book-chapters-${b.id}" style="margin-top:1rem; padding-top:1rem; border-top:1px dashed #e9dbce;"><div class="empty">加载中...</div></div>` : ''}
@@ -808,7 +809,17 @@ window.pickStatus = function(value) {
         btn.classList.toggle('selected', btn.dataset.value === value);
     });
 };
+    
+window.pickType = function(value) {
+    document.querySelectorAll('#ncTypeGroup .cat-btn').forEach(btn => {
+        btn.classList.toggle('selected', btn.dataset.value === value);
+    });
+};
 
+function getSelectedType() {
+    const btn = document.querySelector('#ncTypeGroup .cat-btn.selected');
+    return btn ? btn.dataset.value : 'main';
+}
 function getSelectedCategory() {
     const btn = document.querySelector('#nbCategoryGroup .cat-btn.selected');
     return btn ? btn.dataset.value : 'BL';
@@ -888,16 +899,30 @@ $('createChapterBtn').onclick = async function() {
         content: $('ncContent').value,
         publishTime: publishTime,
         isScheduled: $('ncScheduled').value === 'true'
+        type: getSelectedType()
     });
 
     if (await saveAllChapters(book, chapters)) {
         toast('添加成功');
+        $('ncTitle').value = '';
         $('ncTitle').value = '';
         $('ncContent').value = '';
     }
 };
 
 // ========== 删除书籍 ==========
+    window.changeBookStatus = async function(index) {
+    const book = state.books[index];
+    if (!book) return;
+    const current = book.status || '连载中';
+    const newStatus = current === '已完结' ? '连载中' : '已完结';
+    if (!confirm(`把《${book.title}》改为「${newStatus}」？`)) return;
+    book.status = newStatus;
+    if (await saveBooks()) {
+        toast('状态已改为：' + newStatus);
+        renderBookList();
+    }
+};
 window.deleteBook = async function(index) {
     if (!confirm('确定从书单删除这本书吗？（章节数据文件不会自动删）')) return;
     const removed = state.books[index];
