@@ -1,4 +1,13 @@
 {
   "bookId": "b_mv2obcxz17q4",
-  "chapters": []
+  "chapters": [
+    {
+      "id": "ch_mv2ogkokac13",
+      "title": "第一章",
+      "publishTime": "2026-10-11 01:33",
+      "isScheduled": false,
+      "type": "main",
+      "file": "data/b_mv2obcxz17q4_ch_001.json"
+    }
+  ]
 }
