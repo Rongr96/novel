@@ -6,131 +6,111 @@
 <title>我的书房 · 小说集</title>
 <style>
 * { margin:0; padding:0; box-sizing:border-box; font-family:'Georgia','宋体',serif; }
-body { background: #f7f3eb; min-height: 100vh; color: #2f241b; padding: 0.8rem; }
-.container { max-width: 900px; margin: 0 auto; }
+body { background: #f7f3eb; min-height: 100vh; color: #2f241b; padding: 1.5rem; }
+.container { max-width: 1100px; margin: 0 auto; }
 
+/* 密码门禁 */
 .gate {
     position: fixed; inset: 0; z-index: 9999;
-    background: #f7f3eb; display: flex; align-items: center; justify-content: center; padding: 1rem;
+    background: #f7f3eb; display: flex; align-items: center; justify-content: center; padding: 1.5rem;
 }
 .gate-box {
-    max-width: 360px; width: 100%; background: #fefcf9;
-    border: 1px solid #e9dbce; border-radius: 1rem; padding: 1.5rem;
+    max-width: 400px; width: 100%; background: #fefcf9;
+    border: 1px solid #e9dbce; border-radius: 1.5rem; padding: 2rem;
     box-shadow: 0 12px 32px rgba(0,0,0,0.06); text-align: center;
 }
-.gate-box .icon { font-size: 2.5rem; margin-bottom: 0.8rem; }
-.gate-box h2 { font-weight: 400; color: #3f2e22; letter-spacing: 2px; margin-bottom: 0.4rem; font-size:1.3rem; }
-.gate-box p { color: #8b7a6b; font-size: 0.85rem; font-style: italic; margin-bottom: 1.2rem; }
+.gate-box .icon { font-size: 3rem; margin-bottom: 1rem; }
+.gate-box h2 { font-weight: 400; color: #3f2e22; letter-spacing: 2px; margin-bottom: 0.5rem; }
+.gate-box p { color: #8b7a6b; font-size: 0.9rem; font-style: italic; margin-bottom: 1.5rem; }
 .gate-box input {
-    width: 100%; padding: 0.7rem 0.9rem; border: 1px solid #d6c7b8;
-    border-radius: 60px; font-size: 0.95rem; background: #fffcf9;
+    width: 100%; padding: 0.9rem 1rem; border: 1px solid #d6c7b8;
+    border-radius: 60px; font-size: 1rem; background: #fffcf9;
     outline: none; text-align: center; letter-spacing: 2px;
-    color: #2f241b; margin-bottom: 0.8rem; font-family: inherit;
+    color: #2f241b; margin-bottom: 1rem; font-family: inherit;
 }
 .gate-box input:focus { border-color: #b09b89; box-shadow: 0 0 0 3px rgba(176,155,137,0.15); }
 .gate-box button {
-    width: 100%; padding: 0.7rem 0; background: #5e4b3c; color: #fff;
-    border: none; border-radius: 60px; font-size: 0.95rem;
-    letter-spacing: 2px; cursor: pointer; font-family: inherit;
+    width: 100%; padding: 0.9rem 0; background: #5e4b3c; color: #fff;
+    border: none; border-radius: 60px; font-size: 1rem;
+    letter-spacing: 2px; cursor: pointer; font-family: inherit; transition: background 0.2s;
 }
-.gate-error { color: #b35e5e; font-size: 0.8rem; margin-top: 0.4rem; min-height: 1rem; font-style: italic; }
+.gate-box button:hover { background: #4a3a2e; }
+.gate-error { color: #b35e5e; font-size: 0.85rem; margin-top: 0.5rem; min-height: 1.2rem; font-style: italic; }
 
-.site-header { text-align: center; margin-bottom: 1.2rem; padding-bottom: 1rem; border-bottom: 1px solid #e0d3c6; }
-.site-header h1 { font-size: 1.6rem; font-weight: 400; color: #3f2e22; letter-spacing: 3px; margin-bottom: 0.2rem; }
-.site-header p { color: #9b8a7a; font-style: italic; font-size: 0.8rem; }
+/* 顶部 */
+.site-header { text-align: center; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 2px solid #e0d3c6; }
+.site-header h1 { font-size: 2.4rem; font-weight: 400; color: #3f2e22; letter-spacing: 4px; margin-bottom: 0.4rem; }
+.site-header p { color: #9b8a7a; font-style: italic; font-size: 1rem; }
 
-.recent-section { margin-bottom: 1rem; }
-.recent-title { font-size: 0.9rem; color: #6b5a4b; font-weight: 400; margin-bottom: 0.5rem; letter-spacing: 1px; }
-.recent-list { display: flex; gap: 0.5rem; overflow-x: auto; padding-bottom: 0.3rem; }
+/* 最近阅读 */
+.recent-section { margin-bottom: 2rem; }
+.recent-title {
+    font-size: 1.1rem; color: #6b5a4b; font-weight: 400;
+    margin-bottom: 0.8rem; letter-spacing: 2px;
+    display: flex; align-items: center; gap: 0.5rem;
+}
+.recent-list { display: flex; gap: 0.8rem; overflow-x: auto; padding-bottom: 0.5rem; }
 .recent-card {
-    flex: 0 0 auto; min-width: 140px;
+    flex: 0 0 auto; min-width: 180px;
     background: #fefcf9; border: 1px solid #e9dbce;
-    border-radius: 0.7rem; padding: 0.6rem 0.9rem; cursor: pointer;
+    border-radius: 0.9rem; padding: 1rem 1.2rem;
+    cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;
 }
-.recent-card .r-title { font-size: 0.9rem; color: #3f2e22; margin-bottom: 0.2rem; }
-.recent-card .r-meta { font-size: 0.75rem; color: #9b8a7a; font-style: italic; }
+.recent-card:hover { transform: translateY(-2px); box-shadow: 0 8px 16px rgba(0,0,0,0.06); }
+.recent-card .r-title { font-size: 1.05rem; color: #3f2e22; margin-bottom: 0.3rem; }
+.recent-card .r-meta { font-size: 0.8rem; color: #9b8a7a; font-style: italic; }
 
-.search-box { max-width: 100%; margin: 0 auto 1rem; position: relative; }
+/* 搜索框 */
+.search-box { max-width: 480px; margin: 0 auto 2rem; position: relative; }
 .search-box input {
-    width: 100%; padding: 0.7rem 1rem 0.7rem 2.4rem;
+    width: 100%; padding: 0.9rem 1.2rem 0.9rem 3rem;
     border: 1px solid #d6c7b8; border-radius: 60px;
-    font-size: 0.9rem; background: #fffcf9; outline: none;
-    color: #2f241b;
+    font-size: 1rem; background: #fffcf9; outline: none;
+    color: #2f241b; transition: border 0.2s, box-shadow 0.2s;
 }
-.search-box input:focus { border-color: #b09b89; }
+.search-box input:focus { border-color: #b09b89; box-shadow: 0 0 0 3px rgba(176,155,137,0.15); }
 .search-box::before {
-    content: "🔍"; position: absolute; left: 0.9rem; top: 50%;
-    transform: translateY(-50%); font-size: 0.9rem; opacity: 0.5;
+    content: "🔍"; position: absolute; left: 1.2rem; top: 50%;
+    transform: translateY(-50%); font-size: 1rem; opacity: 0.5;
 }
 
+/* 书籍网格 */
+.book-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1.5rem; }
 .book-card {
-    background: #fefcf9; border: 1px solid #e9dbce; border-radius: 0.8rem;
-    padding: 1rem 1.1rem; box-shadow: 0 2px 6px rgba(0,0,0,0.02);
-    margin-bottom: 0.8rem;
+    background: #fefcf9; border: 1px solid #e9dbce; border-radius: 1rem;
+    padding: 1.5rem; box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+    cursor: pointer; transition: transform 0.2s, box-shadow 0.2s;
+    display: flex; flex-direction: column; gap: 0.8rem;
 }
-.book-header {
-    display: flex; justify-content: space-between; align-items: center;
-    cursor: pointer; gap: 0.5rem;
-}
-.book-title {
-    font-size: 1.15rem; font-weight: 400; color: #3f2e22;
-    letter-spacing: 1px; border-left: 3px solid #b09b89;
-    padding-left: 0.6rem; flex: 1; min-width: 0;
-    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
-}
-.book-toggle {
-    font-size: 0.8rem; color: #8b7a6b;
-    background: #f3ece3; padding: 0.25rem 0.6rem;
-    border-radius: 40px; white-space: nowrap;
-}
-.book-meta { color: #9b8a7a; font-size: 0.8rem; font-style: italic; padding-left: 0.9rem; margin-top: 0.4rem; }
+.book-card:hover { transform: translateY(-3px); box-shadow: 0 12px 24px rgba(0,0,0,0.08); border-color: #cbb9aa; }
+.book-title { font-size: 1.5rem; font-weight: 400; color: #3f2e22; letter-spacing: 1px; border-left: 4px solid #b09b89; padding-left: 0.8rem; }
+.book-meta { display: flex; gap: 1rem; color: #9b8a7a; font-size: 0.85rem; font-style: italic; padding-left: 0.9rem; }
 .book-desc {
-    color: #5a4a3e; font-size: 0.85rem; line-height: 1.6;
-    padding-left: 0.9rem; margin-top: 0.4rem;
-    display: -webkit-box; -webkit-line-clamp: 2;
+    color: #5a4a3e; font-size: 0.95rem; line-height: 1.7; padding-left: 0.9rem;
+    min-height: 3.4rem; display: -webkit-box; -webkit-line-clamp: 2;
     -webkit-box-orient: vertical; overflow: hidden;
 }
 .book-footer {
     display: flex; justify-content: space-between; align-items: center;
-    padding-left: 0.9rem; margin-top: 0.6rem; padding-top: 0.6rem;
-    border-top: 1px dashed #e9dbce;
+    padding-left: 0.9rem; margin-top: 0.5rem; padding-top: 0.8rem; border-top: 1px dashed #e9dbce;
 }
-.book-category {
-    background: #efe6dd; color: #6b5a4b; font-size: 0.75rem;
-    padding: 0.15rem 0.7rem; border-radius: 40px;
-}
-.book-status-done {
-    background: #d7ebd7; color: #3a7a3a;
-    font-size: 0.72rem; padding: 0.15rem 0.6rem;
-    border-radius: 40px; margin-left: 0.3rem;
-}
-.book-status-ongoing {
-    background: #f3e2c7; color: #8a6b2e;
-    font-size: 0.72rem; padding: 0.15rem 0.6rem;
-    border-radius: 40px; margin-left: 0.3rem;
-}
-.book-count { color: #9b8a7a; font-size: 0.8rem; }
+.book-category { background: #efe6dd; color: #6b5a4b; font-size: 0.8rem; padding: 0.25rem 0.8rem; border-radius: 40px; }
+.book-count { color: #9b8a7a; font-size: 0.85rem; }
 
-.chapter-list-expanded {
-    margin-top: 0.8rem; padding-top: 0.8rem;
-    border-top: 1px solid #e9dbce;
-}
-.chapter-row {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 0.5rem 0.6rem; border-radius: 0.4rem;
-    cursor: pointer; font-size: 0.88rem; color: #5a4a3e;
-}
-.chapter-row:hover { background: #f3ece3; }
-.chapter-row .ch-title { flex:1; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-.chapter-row .ch-time { font-size: 0.75rem; color: #9b8a7a; margin-left: 0.5rem; white-space:nowrap; }
+.empty-state { text-align: center; padding: 4rem 1rem; color: #b7a89b; font-style: italic; }
+.empty-state .icon { font-size: 4rem; margin-bottom: 1rem; opacity: 0.5; }
+.site-footer { text-align: center; color: #b7a89b; font-size: 0.85rem; margin-top: 3rem; padding-top: 1.5rem; border-top: 1px solid #e9dbce; letter-spacing: 1px; }
 
-.empty-state { text-align: center; padding: 3rem 1rem; color: #b7a89b; font-style: italic; font-size:0.9rem; }
-.empty-state .icon { font-size: 3rem; margin-bottom: 0.8rem; opacity: 0.5; }
-.site-footer { text-align: center; color: #b7a89b; font-size: 0.75rem; margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #e9dbce; letter-spacing: 1px; }
+@media (max-width: 600px) {
+    body { padding: 1rem; }
+    .site-header h1 { font-size: 1.8rem; letter-spacing: 2px; }
+    .book-grid { grid-template-columns: 1fr; }
+}
 </style>
 </head>
 <body>
 
+<!-- 密码门禁 -->
 <div id="gate" class="gate">
     <div class="gate-box">
         <div class="icon">🔒</div>
@@ -139,18 +119,20 @@ body { background: #f7f3eb; min-height: 100vh; color: #2f241b; padding: 0.8rem; 
         <input type="password" id="gatePwd" placeholder="········" autocomplete="off">
         <button id="gateBtn">进入书房</button>
         <div id="gateError" class="gate-error"></div>
-        <div style="font-size:0.75rem; color:#b7a89b; margin-top:1rem; font-style:italic;">
+        <div style="font-size:0.8rem; color:#b7a89b; margin-top:1.2rem; font-style:italic;">
             密码获取添加 QQ：1550930440
         </div>
     </div>
 </div>
 
+<!-- 主内容 -->
 <div class="container" id="mainContent" style="display:none;">
     <header class="site-header">
         <h1>✎ 我的书房</h1>
         <p>—— 那些藏在字里行间的故事 ——</p>
     </header>
 
+    <!-- 最近阅读 -->
     <div id="recentSection" class="recent-section" style="display:none;">
         <div class="recent-title">📖 最近阅读</div>
         <div id="recentList" class="recent-list"></div>
@@ -160,7 +142,7 @@ body { background: #f7f3eb; min-height: 100vh; color: #2f241b; padding: 0.8rem; 
         <input type="text" id="searchInput" placeholder="搜索书名、作者、简介或章节内容..." autocomplete="off">
     </div>
 
-    <div id="bookGrid"></div>
+    <div id="bookGrid" class="book-grid"></div>
     <div id="emptyState" class="empty-state" style="display:none;">
         <div class="icon">📚</div>
         <p>还没有书，或者没有匹配的结果</p>
@@ -171,17 +153,13 @@ body { background: #f7f3eb; min-height: 100vh; color: #2f241b; padding: 0.8rem; 
 
 <script>
 // ============================================================
-// 读者首页
+// 新版首页：从 books.json 读列表，从 book_xxx.json 读章节
 // ============================================================
 
 let READER_PASSWORD = "123456";
 const PASS_KEY = "novel_pass_ok";
 const PASS_TTL = 24 * 60 * 60 * 1000;
 const HISTORY_KEY = "novel_read_history";
-
-let allBooks = [];
-let bookChaptersCache = {};
-let expandedBooks = {};
 
 function hasPass() {
     try {
@@ -195,6 +173,7 @@ function hasPass() {
 function setPass() {
     localStorage.setItem(PASS_KEY, JSON.stringify({ t: Date.now() }));
 }
+
 function getHistory() {
     try {
         const raw = localStorage.getItem(HISTORY_KEY);
@@ -202,17 +181,12 @@ function getHistory() {
     } catch(e) { return {}; }
 }
 
-// 过滤定时未到的章节
-function getVisibleChapters(bookId) {
-    const now = new Date();
-    return (bookChaptersCache[bookId] || []).filter(ch => {
-        if (!ch.isScheduled) return true;
-        return new Date(ch.publishTime) <= now;
-    });
-}
+// 全局数据
+let allBooks = [];
+let bookChaptersCache = {}; // 缓存每本书的章节数（避免重复请求）
 
-// 读密码
 window.addEventListener('DOMContentLoaded', async function() {
+    // 从 books.json 读密码
     try {
         const res = await fetch('books.json?t=' + Date.now());
         if (res.ok) {
@@ -221,7 +195,7 @@ window.addEventListener('DOMContentLoaded', async function() {
                 READER_PASSWORD = data.settings.readerPassword;
             }
         }
-    } catch(e) {}
+    } catch(e) { /* 用默认密码 */ }
 
     if (hasPass()) {
         showContent();
@@ -251,7 +225,6 @@ function showContent() {
     loadBooks();
 }
 
-// ========== 读数据 ==========
 async function loadBooks() {
     try {
         const res = await fetch('books.json?t=' + Date.now());
@@ -261,28 +234,25 @@ async function loadBooks() {
     } catch (err) {
         allBooks = [];
     }
-
-    // 并行读每本书的章节
+    // 并行读取每本书的章节数
     await Promise.all(allBooks.map(async (book) => {
-        if (!book.dataFile) { bookChaptersCache[book.id] = []; return; }
+        if (!book.dataFile) { bookChaptersCache[book.id] = 0; return; }
         try {
             const res = await fetch(book.dataFile + '?t=' + Date.now());
             if (res.ok) {
                 const d = await res.json();
-                bookChaptersCache[book.id] = d.chapters || [];
+                bookChaptersCache[book.id] = (d.chapters || []).length;
             } else {
-                bookChaptersCache[book.id] = [];
+                bookChaptersCache[book.id] = 0;
             }
         } catch(e) {
-            bookChaptersCache[book.id] = [];
+            bookChaptersCache[book.id] = 0;
         }
     }));
-
     renderBooks(allBooks);
     renderRecent();
 }
 
-// ========== 渲染 ==========
 function renderRecent() {
     const history = getHistory();
     const section = document.getElementById('recentSection');
@@ -317,68 +287,31 @@ function continueRead(bookId, chapterIndex) {
 function renderBooks(books) {
     const grid = document.getElementById('bookGrid');
     const empty = document.getElementById('emptyState');
-
     if (!books || books.length === 0) {
         grid.innerHTML = '';
         empty.style.display = 'block';
         return;
     }
     empty.style.display = 'none';
-
     grid.innerHTML = books.map(book => {
-        const chapters = getVisibleChapters(book.id);
-        const count = chapters.length;
-        const isOpen = expandedBooks[book.id];
-
-        let expandedHtml = '';
-        if (isOpen) {
-            if (chapters.length === 0) {
-                expandedHtml = '<div class="chapter-list-expanded"><div style="text-align:center;color:#b7a89b;font-style:italic;padding:1rem;">本书暂无章节</div></div>';
-            } else {
-                expandedHtml = `
-                    <div class="chapter-list-expanded">
-                        ${chapters.map((ch, i) => `
-                            <div class="chapter-row" onclick="event.stopPropagation(); openChapter('${book.id}', ${i})">
-                                <span class="ch-title">${escapeHtml(ch.title || ('第' + (i+1) + '章'))}</span>
-                                <span class="ch-time">${escapeHtml((ch.publishTime || '').slice(0, 10))}</span>
-                            </div>
-                        `).join('')}
-                    </div>
-                `;
-            }
-        }
-
-        const statusHtml = book.status === '已完结'
-            ? '<span class="book-status-done">✅ 已完结</span>'
-            : '<span class="book-status-ongoing">📝 连载中</span>';
-
+        const count = bookChaptersCache[book.id] || 0;
         return `
-            <div class="book-card">
-                <div class="book-header" onclick="toggleBook('${book.id}')">
-                    <div class="book-title">${escapeHtml(book.title || '无题')}</div>
-                    <div class="book-toggle">${isOpen ? '收起目录 ▲' : '展开目录 ▼'}</div>
-                </div>
+            <div class="book-card" onclick="openBook('${book.id}')">
+                <div class="book-title">${escapeHtml(book.title || '无题')}</div>
                 <div class="book-meta"><span>✍️ ${escapeHtml(book.author || '未署名')}</span></div>
                 <div class="book-desc">${escapeHtml(book.description || '暂无简介')}</div>
                 <div class="book-footer">
                     <span class="book-category">${escapeHtml(book.category || '未分类')}</span>
-                    ${statusHtml}
                     <span class="book-count">📖 ${count} 章</span>
                 </div>
-                ${expandedHtml}
             </div>
         `;
     }).join('');
 }
 
-window.toggleBook = function(bookId) {
-    expandedBooks[bookId] = !expandedBooks[bookId];
-    renderBooks(allBooks);
-};
-
-window.openChapter = function(bookId, chapterIndex) {
-    window.location.href = 'read.html?book=' + bookId + '&ch=' + chapterIndex;
-};
+function openBook(bookId) {
+    window.location.href = 'read.html?book=' + bookId;
+}
 
 document.getElementById('searchInput').addEventListener('input', function(e) {
     const kw = e.target.value.trim().toLowerCase();
@@ -387,10 +320,7 @@ document.getElementById('searchInput').addEventListener('input', function(e) {
         const inMeta = (book.title||'').toLowerCase().includes(kw)
                     || (book.author||'').toLowerCase().includes(kw)
                     || (book.description||'').toLowerCase().includes(kw);
-        const inChapters = (bookChaptersCache[book.id] || []).some(ch =>
-            (ch.title||'').toLowerCase().includes(kw)
-            || (ch.content||'').toLowerCase().includes(kw));
-        return inMeta || inChapters;
+        return inMeta;
     });
     renderBooks(filtered);
 });
