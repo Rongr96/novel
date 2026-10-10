@@ -12,6 +12,15 @@
       "description": "",
       "createTime": "2025-03-09 19:07",
       "dataFile": "book_b_mv0v45d6mf9v.json"
+    },
+    {
+      "id": "b_mv241j2j2ke5",
+      "title": "《醉生梦死》",
+      "author": "Rong",
+      "category": "BL",
+      "description": "",
+      "createTime": "2023-03-01 16:05",
+      "dataFile": "book_b_mv241j2j2ke5.json"
     }
   ]
 }
