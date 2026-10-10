@@ -703,21 +703,17 @@ window.editChapterById = async function(bookId, index) {
     const ch = chapters[index];
     if (!ch) return;
 
-    const newTitle = prompt('章节标题', ch.title || '');
-    if (newTitle === null) return;
-    const newContent = prompt('正文', ch.content || '');
-    if (newContent === null) return;
-    const newTime = prompt('发表时间（2023-05-12 10:00）', ch.publishTime || '');
-    if (newTime === null) return;
-
-    ch.title = newTitle;
-    ch.content = newContent;
-    ch.publishTime = newTime;
-
-    if (await saveAllChapters(book, chapters)) {
-        toast('已保存');
-        renderBookList();
-    }
+    // 弹出编辑面板
+    openEditPanel(ch, async (newTitle, newContent, newTime, newType) => {
+        ch.title = newTitle;
+        ch.content = newContent;
+        ch.publishTime = newTime;
+        ch.type = newType;
+        if (await saveAllChapters(book, chapters)) {
+            toast('已保存');
+            renderBookList();
+        }
+    });
 };
 
 window.deleteChapterById = async function(bookId, index) {
@@ -968,21 +964,16 @@ window.editChapter = async function(index) {
     const ch = chapters[index];
     if (!ch) return;
 
-    const newTitle = prompt('章节标题', ch.title || '');
-    if (newTitle === null) return;
-    const newContent = prompt('正文', ch.content || '');
-    if (newContent === null) return;
-    const newTime = prompt('发表时间', ch.publishTime || '');
-    if (newTime === null) return;
-
-    ch.title = newTitle;
-    ch.content = newContent;
-    ch.publishTime = newTime;
-
-    if (await saveAllChapters(book, chapters)) {
-        toast('已保存');
-        renderChapterList();
-    }
+    openEditPanel(ch, async (newTitle, newContent, newTime, newType) => {
+        ch.title = newTitle;
+        ch.content = newContent;
+        ch.publishTime = newTime;
+        ch.type = newType;
+        if (await saveAllChapters(book, chapters)) {
+            toast('已保存');
+            renderChapterList();
+        }
+    });
 };
 
 window.moveChapter = async function(index, dir) {
@@ -1007,6 +998,76 @@ window.deleteChapter = async function(index) {
     }
 };
 
+    // ========== 章节编辑面板 ==========
+function openEditPanel(ch, onSave) {
+    // 如果已经存在，先移除
+    const old = document.getElementById('editPanel');
+    if (old) old.remove();
+
+    const panel = document.createElement('div');
+    panel.id = 'editPanel';
+    panel.style.cssText = `
+        position:fixed; inset:0; z-index:3000;
+        background:rgba(0,0,0,0.5);
+        display:flex; align-items:center; justify-content:center;
+        padding:1rem; overflow-y:auto;
+    `;
+
+    const currentType = ch.type === 'extra' ? 'extra' : 'main';
+
+    panel.innerHTML = `
+        <div style="background:#fefcf9; border-radius:1rem; padding:1.5rem; max-width:700px; width:100%; max-height:90vh; overflow-y:auto;">
+            <h3 style="font-weight:400; color:#3f2e22; margin-bottom:1rem;">编辑章节</h3>
+            <div class="form-group" style="margin-bottom:1rem;">
+                <label>章节标题</label>
+                <input type="text" id="epTitle" value="${escapeHtml(ch.title || '')}">
+            </div>
+            <div class="form-group" style="margin-bottom:1rem;">
+                <label>章节类型</label>
+                <div class="cat-btn-group" id="epTypeGroup">
+                    <button type="button" class="cat-btn ${currentType === 'main' ? 'selected' : ''}" data-value="main" onclick="epPickType('main')">正文</button>
+                    <button type="button" class="cat-btn ${currentType === 'extra' ? 'selected' : ''}" data-value="extra" onclick="epPickType('extra')">番外</button>
+                </div>
+            </div>
+            <div class="form-group" style="margin-bottom:1rem;">
+                <label>发表时间</label>
+                <input type="text" id="epTime" value="${escapeHtml(ch.publishTime || '')}" placeholder="2023-05-12 10:00">
+            </div>
+            <div class="form-group" style="margin-bottom:1rem;">
+                <label>正文</label>
+                <textarea id="epContent" style="min-height:300px; line-height:1.8;">${escapeHtml(ch.content || '')}</textarea>
+            </div>
+            <div style="display:flex; gap:0.6rem; justify-content:flex-end;">
+                <button class="btn" onclick="closeEditPanel()">取消</button>
+                <button class="btn btn-primary" id="epSaveBtn">保存</button>
+            </div>
+        </div>
+    `;
+
+    document.body.appendChild(panel);
+
+    document.getElementById('epSaveBtn').onclick = function() {
+        const newTitle = document.getElementById('epTitle').value.trim();
+        const newContent = document.getElementById('epContent').value;
+        const newTime = document.getElementById('epTime').value.trim();
+        const newType = document.querySelector('#epTypeGroup .cat-btn.selected').dataset.value;
+
+        closeEditPanel();
+        onSave(newTitle, newContent, newTime, newType);
+    };
+}
+
+window.epPickType = function(value) {
+    document.querySelectorAll('#epTypeGroup .cat-btn').forEach(btn => {
+        btn.classList.toggle('selected', btn.dataset.value === value);
+    });
+};
+
+window.closeEditPanel = function() {
+    const p = document.getElementById('editPanel');
+    if (p) p.remove();
+};
+    
 // ========== 工具栏 ==========
 document.querySelectorAll('.toolbar button').forEach(btn => {
     btn.onclick = function() {
