@@ -13,65 +13,28 @@ body.bg-green { background: #e8efe3; }
 body.bg-dark  { background: #2b2b2b; color: #d8d8d8; }
 .container { max-width: 1100px; margin: 0 auto; }
 
-.gate {
-    position: fixed; inset: 0; z-index: 9999;
-    background: #f7f3eb; display: flex; align-items: center; justify-content: center; padding: 1.5rem;
-}
-.gate-box {
-    max-width: 400px; width: 100%; background: #fefcf9;
-    border: 1px solid #e9dbce; border-radius: 1.5rem; padding: 2rem;
-    text-align: center;
-}
+.gate { position: fixed; inset: 0; z-index: 9999; background: #f7f3eb; display: flex; align-items: center; justify-content: center; padding: 1.5rem; }
+.gate-box { max-width: 400px; width: 100%; background: #fefcf9; border: 1px solid #e9dbce; border-radius: 1.5rem; padding: 2rem; text-align: center; }
 .gate-box .icon { font-size: 3rem; margin-bottom: 1rem; }
 .gate-box h2 { font-weight: 400; color: #3f2e22; letter-spacing: 2px; margin-bottom: 0.5rem; }
 .gate-box p { color: #8b7a6b; font-size: 0.9rem; font-style: italic; margin-bottom: 1.5rem; }
-.gate-box input {
-    width: 100%; padding: 0.9rem 1rem; border: 1px solid #d6c7b8;
-    border-radius: 60px; font-size: 1rem; background: #fffcf9;
-    outline: none; text-align: center; letter-spacing: 2px;
-    color: #2f241b; margin-bottom: 1rem; font-family: inherit;
-}
-.gate-box button {
-    width: 100%; padding: 0.9rem 0; background: #5e4b3c; color: #fff;
-    border: none; border-radius: 60px; font-size: 1rem;
-    letter-spacing: 2px; cursor: pointer; font-family: inherit;
-}
+.gate-box input { width: 100%; padding: 0.9rem 1rem; border: 1px solid #d6c7b8; border-radius: 60px; font-size: 1rem; background: #fffcf9; outline: none; text-align: center; letter-spacing: 2px; color: #2f241b; margin-bottom: 1rem; font-family: inherit; }
+.gate-box button { width: 100%; padding: 0.9rem 0; background: #5e4b3c; color: #fff; border: none; border-radius: 60px; font-size: 1rem; letter-spacing: 2px; cursor: pointer; font-family: inherit; }
 .gate-error { color: #b35e5e; font-size: 0.85rem; margin-top: 0.5rem; min-height: 1.2rem; font-style: italic; }
 
-.top-bar {
-    display: flex; justify-content: space-between; align-items: center;
-    padding-bottom: 1rem; margin-bottom: 1.5rem;
-    border-bottom: 2px solid #e0d3c6; flex-wrap: wrap; gap: 0.8rem;
-}
-.back-btn {
-    background: #efe6dd; color: #5e4b3c; border: none;
-    padding: 0.6rem 1.2rem; border-radius: 40px; cursor: pointer;
-    font-size: 0.9rem; font-family: inherit; text-decoration: none;
-    display: inline-flex; align-items: center; gap: 0.4rem;
-}
+.top-bar { display: flex; justify-content: space-between; align-items: center; padding-bottom: 1rem; margin-bottom: 1.5rem; border-bottom: 2px solid #e0d3c6; flex-wrap: wrap; gap: 0.8rem; }
+.back-btn { background: #efe6dd; color: #5e4b3c; border: none; padding: 0.6rem 1.2rem; border-radius: 40px; cursor: pointer; font-size: 0.9rem; font-family: inherit; text-decoration: none; display: inline-flex; align-items: center; gap: 0.4rem; }
 .book-title-top { font-size: 1.4rem; color: #3f2e22; font-weight: 400; letter-spacing: 2px; }
 
-.read-tools {
-    display: flex; gap: 0.6rem; align-items: center; flex-wrap: wrap;
-    background: #fefcf9; border: 1px solid #e9dbce;
-    border-radius: 1rem; padding: 0.7rem 1rem; margin-bottom: 1.2rem;
-}
+.read-tools { display: flex; gap: 0.6rem; align-items: center; flex-wrap: wrap; background: #fefcf9; border: 1px solid #e9dbce; border-radius: 1rem; padding: 0.7rem 1rem; margin-bottom: 1.2rem; }
 .read-tools .label { font-size: 0.85rem; color: #8b7a6b; }
-.read-tools button {
-    background: #efe6dd; border: 1px solid #d6c7b8;
-    color: #5e4b3c; padding: 0.35rem 0.8rem; border-radius: 40px;
-    cursor: pointer; font-size: 0.85rem; font-family: inherit;
-}
+.read-tools button { background: #efe6dd; border: 1px solid #d6c7b8; color: #5e4b3c; padding: 0.35rem 0.8rem; border-radius: 40px; cursor: pointer; font-size: 0.85rem; font-family: inherit; }
 .read-tools button.active { background: #5e4b3c; color: #fff; }
 
 .read-layout { display: grid; grid-template-columns: 240px 1fr; gap: 2rem; }
 @media (max-width: 800px) {
     .read-layout { grid-template-columns: 1fr; gap: 1rem; }
-    .chapter-list {
-        display: none; position: fixed; inset: 0;
-        max-height: 100vh; border-radius: 0;
-        z-index: 1000; padding: 1.5rem 1rem; overflow-y: auto;
-    }
+    .chapter-list { display: none; position: fixed; inset: 0; max-height: 100vh; border-radius: 0; z-index: 1000; padding: 1.5rem 1rem; overflow-y: auto; }
     .chapter-list.open { display: block; }
     .chapter-close { display: block; text-align: right; font-size: 1.5rem; color: #8b7a6b; padding: 0.5rem; cursor: pointer; border: none; background: transparent; width: 100%; }
     .chapter-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.3); z-index: 999; }
@@ -79,57 +42,29 @@ body.bg-dark  { background: #2b2b2b; color: #d8d8d8; }
 }
 .chapter-close { display: none; }
 
-.chapter-list {
-    background: #fefcf9; border: 1px solid #e9dbce;
-    border-radius: 1rem; padding: 1rem;
-    max-height: 80vh; overflow-y: auto;
-    align-self: start; position: sticky; top: 1.5rem;
-}
+.chapter-list { background: #fefcf9; border: 1px solid #e9dbce; border-radius: 1rem; padding: 1rem; max-height: 80vh; overflow-y: auto; align-self: start; position: sticky; top: 1.5rem; }
 .chapter-list h3 { font-size: 1rem; color: #8b7a6b; font-weight: 400; margin-bottom: 0.8rem; padding-left: 0.5rem; }
-.chapter-item {
-    padding: 0.7rem 0.9rem; border-radius: 0.6rem; cursor: pointer;
-    color: #5a4a3e; font-size: 0.95rem; margin-bottom: 0.2rem;
-    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-}
+.chapter-item { padding: 0.7rem 0.9rem; border-radius: 0.6rem; cursor: pointer; color: #5a4a3e; font-size: 0.95rem; margin-bottom: 0.2rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .chapter-item:hover { background: #f3ece3; }
 .chapter-item.active { background: #5e4b3c; color: #fff; }
 
-.menu-btn {
-    display: none; background: #5e4b3c; color: #fff; border: none;
-    padding: 0.6rem 1.1rem; border-radius: 40px;
-    cursor: pointer; font-size: 0.9rem; font-family: inherit;
-}
+.menu-btn { display: none; background: #5e4b3c; color: #fff; border: none; padding: 0.6rem 1.1rem; border-radius: 40px; cursor: pointer; font-size: 0.9rem; font-family: inherit; }
 @media (max-width: 800px) { .menu-btn { display: inline-flex; align-items: center; gap: 0.4rem; } }
 
-.article-area {
-    background: #fefcf9; border: 1px solid #e9dbce;
-    border-radius: 1rem; padding: 2.5rem 3rem;
-}
+.article-area { background: #fefcf9; border: 1px solid #e9dbce; border-radius: 1rem; padding: 2.5rem 3rem; }
 body.bg-dark .article-area { background: #3a3a3a; border-color: #444; }
 body.bg-dark .article-title { color: #e8e8e8; }
 body.bg-white .article-area { background: #fff; }
 body.bg-green .article-area { background: #f4f9ef; }
 @media (max-width: 600px) { .article-area { padding: 1.5rem 1.2rem; } }
 
-.article-title {
-    font-size: 1.8rem; color: #3f2e22; font-weight: 400;
-    margin-bottom: 0.5rem; letter-spacing: 1px;
-    border-left: 5px solid #b09b89; padding-left: 1rem;
-}
+.article-title { font-size: 1.8rem; color: #3f2e22; font-weight: 400; margin-bottom: 0.5rem; letter-spacing: 1px; border-left: 5px solid #b09b89; padding-left: 1rem; }
 .article-meta { color: #9b8a7a; font-size: 0.9rem; font-style: italic; margin-bottom: 2rem; padding-left: 1.3rem; }
 .article-content { line-height: 2; }
 .article-content p { text-indent: 2em; margin-bottom: 1.2rem; }
 
-.nav-buttons {
-    display: flex; justify-content: space-between;
-    margin-top: 3rem; padding-top: 1.5rem;
-    border-top: 1px dashed #e9dbce; gap: 1rem; flex-wrap: wrap;
-}
-.nav-btn {
-    background: #efe6dd; color: #5e4b3c; border: none;
-    padding: 0.7rem 1.4rem; border-radius: 40px;
-    cursor: pointer; font-size: 0.95rem; font-family: inherit;
-}
+.nav-buttons { display: flex; justify-content: space-between; margin-top: 3rem; padding-top: 1.5rem; border-top: 1px dashed #e9dbce; gap: 1rem; flex-wrap: wrap; }
+.nav-btn { background: #efe6dd; color: #5e4b3c; border: none; padding: 0.7rem 1.4rem; border-radius: 40px; cursor: pointer; font-size: 0.95rem; font-family: inherit; }
 .nav-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 .loading-tip { text-align: center; padding: 4rem 1rem; color: #b7a89b; font-style: italic; }
 </style>
@@ -184,7 +119,7 @@ body.bg-green .article-area { background: #f4f9ef; }
 
 <script>
 // ============================================================
-// 新版阅读页：读 _meta.json + _part*.json
+// 新结构阅读页：读 _meta.json + 单章文件
 // ============================================================
 
 const REPO = 'Rongr96/novel';
@@ -206,9 +141,7 @@ function hasPass() {
     } catch(e) { return false; }
 }
 function setPass() { localStorage.setItem(PASS_KEY, JSON.stringify({ t: Date.now() })); }
-function getHistory() {
-    try { return JSON.parse(localStorage.getItem(HISTORY_KEY) || '{}'); } catch(e) { return {}; }
-}
+function getHistory() { try { return JSON.parse(localStorage.getItem(HISTORY_KEY) || '{}'); } catch(e) { return {}; } }
 function saveHistory(bookId, chapterIndex, bookTitle) {
     const h = getHistory();
     h[bookId] = { bookId, chapterIndex, bookTitle, t: Date.now() };
@@ -235,7 +168,8 @@ function applyBg() {
 }
 
 let currentBook = null;
-let allChapters = [];  // 这本书的全部章节
+let allChapters = [];  // 章节索引（不含正文）
+let chapterContentCache = {};  // 缓存已加载的正文
 let currentChapterIndex = 0;
 
 window.addEventListener('DOMContentLoaded', async function() {
@@ -244,9 +178,7 @@ window.addEventListener('DOMContentLoaded', async function() {
         const res = await fetch('books.json?t=' + Date.now());
         if (res.ok) {
             const data = await res.json();
-            if (data.settings && data.settings.readerPassword) {
-                READER_PASSWORD = data.settings.readerPassword;
-            }
+            if (data.settings && data.settings.readerPassword) READER_PASSWORD = data.settings.readerPassword;
         }
     } catch(e) {}
     if (hasPass()) showContent();
@@ -255,10 +187,8 @@ window.addEventListener('DOMContentLoaded', async function() {
 
 document.getElementById('gateBtn').onclick = function() {
     const pwd = document.getElementById('gatePwd').value.trim();
-    if (pwd === READER_PASSWORD) {
-        setPass();
-        showContent();
-    } else {
+    if (pwd === READER_PASSWORD) { setPass(); showContent(); }
+    else {
         document.getElementById('gateError').textContent = '密码不正确，请重试。';
         document.getElementById('gatePwd').value = '';
         document.getElementById('gatePwd').focus();
@@ -284,7 +214,6 @@ async function init() {
         return;
     }
 
-    // 读 books.json
     let booksData;
     try {
         const res = await fetch('books.json?t=' + Date.now());
@@ -301,26 +230,16 @@ async function init() {
         return;
     }
 
-    // 读 meta 文件 + 所有 part 文件
+    // 只读 meta（索引），非常快
     allChapters = [];
     if (currentBook.metaFile) {
         try {
             const metaRes = await fetch(currentBook.metaFile + '?t=' + Date.now());
             if (metaRes.ok) {
                 const meta = await metaRes.json();
-                const parts = meta.parts || [];
-// 按 part 顺序串行读取，保证章节顺序正确
-for (const p of parts) {
-    try {
-        const r = await fetch(p.file + '?t=' + Date.now());
-        if (r.ok) {
-            const d = await r.json();
-            (d.chapters || []).forEach(ch => allChapters.push(ch));
-        }
-    } catch(e) {}
-}
+                allChapters = meta.chapters || [];
             }
-        } catch(e) { /* 保持空 */ }
+        } catch(e) {}
     }
 
     document.getElementById('topTitle').textContent = currentBook.title || '未命名';
@@ -347,7 +266,6 @@ function renderChapterList() {
         return;
     }
 
-    // 分成「正文」和「番外」两组
     const mainChapters = [];
     const extraChapters = [];
     chapters.forEach((ch, i) => {
@@ -376,22 +294,49 @@ function renderChapterList() {
     list.innerHTML = html;
 }
 
-function loadChapter(index) {
+async function loadChapter(index) {
     const chapters = getVisibleChapters();
     if (index < 0 || index >= chapters.length) return;
     currentChapterIndex = index;
     const ch = chapters[index];
 
     document.querySelectorAll('.chapter-item').forEach((el, i) => {
-        el.classList.toggle('active', i === index);
+        el.classList.toggle('active', parseInt(el.dataset.index) === index);
     });
 
-    const paras = (ch.content || '').split('\n')
+    // 显示加载状态
+    const articleArea = document.getElementById('articleArea');
+    articleArea.innerHTML = '<div class="loading-tip">📖 正在加载...</div>';
+
+    // 读正文
+    let content = chapterContentCache[ch.id];
+    if (content === undefined) {
+        try {
+            if (ch.file) {
+                const r = await fetch(ch.file + '?t=' + Date.now());
+                if (r.ok) {
+                    const d = await r.json();
+                    content = d.content || '';
+                } else {
+                    content = '';
+                }
+            } else if (ch.content) {
+                content = ch.content;
+            } else {
+                content = '';
+            }
+            chapterContentCache[ch.id] = content;
+        } catch(e) {
+            content = '';
+        }
+    }
+
+    const paras = (content || '').split('\n')
         .filter(p => p.trim() !== '')
         .map(p => `<p>${escapeHtml(p)}</p>`).join('');
 
     const fontSize = getFontSize();
-    document.getElementById('articleArea').innerHTML = `
+    articleArea.innerHTML = `
         <h1 class="article-title">${escapeHtml(ch.title || ('第' + (index+1) + '章'))}</h1>
         <div class="article-meta">📅 ${escapeHtml(ch.publishTime || '')}　✍️ ${escapeHtml(currentBook.author || '未署名')}</div>
         <div class="article-content" style="font-size:${fontSize}px;">
