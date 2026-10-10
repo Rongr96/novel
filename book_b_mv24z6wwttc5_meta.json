@@ -1,5 +1,21 @@
 {
   "bookId": "b_mv24z6wwttc5",
-  "totalChapters": 0,
-  "parts": []
+  "totalChapters": 131,
+  "parts": [
+    {
+      "file": "book_b_mv24z6wwttc5_part1.json",
+      "start": 0,
+      "end": 49
+    },
+    {
+      "file": "book_b_mv24z6wwttc5_part2.json",
+      "start": 50,
+      "end": 99
+    },
+    {
+      "file": "book_b_mv24z6wwttc5_part3.json",
+      "start": 100,
+      "end": 130
+    }
+  ]
 }
