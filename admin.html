@@ -115,7 +115,59 @@ body { background:#f7f3eb; min-height:100vh; color:#2f241b; padding:1.5rem; }
 .badge-live { background:#d7ebd7; color:#3a7a3a; }
 .badge-scheduled { background:#f3e2c7; color:#8a6b2e; }
 
-.toast {
+/* 自定义下拉框 / 选择弹窗 */
+.picker-btn {
+    width:100%; padding:0.7rem 0.9rem; border:1px solid #d6c7b8;
+    border-radius:0.6rem; font-size:0.95rem; background:#fffcf9;
+    color:#2f241b; cursor:pointer; text-align:left;
+    display:flex; justify-content:space-between; align-items:center;
+    font-family:inherit;
+}
+.picker-btn:hover { background:#f7f3eb; }
+.picker-btn .arrow { color:#9b8a7a; font-size:0.8rem; }
+
+.picker-overlay {
+    display:none; position:fixed; inset:0;
+    background:rgba(0,0,0,0.4); z-index:2000;
+    align-items:center; justify-content:center; padding:1.5rem;
+}
+.picker-overlay.open { display:flex; }
+.picker-box {
+    background:#fefcf9; border:1px solid #e9dbce;
+    border-radius:1rem; padding:1.2rem;
+    max-width:400px; width:100%; max-height:70vh;
+    overflow-y:auto; box-shadow:0 12px 32px rgba(0,0,0,0.15);
+}
+.picker-box h4 {
+    font-weight:400; color:#3f2e22; margin-bottom:0.8rem;
+    text-align:center; letter-spacing:1px;
+}
+.picker-option {
+    padding:0.8rem 1rem; border-radius:0.6rem;
+    cursor:pointer; color:#5a4a3e; transition:background 0.15s;
+    margin-bottom:0.3rem; border:1px solid #e9dbce;
+}
+.picker-option:hover { background:#f3ece3; }
+.picker-option.selected { background:#5e4b3c; color:#fff; border-color:#5e4b3c; }
+.picker-cancel {
+    width:100%; padding:0.7rem; margin-top:0.5rem;
+    background:transparent; border:1px solid #d6c7b8;
+    border-radius:0.6rem; color:#8b7a6b;
+    cursor:pointer; font-family:inherit; font-size:0.9rem;
+}
+
+/* 分类按钮组 */
+.cat-btn-group { display:flex; gap:0.6rem; flex-wrap:wrap; }
+.cat-btn {
+    padding:0.7rem 1.5rem; border:1px solid #d6c7b8;
+    background:#fffcf9; color:#5e4b3c;
+    border-radius:0.6rem; cursor:pointer;
+    font-family:inherit; font-size:0.95rem;
+    transition:background 0.15s;
+}
+.cat-btn:hover { background:#f3ece3; }
+.cat-btn.selected { background:#5e4b3c; color:#fff; border-color:#5e4b3c; }
+    .toast {
     position:fixed; top:1.5rem; left:50%; transform:translateX(-50%);
     background:#5e4b3c; color:#fff; padding:0.9rem 1.6rem;
     border-radius:40px; font-size:0.95rem; z-index:999;
@@ -200,11 +252,11 @@ body { background:#f7f3eb; min-height:100vh; color:#2f241b; padding:1.5rem; }
                 <div class="form-row">
                     <div class="form-group">
                         <label>分类</label>
-                        <select id="nbCategory">
-                            <option value="BL">BL</option>
-                            <option value="GL">GL</option>
-                            <option value="BG">BG</option>
-                        </select>
+<div class="cat-btn-group" id="nbCategoryGroup">
+    <button type="button" class="cat-btn selected" data-value="BL" onclick="pickCategory('BL')">BL</button>
+    <button type="button" class="cat-btn" data-value="GL" onclick="pickCategory('GL')">GL</button>
+    <button type="button" class="cat-btn" data-value="BG" onclick="pickCategory('BG')">BG</button>
+</div>
                     </div>
                     <div class="form-group">
                         <label>创建时间（可自选过去的时间）</label>
@@ -225,7 +277,11 @@ body { background:#f7f3eb; min-height:100vh; color:#2f241b; padding:1.5rem; }
                 <h3>✍️ 新建章节</h3>
                 <div class="form-group" style="margin-bottom:1rem;">
                     <label>选择书籍 *</label>
-                    <select id="ncBookSelect"></select>
+<button type="button" class="picker-btn" id="ncBookSelectBtn" onclick="openPicker('ncBookSelect')">
+    <span id="ncBookSelectLabel">点击选择书籍</span>
+    <span class="arrow">▼</span>
+</button>
+<input type="hidden" id="ncBookSelect" value="">
                 </div>
                 <div class="form-group" style="margin-bottom:1rem;">
                     <label>章节标题 *</label>
@@ -264,7 +320,11 @@ body { background:#f7f3eb; min-height:100vh; color:#2f241b; padding:1.5rem; }
                 <h3>📚 章节管理</h3>
                 <div class="form-group" style="margin-bottom:1rem;">
                     <label>选择书籍</label>
-                    <select id="cmBookSelect"></select>
+<button type="button" class="picker-btn" id="cmBookSelectBtn" onclick="openPicker('cmBookSelect')">
+    <span id="cmBookSelectLabel">点击选择书籍</span>
+    <span class="arrow">▼</span>
+</button>
+<input type="hidden" id="cmBookSelect" value="">
                 </div>
                 <div id="chapterList" class="item-list">
                     <div class="empty">请选择一本书查看章节</div>
@@ -278,7 +338,11 @@ body { background:#f7f3eb; min-height:100vh; color:#2f241b; padding:1.5rem; }
                 <h3>📥 批量导入章节</h3>
                 <div class="form-group" style="margin-bottom:1rem;">
                     <label>导入到哪本书 *</label>
-                    <select id="biBookSelect"></select>
+<button type="button" class="picker-btn" id="biBookSelectBtn" onclick="openPicker('biBookSelect')">
+    <span id="biBookSelectLabel">点击选择书籍</span>
+    <span class="arrow">▼</span>
+</button>
+<input type="hidden" id="biBookSelect" value="">
                 </div>
                 <div class="form-group" style="margin-bottom:1rem;">
                     <label>粘贴内容（自动按「第X章」拆分）</label>
@@ -320,6 +384,14 @@ body { background:#f7f3eb; min-height:100vh; color:#2f241b; padding:1.5rem; }
 </div>
 
 <div id="toast" class="toast"></div>
+    <!-- 选择弹窗 -->
+<div class="picker-overlay" id="pickerOverlay" onclick="closePickerOutside(event)">
+    <div class="picker-box" id="pickerBox">
+        <h4>请选择</h4>
+        <div id="pickerOptions"></div>
+        <button type="button" class="picker-cancel" onclick="closePicker()">取消</button>
+    </div>
+</div>
 <script>
 // ============================================================
 // 新版管理后台：一本书一个文件
@@ -398,6 +470,73 @@ $('logoutBtn').onclick = function() {
     toast('已退出');
 };
 
+    // ============================================================
+// 自定义选择弹窗（替代原生 select）
+// ============================================================
+
+let currentPickerTarget = null;
+
+window.openPicker = function(targetId) {
+    currentPickerTarget = targetId;
+    const overlay = document.getElementById('pickerOverlay');
+    const optionsBox = document.getElementById('pickerOptions');
+
+    // 根据 targetId 决定显示什么选项
+    if (targetId === 'ncBookSelect' || targetId === 'cmBookSelect' || targetId === 'biBookSelect') {
+        // 选书
+        if (state.books.length === 0) {
+            optionsBox.innerHTML = '<div class="empty" style="padding:1rem;text-align:center;color:#b7a89b;">还没有书，请先去「发表新文」创建</div>';
+        } else {
+            const currentVal = document.getElementById(targetId).value;
+            optionsBox.innerHTML = state.books.map(b => `
+                <div class="picker-option ${b.id === currentVal ? 'selected' : ''}" onclick="pickOption('${b.id}', '${escapeHtml(b.title)}')">
+                    ${escapeHtml(b.title)}
+                </div>
+            `).join('');
+        }
+    }
+    overlay.classList.add('open');
+};
+
+window.pickOption = function(value, label) {
+    const input = document.getElementById(currentPickerTarget);
+    input.value = value;
+    // 更新按钮上显示的文字
+    const labelSpan = document.getElementById(currentPickerTarget + 'Label');
+    if (labelSpan) labelSpan.textContent = label;
+
+    // 如果是章节管理里选书，选完后自动加载章节列表
+    if (currentPickerTarget === 'cmBookSelect') {
+        renderChapterList();
+    }
+
+    closePicker();
+};
+
+window.closePicker = function() {
+    document.getElementById('pickerOverlay').classList.remove('open');
+    currentPickerTarget = null;
+};
+
+window.closePickerOutside = function(e) {
+    // 只有点遮罩层本身才关闭，点内部不关闭
+    if (e.target.id === 'pickerOverlay') {
+        closePicker();
+    }
+};
+
+// 分类选择
+window.pickCategory = function(value) {
+    document.querySelectorAll('#nbCategoryGroup .cat-btn').forEach(btn => {
+        btn.classList.toggle('selected', btn.dataset.value === value);
+    });
+};
+
+// 获取当前选中的分类
+function getSelectedCategory() {
+    const btn = document.querySelector('#nbCategoryGroup .cat-btn.selected');
+    return btn ? btn.dataset.value : 'BL';
+}
 window.addEventListener('DOMContentLoaded', function() {
     const saved = localStorage.getItem('novel_token');
     if (saved) $('tokenInput').value = saved;
@@ -678,7 +817,27 @@ async function renderChapterList() {
     }).join('');
 }
 
-function renderSettings() {
+// 同步选书按钮上的文字（旧版 renderBookSelects 的替代）
+function renderBookSelects() {
+    ['ncBookSelect', 'cmBookSelect', 'biBookSelect'].forEach(id => {
+        const input = document.getElementById(id);
+        const label = document.getElementById(id + 'Label');
+        if (!input || !label) return;
+        if (input.value) {
+            const book = state.books.find(b => b.id === input.value);
+            if (book) {
+                label.textContent = book.title;
+            } else {
+                input.value = '';
+                label.textContent = '点击选择书籍';
+            }
+        } else {
+            label.textContent = '点击选择书籍';
+        }
+    });
+}
+    
+    function renderSettings() {
     $('stReaderPwd').value = state.settings.readerPassword || '';
     $('stAdminPwd').value = state.settings.adminPassword || '';
 }
@@ -699,7 +858,7 @@ $('createBookBtn').onclick = async function() {
         id: bookId,
         title: title,
         author: $('nbAuthor').value.trim(),
-        category: $('nbCategory').value,
+category: getSelectedCategory(),
         description: $('nbDesc').value.trim(),
         createTime: createTime,
         dataFile: dataFile
@@ -722,10 +881,12 @@ $('createBookBtn').onclick = async function() {
         return;
     }
 
-    toast('创建成功');
-    $('nbTitle').value = '';
-    $('nbAuthor').value = '';
-    $('nbDesc').value = '';
+toast('创建成功');
+        $('nbTitle').value = '';
+        $('nbAuthor').value = '';
+        $('nbDesc').value = '';
+        // 分类重置为 BL
+        pickCategory('BL');
     renderBookList();
     renderBookSelects();
 };
@@ -827,7 +988,7 @@ window.deleteChapter = async function(index) {
     else bookData.chapters.splice(index, 0, removed);
 };
 
-$('cmBookSelect').onchange = renderChapterList;
+// 章节管理选书由 pickOption 自动触发 renderChapterList，这里不需要额外监听
 
 // ---------- 编辑器工具栏 ----------
 document.querySelectorAll('.toolbar button').forEach(btn => {
