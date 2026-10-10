@@ -21,6 +21,16 @@
       "description": "",
       "createTime": "2023-03-01 16:05",
       "dataFile": "book_b_mv241j2j2ke5.json"
+    },
+    {
+      "id": "b_mv244zzcnqr1",
+      "title": "测试",
+      "author": "",
+      "category": "BL",
+      "status": "连载中",
+      "description": "",
+      "createTime": "2026-10-10 16:08",
+      "metaFile": "book_b_mv244zzcnqr1_meta.json"
     }
   ]
 }
