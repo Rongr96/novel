@@ -345,11 +345,34 @@ function renderChapterList() {
         list.innerHTML = '<div class="loading-tip">本书暂无章节</div>';
         return;
     }
-    list.innerHTML = chapters.map((ch, i) => `
-        <div class="chapter-item" data-index="${i}" onclick="loadChapter(${i}); closeMenu();">
-            ${escapeHtml(ch.title || ('第' + (i+1) + '章'))}
-        </div>
-    `).join('');
+
+    // 分成「正文」和「番外」两组
+    const mainChapters = [];
+    const extraChapters = [];
+    chapters.forEach((ch, i) => {
+        const item = { ...ch, _index: i };
+        if (ch.type === 'extra') extraChapters.push(item);
+        else mainChapters.push(item);
+    });
+
+    let html = '';
+    if (mainChapters.length > 0) {
+        html += '<div style="font-size:0.85rem;color:#8b7a6b;padding:0.5rem 0.7rem;letter-spacing:1px;">📖 正文</div>';
+        html += mainChapters.map(ch => `
+            <div class="chapter-item" data-index="${ch._index}" onclick="loadChapter(${ch._index}); closeMenu();">
+                ${escapeHtml(ch.title || ('第' + (ch._index+1) + '章'))}
+            </div>
+        `).join('');
+    }
+    if (extraChapters.length > 0) {
+        html += '<div style="font-size:0.85rem;color:#8b7a6b;padding:0.8rem 0.7rem 0.5rem;letter-spacing:1px;border-top:1px dashed #e9dbce;margin-top:0.5rem;">📖 番外</div>';
+        html += extraChapters.map(ch => `
+            <div class="chapter-item" data-index="${ch._index}" onclick="loadChapter(${ch._index}); closeMenu();">
+                ${escapeHtml(ch.title || ('第' + (ch._index+1) + '章'))}
+            </div>
+        `).join('');
+    }
+    list.innerHTML = html;
 }
 
 function loadChapter(index) {
