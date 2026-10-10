@@ -514,9 +514,25 @@ async function saveBooks() {
 
 // 读取某本书的完整章节列表（跨所有 part）
 async function loadAllChapters(book) {
+async function loadAllChapters(book) {
     const metaPath = book.metaFile;
     if (!metaPath) return { chapters: [], parts: [] };
 
+    // ========== 缓存检查（5 分钟有效）==========
+    const cacheKey = 'admin_cache_' + book.id;
+    const cacheTTL = 5 * 60 * 1000;
+    try {
+        const raw = sessionStorage.getItem(cacheKey);
+        if (raw) {
+            const obj = JSON.parse(raw);
+            if (Date.now() - obj.t < cacheTTL) {
+                // 命中缓存，直接返回
+                return { chapters: obj.chapters, parts: obj.parts, meta: obj.meta, cached: true };
+            }
+        }
+    } catch(e) { /* 缓存读取失败，忽略 */ }
+
+    // ========== 缓存没命中，从 GitHub 读 ==========
     let meta;
     try {
         const result = await ghGet(metaPath);
@@ -527,10 +543,10 @@ async function loadAllChapters(book) {
         return { chapters: [], parts: [] };
     }
 
-    // meta 结构：{ bookId, parts: [{file, start, end}], totalChapters }
     const parts = meta.parts || [];
     const allChapters = [];
 
+    // 串行读 part，保证顺序，且减少 GitHub 并发压力
     for (const part of parts) {
         try {
             const r = await ghGet(part.file);
@@ -541,9 +557,19 @@ async function loadAllChapters(book) {
         } catch(e) { /* 跳过读不到的 part */ }
     }
 
-    return { chapters: allChapters, parts, meta };
-}
+    // ========== 写缓存 ==========
+    try {
+        sessionStorage.setItem(cacheKey, JSON.stringify({
+            t: Date.now(),
+            chapters: allChapters,
+            parts: parts,
+            meta: meta
+        }));
+    } catch(e) { /* sessionStorage 满或不可用，忽略 */ }
 
+    return { chapters: allChapters, parts, meta };
+    }
+    
 // 保存所有章节（自动分文件）
 async function saveAllChapters(book, chapters) {
     const metaPath = book.metaFile;
