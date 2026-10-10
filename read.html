@@ -11,10 +11,8 @@ body.bg-paper { background: #f7f3eb; }
 body.bg-white { background: #ffffff; }
 body.bg-green { background: #e8efe3; }
 body.bg-dark  { background: #2b2b2b; color: #d8d8d8; }
-
 .container { max-width: 1100px; margin: 0 auto; }
 
-/* 密码门禁 */
 .gate {
     position: fixed; inset: 0; z-index: 9999;
     background: #f7f3eb; display: flex; align-items: center; justify-content: center; padding: 1.5rem;
@@ -22,7 +20,7 @@ body.bg-dark  { background: #2b2b2b; color: #d8d8d8; }
 .gate-box {
     max-width: 400px; width: 100%; background: #fefcf9;
     border: 1px solid #e9dbce; border-radius: 1.5rem; padding: 2rem;
-    box-shadow: 0 12px 32px rgba(0,0,0,0.06); text-align: center;
+    text-align: center;
 }
 .gate-box .icon { font-size: 3rem; margin-bottom: 1rem; }
 .gate-box h2 { font-weight: 400; color: #3f2e22; letter-spacing: 2px; margin-bottom: 0.5rem; }
@@ -33,16 +31,13 @@ body.bg-dark  { background: #2b2b2b; color: #d8d8d8; }
     outline: none; text-align: center; letter-spacing: 2px;
     color: #2f241b; margin-bottom: 1rem; font-family: inherit;
 }
-.gate-box input:focus { border-color: #b09b89; }
 .gate-box button {
     width: 100%; padding: 0.9rem 0; background: #5e4b3c; color: #fff;
     border: none; border-radius: 60px; font-size: 1rem;
     letter-spacing: 2px; cursor: pointer; font-family: inherit;
 }
-.gate-box button:hover { background: #4a3a2e; }
 .gate-error { color: #b35e5e; font-size: 0.85rem; margin-top: 0.5rem; min-height: 1.2rem; font-style: italic; }
 
-/* 顶部栏 */
 .top-bar {
     display: flex; justify-content: space-between; align-items: center;
     padding-bottom: 1rem; margin-bottom: 1.5rem;
@@ -54,10 +49,8 @@ body.bg-dark  { background: #2b2b2b; color: #d8d8d8; }
     font-size: 0.9rem; font-family: inherit; text-decoration: none;
     display: inline-flex; align-items: center; gap: 0.4rem;
 }
-.back-btn:hover { background: #e0d3c6; }
 .book-title-top { font-size: 1.4rem; color: #3f2e22; font-weight: 400; letter-spacing: 2px; }
 
-/* 阅读设置栏 */
 .read-tools {
     display: flex; gap: 0.6rem; align-items: center; flex-wrap: wrap;
     background: #fefcf9; border: 1px solid #e9dbce;
@@ -69,10 +62,8 @@ body.bg-dark  { background: #2b2b2b; color: #d8d8d8; }
     color: #5e4b3c; padding: 0.35rem 0.8rem; border-radius: 40px;
     cursor: pointer; font-size: 0.85rem; font-family: inherit;
 }
-.read-tools button:hover { background: #e0d3c6; }
 .read-tools button.active { background: #5e4b3c; color: #fff; }
 
-/* 布局 */
 .read-layout { display: grid; grid-template-columns: 240px 1fr; gap: 2rem; }
 @media (max-width: 800px) {
     .read-layout { grid-template-columns: 1fr; gap: 1rem; }
@@ -97,8 +88,8 @@ body.bg-dark  { background: #2b2b2b; color: #d8d8d8; }
 .chapter-list h3 { font-size: 1rem; color: #8b7a6b; font-weight: 400; margin-bottom: 0.8rem; padding-left: 0.5rem; }
 .chapter-item {
     padding: 0.7rem 0.9rem; border-radius: 0.6rem; cursor: pointer;
-    color: #5a4a3e; font-size: 0.95rem; transition: background 0.15s;
-    margin-bottom: 0.2rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    color: #5a4a3e; font-size: 0.95rem; margin-bottom: 0.2rem;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
 }
 .chapter-item:hover { background: #f3ece3; }
 .chapter-item.active { background: #5e4b3c; color: #fff; }
@@ -110,26 +101,24 @@ body.bg-dark  { background: #2b2b2b; color: #d8d8d8; }
 }
 @media (max-width: 800px) { .menu-btn { display: inline-flex; align-items: center; gap: 0.4rem; } }
 
-/* 正文区 */
 .article-area {
     background: #fefcf9; border: 1px solid #e9dbce;
     border-radius: 1rem; padding: 2.5rem 3rem;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.02); transition: background 0.3s, color 0.3s;
 }
 body.bg-dark .article-area { background: #3a3a3a; border-color: #444; }
-body.bg-white .article-area { background: #ffffff; }
+body.bg-dark .article-title { color: #e8e8e8; }
+body.bg-white .article-area { background: #fff; }
 body.bg-green .article-area { background: #f4f9ef; }
 @media (max-width: 600px) { .article-area { padding: 1.5rem 1.2rem; } }
+
 .article-title {
     font-size: 1.8rem; color: #3f2e22; font-weight: 400;
     margin-bottom: 0.5rem; letter-spacing: 1px;
     border-left: 5px solid #b09b89; padding-left: 1rem;
 }
-body.bg-dark .article-title { color: #e8e8e8; }
 .article-meta { color: #9b8a7a; font-size: 0.9rem; font-style: italic; margin-bottom: 2rem; padding-left: 1.3rem; }
 .article-content { line-height: 2; }
 .article-content p { text-indent: 2em; margin-bottom: 1.2rem; }
-.article-content p:last-child { margin-bottom: 0; }
 
 .nav-buttons {
     display: flex; justify-content: space-between;
@@ -141,14 +130,12 @@ body.bg-dark .article-title { color: #e8e8e8; }
     padding: 0.7rem 1.4rem; border-radius: 40px;
     cursor: pointer; font-size: 0.95rem; font-family: inherit;
 }
-.nav-btn:hover:not(:disabled) { background: #e0d3c6; }
 .nav-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 .loading-tip { text-align: center; padding: 4rem 1rem; color: #b7a89b; font-style: italic; }
 </style>
 </head>
 <body class="bg-paper">
 
-<!-- 密码门禁 -->
 <div id="gate" class="gate">
     <div class="gate-box">
         <div class="icon">🔒</div>
@@ -163,7 +150,6 @@ body.bg-dark .article-title { color: #e8e8e8; }
     </div>
 </div>
 
-<!-- 主内容 -->
 <div class="container" id="mainContent" style="display:none;">
     <div class="top-bar">
         <a href="index.html" class="back-btn">← 返回书架</a>
@@ -171,7 +157,6 @@ body.bg-dark .article-title { color: #e8e8e8; }
         <div class="book-title-top" id="topTitle">加载中...</div>
     </div>
 
-    <!-- 阅读设置栏 -->
     <div class="read-tools">
         <span class="label">字体：</span>
         <button onclick="setFontSize(-1)">A-</button>
@@ -189,7 +174,6 @@ body.bg-dark .article-title { color: #e8e8e8; }
             <h3>📖 章节目录</h3>
             <div id="chapterList"><div class="loading-tip">加载中...</div></div>
         </aside>
-
         <main class="article-area" id="articleArea">
             <div class="loading-tip">正在加载正文...</div>
         </main>
@@ -200,11 +184,12 @@ body.bg-dark .article-title { color: #e8e8e8; }
 
 <script>
 // ============================================================
-// 新版阅读页：先读 books.json 找到书的 dataFile，
-// 再读那个文件拿章节列表和正文
+// 新版阅读页：读 _meta.json + _part*.json
 // ============================================================
 
-let READER_PASSWORD = "read";
+const REPO = 'Rongr96/novel';
+
+let READER_PASSWORD = "123456";
 const PASS_KEY = "novel_pass_ok";
 const PASS_TTL = 24 * 60 * 60 * 1000;
 const HISTORY_KEY = "novel_read_history";
@@ -220,23 +205,16 @@ function hasPass() {
         return true;
     } catch(e) { return false; }
 }
-function setPass() {
-    localStorage.setItem(PASS_KEY, JSON.stringify({ t: Date.now() }));
-}
+function setPass() { localStorage.setItem(PASS_KEY, JSON.stringify({ t: Date.now() })); }
 function getHistory() {
-    try {
-        const raw = localStorage.getItem(HISTORY_KEY);
-        return raw ? JSON.parse(raw) : {};
-    } catch(e) { return {}; }
+    try { return JSON.parse(localStorage.getItem(HISTORY_KEY) || '{}'); } catch(e) { return {}; }
 }
 function saveHistory(bookId, chapterIndex, bookTitle) {
     const h = getHistory();
     h[bookId] = { bookId, chapterIndex, bookTitle, t: Date.now() };
     localStorage.setItem(HISTORY_KEY, JSON.stringify(h));
 }
-function getFontSize() {
-    return parseInt(localStorage.getItem(FONT_KEY)) || 17;
-}
+function getFontSize() { return parseInt(localStorage.getItem(FONT_KEY)) || 17; }
 function setFontSize(delta) {
     let size = getFontSize() + delta * 2;
     if (size < 12) size = 12;
@@ -248,26 +226,20 @@ function setFontSize(delta) {
 function setBg(bg) {
     document.body.className = 'bg-' + bg;
     localStorage.setItem(BG_KEY, bg);
-    document.querySelectorAll('.bg-btn').forEach(b => {
-        b.classList.toggle('active', b.dataset.bg === bg);
-    });
+    document.querySelectorAll('.bg-btn').forEach(b => b.classList.toggle('active', b.dataset.bg === bg));
 }
 function applyBg() {
     const bg = localStorage.getItem(BG_KEY) || 'paper';
     document.body.className = 'bg-' + bg;
-    document.querySelectorAll('.bg-btn').forEach(b => {
-        b.classList.toggle('active', b.dataset.bg === bg);
-    });
+    document.querySelectorAll('.bg-btn').forEach(b => b.classList.toggle('active', b.dataset.bg === bg));
 }
 
 let currentBook = null;
-let currentBookData = null;  // 这本书的完整数据（含章节）
+let allChapters = [];  // 这本书的全部章节
 let currentChapterIndex = 0;
 
 window.addEventListener('DOMContentLoaded', async function() {
     applyBg();
-
-    // 读 books.json 拿读者密码
     try {
         const res = await fetch('books.json?t=' + Date.now());
         if (res.ok) {
@@ -276,13 +248,9 @@ window.addEventListener('DOMContentLoaded', async function() {
                 READER_PASSWORD = data.settings.readerPassword;
             }
         }
-    } catch(e) { /* 用默认 */ }
-
-    if (hasPass()) {
-        showContent();
-    } else {
-        document.getElementById('gatePwd').focus();
-    }
+    } catch(e) {}
+    if (hasPass()) showContent();
+    else document.getElementById('gatePwd').focus();
 });
 
 document.getElementById('gateBtn').onclick = function() {
@@ -312,41 +280,47 @@ async function init() {
     const jumpChapter = parseInt(params.get('ch'));
 
     if (!bookId) {
-        document.getElementById('articleArea').innerHTML =
-            '<div class="loading-tip">没有指定书籍，请从<a href="index.html">书架</a>进入</div>';
+        document.getElementById('articleArea').innerHTML = '<div class="loading-tip">没有指定书籍</div>';
         return;
     }
 
-    // 1. 读 books.json
+    // 读 books.json
     let booksData;
     try {
         const res = await fetch('books.json?t=' + Date.now());
         if (!res.ok) throw new Error();
         booksData = await res.json();
     } catch (err) {
-        document.getElementById('articleArea').innerHTML =
-            '<div class="loading-tip">读取书籍列表失败</div>';
+        document.getElementById('articleArea').innerHTML = '<div class="loading-tip">读取书籍列表失败</div>';
         return;
     }
 
-    // 2. 找到这本书
     currentBook = (booksData.books || []).find(b => b.id === bookId);
     if (!currentBook) {
-        document.getElementById('articleArea').innerHTML =
-            '<div class="loading-tip">找不到这本书</div>';
+        document.getElementById('articleArea').innerHTML = '<div class="loading-tip">找不到这本书</div>';
         return;
     }
 
-    // 3. 读这本书的 dataFile（含章节）
-    if (currentBook.dataFile) {
+    // 读 meta 文件 + 所有 part 文件
+    allChapters = [];
+    if (currentBook.metaFile) {
         try {
-            const res = await fetch(currentBook.dataFile + '?t=' + Date.now());
-            if (res.ok) {
-                currentBookData = await res.json();
+            const metaRes = await fetch(currentBook.metaFile + '?t=' + Date.now());
+            if (metaRes.ok) {
+                const meta = await metaRes.json();
+                const parts = meta.parts || [];
+                // 并行读取所有 part
+                const partDatas = await Promise.all(parts.map(p =>
+                    fetch(p.file + '?t=' + Date.now())
+                        .then(r => r.ok ? r.json() : { chapters: [] })
+                        .catch(() => ({ chapters: [] }))
+                ));
+                partDatas.forEach(d => {
+                    (d.chapters || []).forEach(ch => allChapters.push(ch));
+                });
             }
-        } catch(e) { currentBookData = { chapters: [] }; }
+        } catch(e) { /* 保持空 */ }
     }
-    if (!currentBookData) currentBookData = { chapters: [] };
 
     document.getElementById('topTitle').textContent = currentBook.title || '未命名';
     document.title = (currentBook.title || '阅读') + ' · 我的书房';
@@ -356,10 +330,9 @@ async function init() {
     loadChapter(startCh);
 }
 
-// 章节列表（过滤掉未到时间的定时章节）
 function getVisibleChapters() {
     const now = new Date();
-    return (currentBookData.chapters || []).filter(ch => {
+    return allChapters.filter(ch => {
         if (!ch.isScheduled) return true;
         return new Date(ch.publishTime) <= now;
     });
@@ -394,10 +367,10 @@ function loadChapter(index) {
         .map(p => `<p>${escapeHtml(p)}</p>`).join('');
 
     const fontSize = getFontSize();
-document.getElementById('articleArea').innerHTML = `
-    <h1 class="article-title">${escapeHtml(ch.title || ('第' + (index+1) + '章'))}</h1>
-    <div class="article-meta">📅 ${escapeHtml(ch.publishTime || '')}　✍️ ${escapeHtml(currentBook.author || '未署名')}</div>
-    <div class="article-content" style="font-size:${fontSize}px;">
+    document.getElementById('articleArea').innerHTML = `
+        <h1 class="article-title">${escapeHtml(ch.title || ('第' + (index+1) + '章'))}</h1>
+        <div class="article-meta">📅 ${escapeHtml(ch.publishTime || '')}　✍️ ${escapeHtml(currentBook.author || '未署名')}</div>
+        <div class="article-content" style="font-size:${fontSize}px;">
             ${paras || '<p style="text-indent:0;color:#b7a89b;font-style:italic;">（本章暂无正文）</p>'}
         </div>
         <div class="nav-buttons">
