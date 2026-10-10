@@ -175,18 +175,18 @@ async function loadBooks() {
             const res = await fetch(book.metaFile + '?t=' + Date.now());
             if (!res.ok) { bookMetaCache[book.id] = { chapters: [] }; return; }
             const meta = await res.json();
-            const parts = meta.parts || [];
-            // 读所有 part 拿章节
-            const allChapters = [];
-            await Promise.all(parts.map(async (p) => {
-                try {
-                    const r = await fetch(p.file + '?t=' + Date.now());
-                    if (r.ok) {
-                        const d = await r.json();
-                        (d.chapters || []).forEach(ch => allChapters.push(ch));
-                    }
-                } catch(e) {}
-            }));
+const parts = meta.parts || [];
+// 按 part 顺序串行读取，保证章节顺序正确
+const allChapters = [];
+for (const p of parts) {
+    try {
+        const r = await fetch(p.file + '?t=' + Date.now());
+        if (r.ok) {
+            const d = await r.json();
+            (d.chapters || []).forEach(ch => allChapters.push(ch));
+        }
+    } catch(e) {}
+}
             bookMetaCache[book.id] = { chapters: allChapters };
         } catch(e) {
             bookMetaCache[book.id] = { chapters: [] };
